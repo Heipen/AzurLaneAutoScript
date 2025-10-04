@@ -224,6 +224,9 @@ Reward:
     Awaken:
       - Scheduler
       - Awaken
+    Island:
+      - Scheduler
+      - Island
 
 # ==================== DailyMission ====================
 
