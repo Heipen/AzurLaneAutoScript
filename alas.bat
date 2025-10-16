@@ -10,9 +10,8 @@ echo 正在启动 ALAS，并激活 Conda 环境运行 gui.py...
 REM 使用 PowerShell 启动 Conda 环境并运行脚本
 start "" powershell -NoExit -Command "conda activate alas; python gui.py"
 
-REM 3. 同时打开指定的网址
-echo 正在打开网址 http://127.0.0.1:22267 ...
-start http://127.0.0.1:22267
+REM 3. 不再自动打开浏览器，因为已经安装了 PWA，你可以手动打开 PWA 应用。
+echo ALAS 服务已启动，请手动打开 ALAS PWA 应用。
 
 exit /b
 
