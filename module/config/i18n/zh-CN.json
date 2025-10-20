@@ -1966,6 +1966,17 @@
       "7": "土豆",
       "8": "大豆"
     },
+    "Character1": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option2": {
       "name": "第二个格子生产物品",
       "help": "",
@@ -1979,6 +1990,17 @@
       "7": "土豆",
       "8": "大豆"
     },
+    "Character2": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option3": {
       "name": "第三个格子生产物品",
       "help": "",
@@ -1991,6 +2013,17 @@
       "6": "白菜",
       "7": "土豆",
       "8": "大豆"
+    },
+    "Character3": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     },
     "Option4": {
       "name": "第四个格子生产物品",
@@ -2021,11 +2054,33 @@
       "0": "不生产",
       "1": "鸡蛋（禽肉）"
     },
+    "Character1": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option2": {
       "name": "第二个格子生产物品",
       "help": "",
       "0": "不生产",
       "2": "鲜肉"
+    },
+    "Character2": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     },
     "Option3": {
       "name": "第三个格子生产物品",
@@ -2033,11 +2088,33 @@
       "0": "不生产",
       "3": "牛奶（皮料）"
     },
+    "Character3": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option4": {
       "name": "第四个格子生产物品",
       "help": "",
       "0": "不生产",
       "4": "羊毛"
+    },
+    "Character4": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     }
   },
   "Island3": {
@@ -2060,6 +2137,17 @@
       "5": "硫矿",
       "6": "银矿"
     },
+    "Character1": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option2": {
       "name": "第二个格子生产物品",
       "help": "",
@@ -2070,6 +2158,17 @@
       "4": "铁矿",
       "5": "硫矿",
       "6": "银矿"
+    },
+    "Character2": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     },
     "Option3": {
       "name": "第三个格子生产物品",
@@ -2082,6 +2181,17 @@
       "5": "硫矿",
       "6": "银矿"
     },
+    "Character3": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option4": {
       "name": "第四个格子生产物品",
       "help": "",
@@ -2092,6 +2202,17 @@
       "4": "铁矿",
       "5": "硫矿",
       "6": "银矿"
+    },
+    "Character4": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     }
   },
   "Island4": {
@@ -2112,6 +2233,17 @@
       "3": "精选之木",
       "4": "典雅之木"
     },
+    "Character1": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option2": {
       "name": "第二个格子生产物品",
       "help": "",
@@ -2120,6 +2252,17 @@
       "2": "实用之木",
       "3": "精选之木",
       "4": "典雅之木"
+    },
+    "Character2": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     },
     "Option3": {
       "name": "第三个格子生产物品",
@@ -2130,6 +2273,17 @@
       "3": "精选之木",
       "4": "典雅之木"
     },
+    "Character3": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option4": {
       "name": "第四个格子生产物品",
       "help": "",
@@ -2138,6 +2292,17 @@
       "2": "实用之木",
       "3": "精选之木",
       "4": "典雅之木"
+    },
+    "Character4": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     }
   },
   "Island5": {
@@ -2163,6 +2328,17 @@
       "8": "牛油果",
       "9": "橡胶"
     },
+    "Character1": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option2": {
       "name": "第二个格子生产物品",
       "help": "",
@@ -2176,6 +2352,17 @@
       "7": "柠檬",
       "8": "牛油果",
       "9": "橡胶"
+    },
+    "Character2": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     },
     "Option3": {
       "name": "第三个格子生产物品",
@@ -2191,6 +2378,17 @@
       "8": "牛油果",
       "9": "橡胶"
     },
+    "Character3": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option4": {
       "name": "第四个格子生产物品",
       "help": "",
@@ -2204,6 +2402,17 @@
       "7": "柠檬",
       "8": "牛油果",
       "9": "橡胶"
+    },
+    "Character4": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     }
   },
   "Island6": {
@@ -2227,6 +2436,17 @@
       "6": "胡萝卜",
       "7": "洋葱"
     },
+    "Character1": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option2": {
       "name": "第二个格子生产物品",
       "help": "",
@@ -2238,6 +2458,17 @@
       "5": "薰衣草",
       "6": "胡萝卜",
       "7": "洋葱"
+    },
+    "Character2": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     }
   },
   "Island7": {
@@ -2263,6 +2494,17 @@
       "8": "经典豆腐套餐",
       "9": "绵玉定食"
     },
+    "Character1": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option2": {
       "name": "第二个格子生产物品",
       "help": "",
@@ -2276,6 +2518,17 @@
       "7": "蔬菜沙拉",
       "8": "经典豆腐套餐",
       "9": "绵玉定食"
+    },
+    "Character2": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     }
   },
   "Island8": {
@@ -2303,6 +2556,17 @@
       "10": "缤纷果乐园",
       "11": "花香果韵"
     },
+    "Character1": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option2": {
       "name": "第二个格子生产物品",
       "help": "",
@@ -2318,6 +2582,17 @@
       "9": "阳光蜜水",
       "10": "缤纷果乐园",
       "11": "花香果韵"
+    },
+    "Character2": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     }
   },
   "Island9": {
@@ -2343,6 +2618,17 @@
       "8": "果园二重奏",
       "9": "莓果香橙甜点组"
     },
+    "Character1": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option2": {
       "name": "第二个格子生产物品",
       "help": "",
@@ -2356,6 +2642,17 @@
       "7": "香甜组合",
       "8": "果园二重奏",
       "9": "莓果香橙甜点组"
+    },
+    "Character2": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     }
   },
   "Island10": {
@@ -2379,6 +2676,17 @@
       "6": "烤肉狂欢",
       "7": "能量双拼套餐"
     },
+    "Character1": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option2": {
       "name": "第二个格子生产物品",
       "help": "",
@@ -2390,6 +2698,17 @@
       "5": "汉堡肉饭",
       "6": "烤肉狂欢",
       "7": "能量双拼套餐"
+    },
+    "Character2": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     }
   },
   "Island11": {
@@ -2411,6 +2730,17 @@
       "4": "精选木桶",
       "5": "文件柜"
     },
+    "Character1": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option2": {
       "name": "第二个格子生产物品",
       "help": "",
@@ -2420,6 +2750,17 @@
       "3": "桌椅",
       "4": "精选木桶",
       "5": "文件柜"
+    },
+    "Character2": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     }
   },
   "Island12": {
@@ -2442,6 +2783,17 @@
       "5": "火药",
       "6": "刀叉餐具"
     },
+    "Character1": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option2": {
       "name": "第二个格子生产物品",
       "help": "",
@@ -2452,6 +2804,17 @@
       "4": "硫酸",
       "5": "火药",
       "6": "刀叉餐具"
+    },
+    "Character2": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     }
   },
   "Island13": {
@@ -2472,6 +2835,17 @@
       "3": "蓄电池",
       "4": "净水滤芯"
     },
+    "Character1": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option2": {
       "name": "第二个格子生产物品",
       "help": "",
@@ -2480,6 +2854,17 @@
       "2": "钟表",
       "3": "蓄电池",
       "4": "净水滤芯"
+    },
+    "Character2": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     }
   },
   "Island14": {
@@ -2505,6 +2890,17 @@
       "8": "鞋靴",
       "9": "绷带"
     },
+    "Character1": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option2": {
       "name": "第二个格子生产物品",
       "help": "",
@@ -2518,6 +2914,17 @@
       "7": "香囊",
       "8": "鞋靴",
       "9": "绷带"
+    },
+    "Character2": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     }
   },
   "Island15": {
@@ -2543,6 +2950,17 @@
       "8": "醒神套餐",
       "9": "果香双杯乐"
     },
+    "Character1": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
+    },
     "Option2": {
       "name": "第二个格子生产物品",
       "help": "",
@@ -2556,6 +2974,17 @@
       "7": "晨光活力组合",
       "8": "醒神套餐",
       "9": "果香双杯乐"
+    },
+    "Character2": {
+      "name": "使用角色",
+      "help": "",
+      "manjuu": "工作啾",
+      "saratoga": "萨拉托加",
+      "new_jersey": "新泽西",
+      "tashkent": "塔什干",
+      "lemalin": "恶毒",
+      "shimakaze": "岛风",
+      "cheshire": "柴郡"
     }
   },
   "GeneralShop": {
