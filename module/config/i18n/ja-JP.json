@@ -1966,17 +1966,6 @@
       "7": "7",
       "8": "8"
     },
-    "Character1": {
-      "name": "Island1.Character1.name",
-      "help": "Island1.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
-    },
     "Option2": {
       "name": "Island1.Option2.name",
       "help": "Island1.Option2.help",
@@ -1989,17 +1978,6 @@
       "6": "6",
       "7": "7",
       "8": "8"
-    },
-    "Character2": {
-      "name": "Island1.Character2.name",
-      "help": "Island1.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
     },
     "Option3": {
       "name": "Island1.Option3.name",
@@ -2014,17 +1992,6 @@
       "7": "7",
       "8": "8"
     },
-    "Character3": {
-      "name": "Island1.Character3.name",
-      "help": "Island1.Character3.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
-    },
     "Option4": {
       "name": "Island1.Option4.name",
       "help": "Island1.Option4.help",
@@ -2037,6 +2004,50 @@
       "6": "6",
       "7": "7",
       "8": "8"
+    },
+    "Character1": {
+      "name": "Island1.Character1.name",
+      "help": "Island1.Character1.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
+    },
+    "Character2": {
+      "name": "Island1.Character2.name",
+      "help": "Island1.Character2.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
+    },
+    "Character3": {
+      "name": "Island1.Character3.name",
+      "help": "Island1.Character3.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
+    },
+    "Character4": {
+      "name": "Island1.Character4.name",
+      "help": "Island1.Character4.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
     }
   },
   "Island2": {
@@ -2054,6 +2065,24 @@
       "0": "0",
       "1": "1"
     },
+    "Option2": {
+      "name": "Island2.Option2.name",
+      "help": "Island2.Option2.help",
+      "0": "0",
+      "2": "2"
+    },
+    "Option3": {
+      "name": "Island2.Option3.name",
+      "help": "Island2.Option3.help",
+      "0": "0",
+      "3": "3"
+    },
+    "Option4": {
+      "name": "Island2.Option4.name",
+      "help": "Island2.Option4.help",
+      "0": "0",
+      "4": "4"
+    },
     "Character1": {
       "name": "Island2.Character1.name",
       "help": "Island2.Character1.help",
@@ -2064,12 +2093,6 @@
       "lemalin": "lemalin",
       "shimakaze": "shimakaze",
       "cheshire": "cheshire"
-    },
-    "Option2": {
-      "name": "Island2.Option2.name",
-      "help": "Island2.Option2.help",
-      "0": "0",
-      "2": "2"
     },
     "Character2": {
       "name": "Island2.Character2.name",
@@ -2082,12 +2105,6 @@
       "shimakaze": "shimakaze",
       "cheshire": "cheshire"
     },
-    "Option3": {
-      "name": "Island2.Option3.name",
-      "help": "Island2.Option3.help",
-      "0": "0",
-      "3": "3"
-    },
     "Character3": {
       "name": "Island2.Character3.name",
       "help": "Island2.Character3.help",
@@ -2098,12 +2115,6 @@
       "lemalin": "lemalin",
       "shimakaze": "shimakaze",
       "cheshire": "cheshire"
-    },
-    "Option4": {
-      "name": "Island2.Option4.name",
-      "help": "Island2.Option4.help",
-      "0": "0",
-      "4": "4"
     },
     "Character4": {
       "name": "Island2.Character4.name",
@@ -2137,17 +2148,6 @@
       "5": "5",
       "6": "6"
     },
-    "Character1": {
-      "name": "Island3.Character1.name",
-      "help": "Island3.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
-    },
     "Option2": {
       "name": "Island3.Option2.name",
       "help": "Island3.Option2.help",
@@ -2158,17 +2158,6 @@
       "4": "4",
       "5": "5",
       "6": "6"
-    },
-    "Character2": {
-      "name": "Island3.Character2.name",
-      "help": "Island3.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
     },
     "Option3": {
       "name": "Island3.Option3.name",
@@ -2181,17 +2170,6 @@
       "5": "5",
       "6": "6"
     },
-    "Character3": {
-      "name": "Island3.Character3.name",
-      "help": "Island3.Character3.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
-    },
     "Option4": {
       "name": "Island3.Option4.name",
       "help": "Island3.Option4.help",
@@ -2202,6 +2180,39 @@
       "4": "4",
       "5": "5",
       "6": "6"
+    },
+    "Character1": {
+      "name": "Island3.Character1.name",
+      "help": "Island3.Character1.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
+    },
+    "Character2": {
+      "name": "Island3.Character2.name",
+      "help": "Island3.Character2.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
+    },
+    "Character3": {
+      "name": "Island3.Character3.name",
+      "help": "Island3.Character3.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
     },
     "Character4": {
       "name": "Island3.Character4.name",
@@ -2233,6 +2244,33 @@
       "3": "3",
       "4": "4"
     },
+    "Option2": {
+      "name": "Island4.Option2.name",
+      "help": "Island4.Option2.help",
+      "0": "0",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4"
+    },
+    "Option3": {
+      "name": "Island4.Option3.name",
+      "help": "Island4.Option3.help",
+      "0": "0",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4"
+    },
+    "Option4": {
+      "name": "Island4.Option4.name",
+      "help": "Island4.Option4.help",
+      "0": "0",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4"
+    },
     "Character1": {
       "name": "Island4.Character1.name",
       "help": "Island4.Character1.help",
@@ -2243,15 +2281,6 @@
       "lemalin": "lemalin",
       "shimakaze": "shimakaze",
       "cheshire": "cheshire"
-    },
-    "Option2": {
-      "name": "Island4.Option2.name",
-      "help": "Island4.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4"
     },
     "Character2": {
       "name": "Island4.Character2.name",
@@ -2264,15 +2293,6 @@
       "shimakaze": "shimakaze",
       "cheshire": "cheshire"
     },
-    "Option3": {
-      "name": "Island4.Option3.name",
-      "help": "Island4.Option3.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4"
-    },
     "Character3": {
       "name": "Island4.Character3.name",
       "help": "Island4.Character3.help",
@@ -2283,15 +2303,6 @@
       "lemalin": "lemalin",
       "shimakaze": "shimakaze",
       "cheshire": "cheshire"
-    },
-    "Option4": {
-      "name": "Island4.Option4.name",
-      "help": "Island4.Option4.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4"
     },
     "Character4": {
       "name": "Island4.Character4.name",
@@ -2328,17 +2339,6 @@
       "8": "8",
       "9": "9"
     },
-    "Character1": {
-      "name": "Island5.Character1.name",
-      "help": "Island5.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
-    },
     "Option2": {
       "name": "Island5.Option2.name",
       "help": "Island5.Option2.help",
@@ -2352,17 +2352,6 @@
       "7": "7",
       "8": "8",
       "9": "9"
-    },
-    "Character2": {
-      "name": "Island5.Character2.name",
-      "help": "Island5.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
     },
     "Option3": {
       "name": "Island5.Option3.name",
@@ -2378,17 +2367,6 @@
       "8": "8",
       "9": "9"
     },
-    "Character3": {
-      "name": "Island5.Character3.name",
-      "help": "Island5.Character3.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
-    },
     "Option4": {
       "name": "Island5.Option4.name",
       "help": "Island5.Option4.help",
@@ -2402,6 +2380,39 @@
       "7": "7",
       "8": "8",
       "9": "9"
+    },
+    "Character1": {
+      "name": "Island5.Character1.name",
+      "help": "Island5.Character1.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
+    },
+    "Character2": {
+      "name": "Island5.Character2.name",
+      "help": "Island5.Character2.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
+    },
+    "Character3": {
+      "name": "Island5.Character3.name",
+      "help": "Island5.Character3.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
     },
     "Character4": {
       "name": "Island5.Character4.name",
@@ -2436,17 +2447,6 @@
       "6": "6",
       "7": "7"
     },
-    "Character1": {
-      "name": "Island6.Character1.name",
-      "help": "Island6.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
-    },
     "Option2": {
       "name": "Island6.Option2.name",
       "help": "Island6.Option2.help",
@@ -2458,6 +2458,17 @@
       "5": "5",
       "6": "6",
       "7": "7"
+    },
+    "Character1": {
+      "name": "Island6.Character1.name",
+      "help": "Island6.Character1.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
     },
     "Character2": {
       "name": "Island6.Character2.name",
@@ -2494,17 +2505,6 @@
       "8": "8",
       "9": "9"
     },
-    "Character1": {
-      "name": "Island7.Character1.name",
-      "help": "Island7.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
-    },
     "Option2": {
       "name": "Island7.Option2.name",
       "help": "Island7.Option2.help",
@@ -2518,6 +2518,17 @@
       "7": "7",
       "8": "8",
       "9": "9"
+    },
+    "Character1": {
+      "name": "Island7.Character1.name",
+      "help": "Island7.Character1.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
     },
     "Character2": {
       "name": "Island7.Character2.name",
@@ -2556,17 +2567,6 @@
       "10": "10",
       "11": "11"
     },
-    "Character1": {
-      "name": "Island8.Character1.name",
-      "help": "Island8.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
-    },
     "Option2": {
       "name": "Island8.Option2.name",
       "help": "Island8.Option2.help",
@@ -2582,6 +2582,17 @@
       "9": "9",
       "10": "10",
       "11": "11"
+    },
+    "Character1": {
+      "name": "Island8.Character1.name",
+      "help": "Island8.Character1.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
     },
     "Character2": {
       "name": "Island8.Character2.name",
@@ -2618,17 +2629,6 @@
       "8": "8",
       "9": "9"
     },
-    "Character1": {
-      "name": "Island9.Character1.name",
-      "help": "Island9.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
-    },
     "Option2": {
       "name": "Island9.Option2.name",
       "help": "Island9.Option2.help",
@@ -2642,6 +2642,17 @@
       "7": "7",
       "8": "8",
       "9": "9"
+    },
+    "Character1": {
+      "name": "Island9.Character1.name",
+      "help": "Island9.Character1.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
     },
     "Character2": {
       "name": "Island9.Character2.name",
@@ -2676,17 +2687,6 @@
       "6": "6",
       "7": "7"
     },
-    "Character1": {
-      "name": "Island10.Character1.name",
-      "help": "Island10.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
-    },
     "Option2": {
       "name": "Island10.Option2.name",
       "help": "Island10.Option2.help",
@@ -2698,6 +2698,17 @@
       "5": "5",
       "6": "6",
       "7": "7"
+    },
+    "Character1": {
+      "name": "Island10.Character1.name",
+      "help": "Island10.Character1.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
     },
     "Character2": {
       "name": "Island10.Character2.name",
@@ -2730,6 +2741,16 @@
       "4": "4",
       "5": "5"
     },
+    "Option2": {
+      "name": "Island11.Option2.name",
+      "help": "Island11.Option2.help",
+      "0": "0",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5"
+    },
     "Character1": {
       "name": "Island11.Character1.name",
       "help": "Island11.Character1.help",
@@ -2740,16 +2761,6 @@
       "lemalin": "lemalin",
       "shimakaze": "shimakaze",
       "cheshire": "cheshire"
-    },
-    "Option2": {
-      "name": "Island11.Option2.name",
-      "help": "Island11.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5"
     },
     "Character2": {
       "name": "Island11.Character2.name",
@@ -2783,17 +2794,6 @@
       "5": "5",
       "6": "6"
     },
-    "Character1": {
-      "name": "Island12.Character1.name",
-      "help": "Island12.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
-    },
     "Option2": {
       "name": "Island12.Option2.name",
       "help": "Island12.Option2.help",
@@ -2804,6 +2804,17 @@
       "4": "4",
       "5": "5",
       "6": "6"
+    },
+    "Character1": {
+      "name": "Island12.Character1.name",
+      "help": "Island12.Character1.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
     },
     "Character2": {
       "name": "Island12.Character2.name",
@@ -2835,6 +2846,15 @@
       "3": "3",
       "4": "4"
     },
+    "Option2": {
+      "name": "Island13.Option2.name",
+      "help": "Island13.Option2.help",
+      "0": "0",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4"
+    },
     "Character1": {
       "name": "Island13.Character1.name",
       "help": "Island13.Character1.help",
@@ -2845,15 +2865,6 @@
       "lemalin": "lemalin",
       "shimakaze": "shimakaze",
       "cheshire": "cheshire"
-    },
-    "Option2": {
-      "name": "Island13.Option2.name",
-      "help": "Island13.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4"
     },
     "Character2": {
       "name": "Island13.Character2.name",
@@ -2890,17 +2901,6 @@
       "8": "8",
       "9": "9"
     },
-    "Character1": {
-      "name": "Island14.Character1.name",
-      "help": "Island14.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
-    },
     "Option2": {
       "name": "Island14.Option2.name",
       "help": "Island14.Option2.help",
@@ -2914,6 +2914,17 @@
       "7": "7",
       "8": "8",
       "9": "9"
+    },
+    "Character1": {
+      "name": "Island14.Character1.name",
+      "help": "Island14.Character1.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
     },
     "Character2": {
       "name": "Island14.Character2.name",
@@ -2950,17 +2961,6 @@
       "8": "8",
       "9": "9"
     },
-    "Character1": {
-      "name": "Island15.Character1.name",
-      "help": "Island15.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "cheshire": "cheshire"
-    },
     "Option2": {
       "name": "Island15.Option2.name",
       "help": "Island15.Option2.help",
@@ -2974,6 +2974,17 @@
       "7": "7",
       "8": "8",
       "9": "9"
+    },
+    "Character1": {
+      "name": "Island15.Character1.name",
+      "help": "Island15.Character1.help",
+      "manjuu": "manjuu",
+      "saratoga": "saratoga",
+      "new_jersey": "new_jersey",
+      "tashkent": "tashkent",
+      "lemalin": "lemalin",
+      "shimakaze": "shimakaze",
+      "cheshire": "cheshire"
     },
     "Character2": {
       "name": "Island15.Character2.name",
