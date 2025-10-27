@@ -1105,15 +1105,31 @@ class OSMap(OSFleet, Map, GlobeCamera, StrategicSearchHandler):
                     except Exception as rec_e:
                         logger.debug(f'软恢复过程出现异常: {rec_e}')
                     if try_idx == 1:
-                        logger.warning('软恢复失败，放弃重启。跳过该舰队并切换至下一舰队继续任务')
+                        logger.warning('软恢复失败，尝试重启应用以恢复状态')
                         try:
-                            next_fleet = (fleet_index % 4) + 1
-                            logger.info(f'切换舰队 {fleet_index} -> {next_fleet}')
-                            self.fleet_set(next_fleet)
+                            self.device.app_stop()
+                            time.sleep(1.0)
+                            self.device.app_start()
+                            LoginHandler(self.config, self.device).handle_app_login()
+                            # 确保回到 OS 页并重建地图数据
+                            self.ui_ensure(page_os)
+                            time.sleep(0.8)
+                            try:
+                                self.map_init(map_=None)
+                                self.update()
+                            except Exception:
+                                logger.debug('重建地图数据失败（app restart）', exc_info=True)
+                            clickable_grid_group = self.view.select(location=target_loc)
+                            if clickable_grid_group:
+                                time.sleep(0.3)
+                                self.device.click(clickable_grid_group[0])
+                                self.wait_until_walk_stable(confirm_timer=Timer(1.5, count=4))
+                                logger.info('重启应用后恢复成功，舰队已到达')
+                                break
                         except Exception:
-                            logger.error('切换舰队过程出现异常，继续下一步', exc_info=True)
-                        recovered = False
-                        break
+                            logger.error('应用重启恢复失败，跳过该舰队并继续下一步', exc_info=True)
+                            # 不要求人工接管，继续后续流程（让外层循环接着处理下一个舰队或最终重扫）
+                            recovered = False
                     time.sleep(0.5)
 
         backup = self.config.temporary(OpsiGeneral_RepairThreshold=-1, Campaign_UseAutoSearch=False)
