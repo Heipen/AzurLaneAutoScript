@@ -77,6 +77,21 @@ class Screenshot(Adb, WSA, DroidCast, AScreenCap, Scrcpy, NemuIpc, LDOpenGL):
             if self.screenshot_queue is not None and self.image is not None:
                 try:
                     rgb_image = self.image
+                    if rgb_image is None:
+                        raise ValueError('Empty image')
+                    if rgb_image.ndim == 2:
+                        rgb_image = cv2.cvtColor(rgb_image, cv2.COLOR_GRAY2BGR)
+                    elif rgb_image.shape[2] == 4:
+                        try:
+                            rgb_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGBA2BGR)
+                        except Exception:
+                            rgb_image = rgb_image[..., :3][:, :, ::-1]
+                    elif rgb_image.shape[2] == 3:
+                        try:
+                            rgb_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
+                        except Exception:
+                            rgb_image = rgb_image[:, :, ::-1]
+                    
                     h, w = rgb_image.shape[:2]
                     max_w, max_h = 900, 1600
                     if w > max_w or h > max_h:
