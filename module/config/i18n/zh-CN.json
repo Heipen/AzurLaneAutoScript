@@ -2891,7 +2891,7 @@
       "ClickToUpdate": "有更新可用，点击这里进行更新"
     },
     "Status": {
-      "Running": "运行中",
+      "Running": "运行中nanoda!",
       "Inactive": "闲置",
       "Warning": "发生错误",
       "Updating": "等待更新"
