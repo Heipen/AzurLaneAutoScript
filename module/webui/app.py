@@ -424,13 +424,13 @@ class AlasGUI(Frame):
 
         with use_scope("schedulers"):
             if State.last_screenshot_base64 is not None:
-                img_html = f'<img id="screenshot-img" src="data:image/jpg;base64,{State.last_screenshot_base64}" style="height:100%; width:100%;">'
+                img_html = f'<img id="screenshot-img" src="data:image/jpg;base64,{State.last_screenshot_base64}" style="max-height:240px; width:auto;">'
                 put_scope("image-container", [put_html(img_html)])
             else:
                 put_scope(
                     "image-container",
                     [
-                        put_html(f'<img id="screenshot-img" src="{State.get_placeholder_url()}" style="height:100%; width:100%;">')
+                        put_html(f'<img id="screenshot-img" src="{State.get_placeholder_url()}" style="max-height:240px; width:auto;">')
                     ],
                 )
             put_scope(
@@ -558,11 +558,19 @@ class AlasGUI(Frame):
                 State.display_screenshots = not getattr(State, "display_screenshots", False)
                 if State.display_screenshots:
                     try:
-                        self.update_screenshot_display()
+                        img_base64 = None
+                        if hasattr(self, 'alas') and self.alas.alive:
+                            img_base64 = self.alas.get_latest_screenshot
+                        if img_base64 is None:
+                            img_base64 = State.last_screenshot_base64
+                        if img_base64:
+                            src = f"data:image/jpg;base64,{img_base64}"
+                            run_js(f'var img=document.getElementById("screenshot-img"); if(img) {{ img.src="{src}"; img.setAttribute("data-modal-src", "{src}"); }}')
                     except Exception:
                         pass
                 else:
-                    run_js(f'var img=document.getElementById("screenshot-img"); if(img) img.src="{State.get_placeholder_url()}";')
+                    current_url = State.get_placeholder_url()
+                    run_js(f'var img=document.getElementById("screenshot-img"); if(img) {{ img.src="{current_url}"; img.setAttribute("data-modal-src", "{current_url}"); }}')
                 try:
                     for pm in ProcessManager.running_instances():
                         try:
@@ -572,23 +580,32 @@ class AlasGUI(Frame):
                 except Exception:
                     pass
                 with use_scope("screenshot_btn", clear=True):
-                    put_buttons([
-                        "看见了nanoda" if State.display_screenshots else "看不见nanoda",
-                        "切换占位图",
-                    ], [ _toggle_screenshot, _switch_placeholder ], small=True)
+                    put_buttons(
+                        [
+                            {"label": "看见了nanoda" if State.display_screenshots else "看不见nanoda", "value": "toggle", "color": "off"},
+                            {"label": "切换雪风大人图片", "value": "switch", "color": "off"},
+                        ],
+                        onclick=[_toggle_screenshot, _switch_placeholder],
+                    ).style("text-align: center")
 
             def _switch_placeholder(_=None):
                 try:
                     url = State.toggle_placeholder()
-                    run_js(f'var img=document.getElementById("screenshot-img"); if(img) img.src="{url}";')
-                    toast(t("雪风大人的图片已切换") if hasattr(t, '__call__') else "占位图已切换", duration=1)
+                    run_js(f'var img=document.getElementById("screenshot-img"); if(img) {{ img.src="{url}"; img.setAttribute("data-modal-src", "{url}"); }}')
+                    toast(t("雪风大人的图片已切换") if hasattr(t, '__call__') else "雪风大人的图片已切换", duration=1)
                 except Exception:
                     pass
 
             if not hasattr(State, "display_screenshots"):
                 State.display_screenshots = True
 
-            put_buttons([label, "切换雪风大人图片"], [_toggle_screenshot, _switch_placeholder], small=True)
+            put_buttons(
+                [
+                    {"label": label, "value": "toggle", "color": "off"},
+                    {"label": "切换雪风大人图片", "value": "switch", "color": "off"},
+                ],
+                onclick=[_toggle_screenshot, _switch_placeholder],
+            ).style("text-align: center")
 
     def set_dashboard_display(self, b):
         self._log.set_dashboard_display(b)
@@ -857,6 +874,8 @@ class AlasGUI(Frame):
                 if (!img) {
                     return;
                 }
+                img.src = src;
+                img.setAttribute("data-modal-src", src);
                 img.style.maxWidth = "100%";
                 img.style.maxHeight = "240px";
                 img.style.height = "auto";
@@ -886,7 +905,7 @@ class AlasGUI(Frame):
                     var modalImg = document.createElement("img");
                     modalImg.id = "screenshot-modal-img";
                     Object.assign(modalImg.style, {
-                        maxWidth: "90vw",
+                        maxWidth: "100%",
                         maxHeight: "90vh",
                         objectFit: "contain",
                         boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
@@ -971,12 +990,15 @@ class AlasGUI(Frame):
 
                 img.src = src;
                 var modalImgEl = document.getElementById("screenshot-modal-img");
-                if (modalImgEl) modalImgEl.src = src;
+                if (modalImgEl) {
+                    modalImgEl.src = img.getAttribute("data-modal-src") || src;
+                }
 
                 img.onclick = function(e) {
                     var m = document.getElementById("screenshot-modal");
                     var mi = document.getElementById("screenshot-modal-img");
                     if (m && mi) {
+                        mi.src = img.getAttribute("data-modal-src") || img.src;
                         m.dataset.scale = 1;
                         m.dataset.tx = 0;
                         m.dataset.ty = 0;
