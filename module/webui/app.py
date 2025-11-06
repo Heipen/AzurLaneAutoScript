@@ -440,7 +440,6 @@ class AlasGUI(Frame):
                         "font-size: 1.25rem; margin: auto .5rem auto;"
                     ),
                     put_scope("scheduler_btn"),
-                    put_scope("screenshot_btn"),
                 ],
             )
             put_scope(
@@ -509,6 +508,7 @@ class AlasGUI(Frame):
                         put_scope(
                             "log-bar-btns",
                             [
+                                put_scope("screenshot_btn"),                                
                                 put_scope("log_scroll_btn"),
                                 put_scope("dashboard_btn"),
                             ],
@@ -585,7 +585,10 @@ class AlasGUI(Frame):
                 except Exception:
                     pass
 
-            put_buttons([label, "切换占位图"], [_toggle_screenshot, _switch_placeholder], small=True)
+            if not hasattr(State, "display_screenshots"):
+                State.display_screenshots = True
+
+            put_buttons([label, "切换雪风大人图片"], [_toggle_screenshot, _switch_placeholder], small=True)
 
     def set_dashboard_display(self, b):
         self._log.set_dashboard_display(b)
