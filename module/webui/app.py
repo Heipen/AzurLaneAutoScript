@@ -423,7 +423,7 @@ class AlasGUI(Frame):
         put_scope("overview", [put_scope("schedulers"), put_scope("logs")])
 
         with use_scope("schedulers"):
-            if State.last_screenshot_base64 is not None:
+            if getattr(State, "display_screenshots", False) and State.last_screenshot_base64 is not None:
                 img_html = f'<img id="screenshot-img" src="data:image/jpg;base64,{State.last_screenshot_base64}" style="max-height:240px; width:auto;">'
                 put_scope("image-container", [put_html(img_html)])
             else:
@@ -852,6 +852,13 @@ class AlasGUI(Frame):
 
     def update_screenshot_display(self):
         if not getattr(State, "display_screenshots", False):
+            self.last_displayed_screenshot_base64 = None
+            run_js(f'''
+                var img = document.getElementById("screenshot-img");
+                if (img) {{
+                    img.src = "{State.get_placeholder_url()}";
+                }}
+            ''')
             return
         img_base64 = None
         if hasattr(self, 'alas') and self.alas.alive:
