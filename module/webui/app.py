@@ -249,7 +249,8 @@ class AlasGUI(Frame):
         cls.theme = theme
         State.deploy_config.Theme = theme
         State.theme = theme
-        webconfig(theme=theme)
+        pywebio_theme = theme if theme in ("default", "dark", "light") else "dark"
+        webconfig(theme=pywebio_theme)
 
     @use_scope("menu", clear=True)
     def alas_set_menu(self) -> None:
@@ -550,8 +551,11 @@ class AlasGUI(Frame):
         self.task_handler.add(self.alas_update_overview_task, 10, True)
         if 'Maa' not in self.ALAS_ARGS:
             self.task_handler.add(self.alas_update_dashboard, 10, True)
-        self.task_handler.add(log.put_log(self.alas), 0.25, True)
-        self.task_handler.add(self.update_screenshot_display, 0.5, True)
+        if hasattr(self, 'alas') and self.alas is not None:
+            self.task_handler.add(log.put_log(self.alas), 0.25, True)
+            self.task_handler.add(self.update_screenshot_display, 0.5, True)
+        else:
+            self.task_handler.add(self.update_screenshot_display, 0.5, True)
 
         with use_scope("screenshot_control_btn", clear=True):
             label = "看见了nanoda" if getattr(State, "display_screenshots", False) else "看不见nanoda"
@@ -1174,7 +1178,8 @@ class AlasGUI(Frame):
 
         self.task_handler.add(switch_scheduler.g(), 1, True)
         self.task_handler.add(switch_log_scroll.g(), 1, True)
-        self.task_handler.add(log.put_log(self.alas), 0.25, True)
+        if hasattr(self, 'alas') and self.alas is not None:
+            self.task_handler.add(log.put_log(self.alas), 0.25, True)
 
     @use_scope("menu", clear=True)
     def dev_set_menu(self) -> None:
@@ -1589,6 +1594,7 @@ class AlasGUI(Frame):
                 [
                     {"label": "Light", "value": "default", "color": "light"},
                     {"label": "Dark", "value": "dark", "color": "dark"},
+                    {"label": "Azur Lane", "value": "azurlane", "color": "info"},
                 ],
                 onclick=lambda t: set_theme(t),
             ).style("text-align: center")
@@ -1628,6 +1634,8 @@ class AlasGUI(Frame):
 
         if self.theme == "dark":
             add_css(filepath_css("dark-alas"))
+        elif self.theme == "azurlane":
+            add_css(filepath_css("azurlane-alas"))
         else:
             add_css(filepath_css("light-alas"))
 

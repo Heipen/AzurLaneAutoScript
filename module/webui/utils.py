@@ -2,6 +2,8 @@ import datetime
 import operator
 import re
 import sys
+import os
+import json
 import threading
 import time
 import traceback
@@ -368,9 +370,29 @@ def filepath_icon(filename):
 
 
 def add_css(filepath):
-    with open(filepath, "r") as f:
-        css = f.read().replace("\n", "")
-        run_js(f"""$('head').append('<style>{css}</style>')""")
+    """
+    Safely inject a CSS file into the document head.
+    Uses document.createElement + text node so CSS containing quotes
+    or </style> won't break JS/HTML parsing.
+    """
+    with open(filepath, "r", encoding="utf-8") as f:
+        css = f.read()
+
+    style_id = f"alas-css-{os.path.basename(filepath).replace('.', '-') }"
+
+    js = (
+        "(function(){"
+        "var old = document.getElementById('" + style_id + "');"
+        "if(old) old.parentNode.removeChild(old);"
+        "var s = document.createElement('style');"
+        "s.type = 'text/css';"
+        "s.id = '" + style_id + "';"
+        "s.appendChild(document.createTextNode(%s));"
+        "document.head.appendChild(s);"
+        "})();"
+    ) % json.dumps(css)
+
+    run_js(js)
 
 
 def _read(path):

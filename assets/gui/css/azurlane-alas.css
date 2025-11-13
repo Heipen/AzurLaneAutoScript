@@ -1,0 +1,258 @@
+/* ALAS - 碧蓝航线 (Azur Lane) inspired theme for ALAS GUI
+   Primary goal: bring Azur Lane UI aesthetic to the ALAS application.
+   - Naval blue palette
+   - Gold accents and borders
+   - White / light-gray text for contrast
+   - Subtle ship silhouette and ocean wave texture
+*/
+:root{
+    /* ALAS - 碧蓝航线生机蓝色主题 */
+    /* 主色调 - 生机碧蓝色 */
+    --alas-blue-1: #1e88e5; /* 活力碧蓝 - 主背景色，明亮的蓝色 */
+    --alas-blue-2: #42a5f5; /* 清新天蓝 - 渐变和亮部 */
+    --alas-blue-3: #4fc3f7; /* 浅水碧蓝 - 高光和点缀 */
+
+    /* 金色点缀 */
+    --alas-gold: #ffb300; /* 温暖金色 - 比经典金色更柔和 */
+
+    /* 文字颜色 */
+    --alas-text: #ffffff; /* 主文字：纯白色 */
+    --alas-text-muted: #bbdefb; /* 次要文字：淡碧蓝色 */
+
+    /* 面板颜色 */
+    --alas-panel-bg: rgba(89, 174, 245, 0.8); /* 主面板：半透明活力碧蓝 */
+    --alas-panel-bg-secondary: rgba(136, 193, 234, 0.95); /* 次级面板：半透明清新天蓝 */
+    
+    /* 内容区域 */
+    --alas-content-bg: rgba(227,242,253,0.95); /* 内容背景：淡碧蓝白 */
+    --alas-content-text: #000000; /* 内容文字：黑色 */
+    
+    /* 边框和其他 */
+    --alas-panel-border: rgba(255,179,0,0.3); /* 面板边框：温暖金色 */
+    --alas-text-small: #ffffff; /* 小文字：白色 */
+    --alas-text-muted-strong: rgba(21,101,192,0.8); /* 强调弱化文字：中深海蓝 */
+    --alas-radius: 8px;
+    
+    /* 波浪效果颜色 */
+    --alas-wave-1: rgba(255,255,255,0.15); /* 明亮波浪效果 */
+    --alas-wave-2: rgba(255,255,255,0.08); /* 柔和波浪效果 */
+}
+
+/* ----- ALAS THEME CONTENT BELOW ----- */
+
+/* Ocean decorative layer: subtle aurora / glow for depth */
+    body, #pywebio-scope-content{
+        color: var(--alas-text);
+        position: relative;
+        min-height: 100vh;
+        background-color: var(--alas-blue-1);
+        background-image:
+            linear-gradient(180deg, var(--alas-blue-1) 0%, var(--alas-blue-2) 100%),
+            radial-gradient(900px 260px at 18% 12%, rgba(255,255,255,0.02), transparent 26%),
+            radial-gradient(1000px 320px at 82% 88%, rgba(255,255,255,0.015), transparent 24%),
+            repeating-linear-gradient(0deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 6px);
+        background-blend-mode: normal, screen, screen, overlay;
+        background-size: auto, cover, cover, 100% 12px;
+        background-attachment: fixed;
+    }
+
+    /* Decorative subtle wave texture */
+    body::before, #pywebio-scope-content::before{
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -3; /* behind aurora */
+        background-image:
+            radial-gradient(1200px 120px at 10% 25%, var(--alas-wave-1), transparent 35%),
+            radial-gradient(1000px 100px at 85% 75%, var(--alas-wave-2), transparent 34%);
+        background-size: cover, cover;
+        mix-blend-mode: overlay;
+        opacity: 0.9;
+    }
+
+    /* Soft aurora / glow behind panels */
+    body::after, #pywebio-scope-content::after{
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -2;
+        background-image:
+            radial-gradient(1400px 700px at 80% 8%, rgba(212,175,55,0.12), transparent 40%),
+            radial-gradient(1600px 800px at 10% 90%, rgba(255,255,255,0.03), transparent 38%);
+        background-size: 160% 160%, 160% 160%;
+        mix-blend-mode: screen;
+        filter: blur(6px) saturate(110%);
+        opacity: 0.9;
+    }
+
+    /* Panels: use the new panel tokens and gold border per user request */
+    #pywebio-scope-aside, #pywebio-scope-menu, [id^="pywebio-scope-group_"]{
+        background: var(--alas-panel-bg-secondary) !important; /* 次级面板 */
+        backdrop-filter: blur(6px) saturate(120%) !important;
+        border: 1px solid var(--alas-panel-border) !important; /* 细边框 */
+        box-shadow: 0 6px 16px rgba(0,0,0,0.28) inset;
+        position: relative;
+        border-radius: var(--alas-radius);
+    }
+
+    /* 内容区单独使用白色半透明，文字为深色以保证可读 */
+    #pywebio-scope-content{
+        background: var(--alas-content-bg) !important;
+        color: var(--alas-content-text) !important;
+        backdrop-filter: blur(6px) saturate(120%) !important;
+        border: 1px solid var(--alas-panel-border) !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12) inset;
+        position: relative;
+        border-radius: var(--alas-radius);
+    }
+
+    #pywebio-scope-aside::after, #pywebio-scope-menu::after, #pywebio-scope-content::after, [id^="pywebio-scope-group_"]::after{
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        border-radius: var(--alas-radius);
+        box-shadow: 0 0 14px rgba(212,175,55,0.06) inset;
+        border: 1px solid rgba(212,175,55,0.06);
+    }
+
+    /* Header and menu */
+    #pywebio-scope-header{ background: var(--alas-panel-bg) ; border-bottom: 1px solid rgba(212,175,55,0.08); color: var(--alas-text); }
+    #pywebio-scope-menu{ background: var(--alas-panel-bg-secondary); }
+
+    /* Buttons */
+    .btn, button, .pywebio-btn, .btn-menu, .btn-aside, .btn-navigator{
+        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        color: var(--alas-text) !important;
+        border: 1px solid rgba(212,175,55,0.12);
+        padding: .45rem .8rem;
+        border-radius: 6px;
+        transition: box-shadow .12s ease, transform .08s ease, border-color .08s ease, color .08s ease;
+    }
+    .btn-menu:hover, .btn-aside:hover, .btn-menu-active, .btn-aside-active{
+        border-color: var(--alas-gold);
+        color: var(--alas-gold);
+    }
+    .btn:hover, .pywebio-btn:hover{
+        box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+        transform: translateY(-1px);
+    }
+
+    /* Form controls */
+    .form-control, .bootstrap-select > select{
+        border: 1px solid rgba(255,255,255,0.04);
+        background: rgba(255,255,255,0.02);
+        color: var(--alas-text);
+        border-radius: 6px;
+        padding: .35rem .5rem;
+    }
+    .form-control:focus{
+        background-color: rgba(255,255,255,0.03);
+        border-color: rgba(212,175,55,0.18);
+        box-shadow: 0 0 8px rgba(212,175,55,0.08);
+    }
+
+    /* Textareas & CodeMirror */
+    textarea{ border: 1px solid rgba(255,255,255,0.06); background: rgba(12,18,30,0.45); color: var(--alas-text); border-radius:6px; }
+    .CodeMirror-wrap{ border: 1px solid rgba(255,255,255,0.06); }
+
+    /* Icons & separators */
+    .aside-icon > path{ fill: var(--alas-text-muted); }
+    .hr-group{ background-color: rgba(255,255,255,0.02) !important; }
+    .hr-task-group-line{ border-top-color: rgba(255,255,255,0.04); }
+    .hr-task-group-text{ color: rgba(215,220,230,0.7); }
+
+    /* Logs and navigator adjustments to match theme */
+    .container-log{ background-color: rgba(12,16,24,0.72) !important; border: 1px solid rgba(255,255,255,0.03); color: var(--alas-text-muted) !important; }
+    .container-log .info{ color: var(--alas-text); }
+    .container-log .warn{ color: var(--alas-gold); font-weight:700; }
+    .container-log .error{ color: #ff6b6b; font-weight:800; }
+
+    /* Status points */
+    .status-point{ width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:.6rem; box-shadow: 0 0 8px rgba(212,175,55,0.06); background: var(--alas-gold); }
+
+    /* Progress bar */
+    .progress, progress, .progress-bar{ background: rgba(255,255,255,0.02); border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.02); }
+    .progress .bar, .progress-bar .bar, progress::-webkit-progress-value{ background: linear-gradient(90deg, rgba(212,175,55,0.95), rgba(230,200,120,0.9)); box-shadow: 0 0 14px rgba(212,175,55,0.18), inset 0 0 6px rgba(255,255,255,0.02); }
+
+    /* Small helpers */
+    .text-gold{ color: var(--alas-gold); }
+    .text-muted{ color: var(--alas-text-muted); }
+
+    /* Ship silhouette (subtle decorative element in bottom-left) */
+    html::after { /* small SVG silhouette placed bottom-left */
+        content: "";
+        position: fixed;
+        left: 2%;
+        bottom: 2%;
+        width: 320px;
+        height: 120px;
+        pointer-events: none;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240"><g fill="none" stroke="rgba(212,175,55,0.12)" stroke-width="6"><path d="M10 160 C80 140 140 120 200 120 C260 120 320 140 380 150 C440 160 500 160 630 120"/></g></svg>');
+        background-repeat: no-repeat;
+        background-size: contain;
+        opacity: 0.9;
+        z-index: -1;
+    }
+
+    /* Ensure decorative layers stacking */
+    body::before { z-index: -4; }
+    body::after { z-index: -2; }
+    html::after { z-index: -1; }
+
+    /* Final safety: keep primary content above decorations */
+    #pywebio-scope-aside, #pywebio-scope-menu, #pywebio-scope-content{ z-index: 50 !important; position: relative !important; }
+
+    /* End of ALAS theme */
+
+body::after, #pywebio-scope-content::after {
+    z-index: -2 !important; /* aurora above grid but below panels */
+    pointer-events: none !important;
+}
+
+#pywebio-scope-aside, #pywebio-scope-menu, #pywebio-scope-content, [id^="pywebio-scope-group_"]{
+  position: relative !important;
+  z-index: 50 !important; /* ensure panels render above decorative backgrounds */
+  isolation: isolate !important;
+}
+
+
+/* If any overlay still covers content, force the primary content area above it */
+#pywebio-scope-content{ z-index: 60 !important; }
+
+/* Modern typography: prefer Inter / SF Pro Display; fallback to system fonts */
+html, body, #pywebio-scope-root{
+    font-family: "Inter", "SF Pro Text", "SF Pro Display", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Microsoft Yahei", sans-serif;
+}
+
+
+/* Buttons on light content background: ensure contrast (content area uses near-white bg) */
+#pywebio-scope-content .btn,
+#pywebio-scope-content button,
+#pywebio-scope-content .pywebio-btn,
+#pywebio-scope-content .btn-menu,
+#pywebio-scope-content .btn-aside {
+    /* 更柔和的按钮背景以配合柔和内容区 */
+    background: linear-gradient(180deg, rgba(250,250,250,0.96), rgba(245,246,248,0.96)) !important;
+    color: var(--alas-content-text) !important; /* 使用柔和深灰文字 */
+    border: 1px solid rgba(16,24,32,0.06) !important; /* 更轻的边框 */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04) inset;
+}
+
+#pywebio-scope-content .btn:hover,
+#pywebio-scope-content button:hover,
+#pywebio-scope-content .pywebio-btn:hover{
+    background: linear-gradient(180deg, rgba(68, 241, 239, 0.96), rgba(240,241,244,0.96)) !important;
+    transform: translateY(-0.6px);
+}
+
+/* Primary/active buttons keep gold accent but use dark text on light backgrounds */
+#pywebio-scope-content .btn-menu-active,
+#pywebio-scope-content .btn-aside-active,
+#pywebio-scope-content .btn-primary {
+    background: linear-gradient(90deg, rgba(212,175,55,0.98), rgba(230,200,120,0.95)) !important;
+    color: #0b0b08 !important;
+    border: 1px solid rgba(180,140,40,0.9) !important;
+}
