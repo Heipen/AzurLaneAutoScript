@@ -40,12 +40,15 @@
 
 /* ----- ALAS THEME CONTENT BELOW ----- */
 
-/* Ocean decorative layer: subtle aurora / glow for depth */
-    body, #pywebio-scope-content{
+    html, body {
+        height: 100%;
+        background: var(--alas-blue-1);
         color: var(--alas-text);
+    }
+
+    body, #pywebio-scope-content{
         position: relative;
         min-height: 100vh;
-        background-color: var(--alas-blue-1);
         background-image:
             linear-gradient(180deg, var(--alas-blue-1) 0%, var(--alas-blue-2) 100%),
             radial-gradient(900px 260px at 18% 12%, rgba(255,255,255,0.02), transparent 26%),
@@ -53,7 +56,7 @@
             repeating-linear-gradient(0deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 6px);
         background-blend-mode: normal, screen, screen, overlay;
         background-size: auto, cover, cover, 100% 12px;
-        background-attachment: fixed;
+        background-attachment: scroll;
     }
 
     /* Decorative subtle wave texture */
@@ -88,13 +91,21 @@
     }
 
     /* Panels: use the new panel tokens and gold border per user request */
-    #pywebio-scope-aside, #pywebio-scope-menu, [id^="pywebio-scope-group_"]{
+    #pywebio-scope-aside, #pywebio-scope-menu {
         background: var(--alas-panel-bg-secondary) !important; /* 次级面板 */
         backdrop-filter: blur(6px) saturate(120%) !important;
         border: 1px solid var(--alas-panel-border) !important; /* 细边框 */
         box-shadow: 0 6px 16px rgba(0,0,0,0.28) inset;
         position: relative;
         border-radius: var(--alas-radius);
+        background-clip: padding-box;
+    }
+
+    [id^="pywebio-scope-group_"]{
+        background: var(--alas-panel-bg-secondary) !important;
+        border-radius: var(--alas-radius);
+        padding: 0.5rem;
+        margin: 0.5rem 0;
     }
 
     /* 内容区单独使用白色半透明，文字为深色以保证可读 */
@@ -165,7 +176,7 @@
     .hr-task-group-text{ color: rgba(215,220,230,0.7); }
 
     /* Logs and navigator adjustments to match theme */
-    .container-log{ background-color: rgba(12,16,24,0.72) !important; border: 1px solid rgba(255,255,255,0.03); color: var(--alas-text-muted) !important; }
+    .container-log{ background-color: rgba(255, 0, 0, 0.72) !important; border: 1px solid rgba(255,255,255,0.03); color: var(--alas-text-muted) !important; }
     .container-log .info{ color: var(--alas-text); }
     .container-log .warn{ color: var(--alas-gold); font-weight:700; }
     .container-log .error{ color: #ff6b6b; font-weight:800; }
@@ -205,6 +216,13 @@
     /* Final safety: keep primary content above decorations */
     #pywebio-scope-aside, #pywebio-scope-menu, #pywebio-scope-content{ z-index: 50 !important; position: relative !important; }
 
+*::-webkit-scrollbar { width: 12px; height: 12px; }
+*::-webkit-scrollbar-track { background: linear-gradient(180deg, var(--alas-blue-1), var(--alas-blue-2)); }
+*::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--alas-panel-bg-secondary), var(--alas-panel-bg)); border-radius: 8px; border: 2px solid transparent; background-clip: content-box; }
+*::-webkit-scrollbar-thumb:hover { filter: brightness(0.9); }
+
+* { scrollbar-width: thin; scrollbar-color: var(--alas-panel-bg-secondary) var(--alas-blue-1); }
+
     /* End of ALAS theme */
 
 body::after, #pywebio-scope-content::after {
@@ -221,6 +239,19 @@ body::after, #pywebio-scope-content::after {
 
 /* If any overlay still covers content, force the primary content area above it */
 #pywebio-scope-content{ z-index: 60 !important; }
+
+#pywebio-scope-aside, #pywebio-scope-menu {
+    position: sticky !important;
+    top: 0;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    background-clip: padding-box;
+}
+
+#pywebio-scope-root, #pywebio-scope-ROOT, #pywebio-scope-contents {
+    background-image: linear-gradient(180deg, var(--alas-blue-1) 0%, var(--alas-blue-2) 100%);
+}
 
 /* Modern typography: prefer Inter / SF Pro Display; fallback to system fonts */
 html, body, #pywebio-scope-root{

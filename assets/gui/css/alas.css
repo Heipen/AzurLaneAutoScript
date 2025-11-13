@@ -590,3 +590,28 @@ pre.rich-traceback-code {
              "Arial",
              serif;
 }
+
+.alas-force-text,
+.alas-force-text * {
+    color: var(--alas-content-text) !important;
+}
+
+.alas-force-bg,
+.alas-force-bg * {
+    background: var(--alas-content-bg) !important;
+    color: var(--alas-content-text) !important;
+}
+
+#pywebio-scope-updater_info,
+#pywebio-scope-updater_state,
+#pywebio-scope-updater_loading,
+#pywebio-scope-updater_btn,
+#pywebio-scope-updater_detail,
+#pywebio-scope-updater_info *,
+#pywebio-scope-updater_state *,
+#pywebio-scope-updater_loading *,
+#pywebio-scope-updater_btn *,
+#pywebio-scope-updater_detail * {
+    background: var(--alas-content-bg) !important;
+    color: var(--alas-content-text) !important;
+}
