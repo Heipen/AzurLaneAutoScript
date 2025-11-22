@@ -224,7 +224,7 @@ class GemsFarming(CampaignRun, Dock, FleetEquipment, GemsEquipmentHandler):
 
         logger.hr('FINDING FLAGSHIP')
 
-        scanner = ShipScanner(level=(1, 31), emotion=(10, 150),
+        scanner = ShipScanner(level=(1, 30), emotion=(110, 150),
                               fleet=self.fleet_to_attack, status='free')
         scanner.disable('rarity')
 
@@ -302,7 +302,7 @@ class GemsFarming(CampaignRun, Dock, FleetEquipment, GemsEquipmentHandler):
         else:
             max_level = 70
 
-        scanner = ShipScanner(level=(max_level, max_level), emotion=(10, 150),
+        scanner = ShipScanner(level=(max_level, max_level), emotion=(100, 150),
                               fleet=[0, self.fleet_to_attack], status='free')
         scanner.disable('rarity')
 
