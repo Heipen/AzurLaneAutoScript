@@ -426,7 +426,7 @@ class AlasGUI(Frame):
 
         with use_scope("schedulers"):
             if getattr(State, "display_screenshots", False) and hasattr(self, 'alas') and self.alas.alive and self.alas.get_latest_screenshot:
-                img_html = f'<img id="screenshot-img" src="data:image/jpg;base64,{self.alas.get_latest_screenshot}" style="max-height:240px; width:auto;">'
+                img_html = f'<img id="screenshot-img" src="data:image/jpg;base64,{self.alas.get_latest_screenshot}" style="height:240px; width:auto;">'
                 put_scope("image-container", [put_html(img_html)])
             else:
                 put_scope(
@@ -512,7 +512,7 @@ class AlasGUI(Frame):
                         put_scope(
                             "log-bar-btns",
                             [
-                                put_scope("screenshot_control_btn"),                                
+                                # put_scope("screenshot_control_btn"),                                
                                 put_scope("log_scroll_btn"),
                                 put_scope("dashboard_btn"),
                             ],
@@ -1604,7 +1604,7 @@ class AlasGUI(Frame):
                 [
                     {"label": "Light", "value": "default", "color": "light"},
                     {"label": "Dark", "value": "dark", "color": "dark"},
-                    {"label": "Azur Lane", "value": "azurlane", "color": "info"},
+                    # {"label": "Azur Lane", "value": "azurlane", "color": "info"},
                 ],
                 onclick=lambda t: set_theme(t),
             ).style("text-align: center")
@@ -1651,25 +1651,25 @@ class AlasGUI(Frame):
                             "</style>"
                         )
 
-                        with popup("", content=put_html(modal_style), size=None) as p:
-                            put_html(
-                                '<div class="azurlane-popup" style="padding: 12px; text-align: center;">'
-                                + '<h3 style="margin:0 0 8px 0;">雪风大人新增碧蓝主题</h3>'
-                                + '<div style="font-size:0.95rem;margin-bottom:12px;">点击下方按钮即可立即应用碧蓝主题。</div>'
-                                + '</div>'
-                            )
-                            put_buttons(
-                                [
-                                    {"label": "立即应用碧蓝主题", "value": "apply", "color": "info"},
-                                    {"label": "不，谢谢", "value": "cancel", "color": "secondary"},
-                                ],
-                                onclick=[_apply_azurlane, _dismiss],
-                                scope=p,
-                            )
-                            run_js(
-                                "(function(){var m=document.querySelector('.modal.show .modal-content'); if(m) m.classList.add('azurlane-popup');})();"
-                            )
-                            run_js("localStorage.setItem('alas_azurlane_theme_notice_shown', '1')")
+                        # with popup("", content=put_html(modal_style), size=None) as p:
+                        #     put_html(
+                        #         '<div class="azurlane-popup" style="padding: 12px; text-align: center;">'
+                        #         + '<h3 style="margin:0 0 8px 0;">雪风大人新增碧蓝主题</h3>'
+                        #         + '<div style="font-size:0.95rem;margin-bottom:12px;">点击下方按钮即可立即应用碧蓝主题。</div>'
+                        #         + '</div>'
+                        #     )
+                        #     put_buttons(
+                        #         [
+                        #             {"label": "立即应用碧蓝主题", "value": "apply", "color": "info"},
+                        #             {"label": "不，谢谢", "value": "cancel", "color": "secondary"},
+                        #         ],
+                        #         onclick=[_apply_azurlane, _dismiss],
+                        #         scope=p,
+                        #     )
+                        #     run_js(
+                        #         "(function(){var m=document.querySelector('.modal.show .modal-content'); if(m) m.classList.add('azurlane-popup');})();"
+                        #     )
+                        #     run_js("localStorage.setItem('alas_azurlane_theme_notice_shown', '1')")
             except Exception:
                 pass
             

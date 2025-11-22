@@ -415,6 +415,7 @@ pre.rich-traceback-code {
 #pywebio-scope-log-bar-btns {
     display: grid;
     grid-auto-flow: column;
+    gap: 2rem;
 }
 
 #pywebio-scope-log-bar .hr-group {

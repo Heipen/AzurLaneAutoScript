@@ -61,7 +61,7 @@ class ProcessManager:
                 except Exception:
                     self._screenshot_enabled_flag = None
             except Exception:
-                logger.exception("雪风大人提醒无法创建多进程截图队列")
+                logger.exception("无法创建多进程截图队列")
             args = (
                 self.config_name,
                 func,

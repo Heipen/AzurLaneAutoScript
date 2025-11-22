@@ -345,7 +345,7 @@ class Screenshot(Adb, WSA, DroidCast, AScreenCap, Scrcpy, NemuIpc, LDOpenGL):
                     if self._queue_full_since == 0.0:
                         self._queue_full_since = nowt
                     if nowt - self._last_queue_warn_time > 15.0:
-                        logger.warning('雪风大人提示：已丢帧=%d qsize=%d max=%d', self._screenshot_drop_count, qsize, qmax)
+                        logger.warning('已丢帧=%d qsize=%d max=%d', self._screenshot_drop_count, qsize, qmax)
                         self._last_queue_warn_time = nowt
                     if nowt - self._queue_full_since > 10.0:
                         time.sleep(0.3)
