@@ -512,7 +512,7 @@ class AlasGUI(Frame):
                         put_scope(
                             "log-bar-btns",
                             [
-                                put_scope("screenshot_control_btn"),                                
+                                # put_scope("screenshot_control_btn"),                                
                                 put_scope("log_scroll_btn"),
                                 put_scope("dashboard_btn"),
                             ],
@@ -558,89 +558,34 @@ class AlasGUI(Frame):
         else:
             self.task_handler.add(self.update_screenshot_display, 0.5, True)
 
-        with use_scope("screenshot_control_btn", clear=True):
-            label = "看见了nanoda" if getattr(State, "display_screenshots", False) else "看不见nanoda"
-
-            def _toggle_screenshot(_=None):
-                State.display_screenshots = not getattr(State, "display_screenshots", False)
-                if State.display_screenshots:
+        def _toggle_screenshot(_=None):
+            State.display_screenshots = not getattr(State, "display_screenshots", False)
+            if State.display_screenshots:
+                try:
+                    img_base64 = None
+                    if hasattr(self, 'alas') and self.alas.alive:
+                        img_base64 = self.alas.get_latest_screenshot
+                    if img_base64 is None:
+                        img_base64 = State.last_screenshot_base64
+                    if img_base64:
+                        src = f"data:image/jpg;base64,{img_base64}"
+                        run_js(f'var img=document.getElementById("screenshot-img"); if(img) {{ img.src="{src}"; img.setAttribute("data-modal-src", "{src}"); }}')
+                except Exception:
+                    pass
+            else:
+                current_url = State.get_placeholder_url()
+                run_js(f'var img=document.getElementById("screenshot-img"); if(img) {{ img.src="{current_url}"; img.setAttribute("data-modal-src", "{current_url}"); }}')
+            try:
+                for pm in ProcessManager.running_instances():
                     try:
-                        img_base64 = None
-                        if hasattr(self, 'alas') and self.alas.alive:
-                            img_base64 = self.alas.get_latest_screenshot
-                        if img_base64 is None:
-                            img_base64 = State.last_screenshot_base64
-                        if img_base64:
-                            src = f"data:image/jpg;base64,{img_base64}"
-                            run_js(f'var img=document.getElementById("screenshot-img"); if(img) {{ img.src="{src}"; img.setAttribute("data-modal-src", "{src}"); }}')
+                        pm.set_screenshot_enabled(State.display_screenshots)
                     except Exception:
                         pass
-                else:
-                    current_url = State.get_placeholder_url()
-                    run_js(f'var img=document.getElementById("screenshot-img"); if(img) {{ img.src="{current_url}"; img.setAttribute("data-modal-src", "{current_url}"); }}')
-                try:
-                    for pm in ProcessManager.running_instances():
-                        try:
-                            pm.set_screenshot_enabled(State.display_screenshots)
-                        except Exception:
-                            pass
-                except Exception:
-                    pass
-                with use_scope("screenshot_control_btn", clear=True):
-                    put_buttons(
-                        [
-                            {"label": "看见了nanoda" if State.display_screenshots else "看不见nanoda", "value": "toggle", "color": "off"},
-                            {"label": "切换雪风大人图片", "value": "switch", "color": "off"},
-                        ],
-                        onclick=[_toggle_screenshot, _switch_placeholder],
-                    ).style("text-align: center")
-
-            def _switch_placeholder(_=None):
-                try:
-                    url = State.advance_placeholder()
-                    run_js(f'var img=document.getElementById("screenshot-img"); if(img) {{ img.src="{url}"; img.setAttribute("data-modal-src", "{url}"); }}')
-                    gradient = 'linear-gradient(90deg, #00b894, #0984e3)'
-                    toast(t("Gui.Overview.PlaceholderSwitched"), duration=1, position="top", color=gradient)
-                    run_js(r"""
-                        setTimeout(function(){
-                            var el = document.querySelector('.toastify.toastify-top.toastify-right') || document.querySelector('.toastify.toastify-top') || document.querySelector('.toastify');
-                            if (!el) return;
-                            el.classList.add('alas-force-text');
-                            el.style.boxShadow = '0 6px 18px rgba(0,0,0,0.22)';
-                            el.style.zIndex = '2147483647';
-                            /* children inherit via .alas-force-text */
-                            try{
-                                if (el.classList && el.classList.contains('toastify-right')){
-                                    el.style.position = 'fixed';
-                                    el.style.top = '8px';
-                                    el.style.right = '8px';
-                                    el.style.left = 'auto';
-                                    el.style.transform = 'none';
-                                    el.style.margin = '0';
-                                } else {
-                                    el.style.position = 'fixed';
-                                    el.style.top = '8px';
-                                    el.style.left = '50%';
-                                    el.style.right = 'auto';
-                                    el.style.transform = 'translateX(-50%)';
-                                    el.style.margin = '0';
-                                }
-                            }catch(e){}
-                        }, 80);
-                    """)
-                except Exception:
-                    pass
-
-            if not hasattr(State, "display_screenshots"):
-                State.display_screenshots = True
-
-            put_buttons(
-                [
-                    {"label": label, "value": "toggle", "color": "off"},
-                    {"label": "切换雪风大人图片", "value": "switch", "color": "off"},
-                ],
-                onclick=[_toggle_screenshot, _switch_placeholder],
-            ).style("text-align: center")
+            except Exception:
+                pass
+        
+        if not hasattr(State, "display_screenshots"):
+            State.display_screenshots = True
 
     def set_dashboard_display(self, b):
         self._log.set_dashboard_display(b)
