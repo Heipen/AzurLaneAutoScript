@@ -173,8 +173,16 @@ class ConfigGenerator:
         # Construct args
         data = {}
         # Add dashboard to args
-        dashboard_and_task = {**self.dashboard,**self.task}
-        for path, groups in deep_iter(dashboard_and_task, depth=3):
+        for path, groups in deep_iter(self.dashboard, depth=1):
+            groups.append('Storage')
+            for group in groups:
+                if group not in self.argument:
+                    print(f'`Dashboard.{group}` is not related to any argument group')
+                    continue
+                deep_set(data, keys=['Dashboard', group], value=deepcopy(self.argument[group]))
+        
+        #Add task to args
+        for path, groups in deep_iter(self.task, depth=3):
             if 'tasks' not in path and 'Dashboard' not in path:
                 continue
             task = path[2] if 'tasks' in path else path[0]
@@ -825,7 +833,7 @@ class ConfigUpdater:
 
 
 if __name__ == '__main__':
-    """
+    r"""
     Process the whole config generation.
 
                  task.yaml -+----------------> menu.json
