@@ -368,7 +368,7 @@ class OperationSiren(OSMap):
                 # When not running CL1 and use oil
                 keep_current_ap = True
                 check_rest_ap = True
-                if self.is_cl1_enabled and self.get_yellow_coins() >= self.config.OS_CL1_YELLOW_COINS_PRESERVE:
+                if self.is_cl1_enabled and self.get_yellow_coins() >= self.config.OpsiGeneral_YellowCoinPreserve:
                     check_rest_ap = False
                 if not self.is_cl1_enabled and self.config.OpsiGeneral_BuyActionPointLimit > 0:
                     keep_current_ap = False
@@ -476,8 +476,8 @@ class OperationSiren(OSMap):
                 self.config.OS_ACTION_POINT_PRESERVE = 0
             logger.attr('OS_ACTION_POINT_PRESERVE', self.config.OS_ACTION_POINT_PRESERVE)
 
-            if self.get_yellow_coins() < self.config.OS_CL1_YELLOW_COINS_PRESERVE:
-                logger.info(f'Reach the limit of yellow coins, preserve={self.config.OS_CL1_YELLOW_COINS_PRESERVE}')
+            if self.get_yellow_coins() < self.config.OpsiGeneral_YellowCoinPreserve:
+                logger.info(f'Reach the limit of yellow coins, preserve={self.config.OpsiGeneral_YellowCoinPreserve}')
                 with self.config.multi_set():
                     self.config.task_delay(server_update=True)
                 #    if not self.is_in_opsi_explore():

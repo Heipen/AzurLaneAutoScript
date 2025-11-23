@@ -426,7 +426,7 @@ class AlasGUI(Frame):
 
         with use_scope("schedulers"):
             if getattr(State, "display_screenshots", False) and hasattr(self, 'alas') and self.alas.alive and self.alas.get_latest_screenshot:
-                img_html = f'<img id="screenshot-img" src="data:image/jpg;base64,{self.alas.get_latest_screenshot}" style="height:240px; width:auto;">'
+                img_html = f'<img id="screenshot-img" src="data:image/jpg;base64,{self.alas.get_latest_screenshot}" style="max-height:240px; width:auto;">'
                 put_scope("image-container", [put_html(img_html)])
             else:
                 put_scope(
@@ -512,7 +512,7 @@ class AlasGUI(Frame):
                         put_scope(
                             "log-bar-btns",
                             [
-                                # put_scope("screenshot_control_btn"),                                
+                                put_scope("screenshot_control_btn"),                                
                                 put_scope("log_scroll_btn"),
                                 put_scope("dashboard_btn"),
                             ],

@@ -2570,6 +2570,10 @@
       "name": "OpsiGeneral.DoRandomMapEvent.name",
       "help": "OpsiGeneral.DoRandomMapEvent.help"
     },
+    "YellowCoinPreserve": {
+      "name": "OpsiGeneral.YellowCoinPreserve.name",
+      "help": "OpsiGeneral.YellowCoinPreserve.help"
+    },
     "AkashiShopFilter": {
       "name": "OpsiGeneral.AkashiShopFilter.name",
       "help": "OpsiGeneral.AkashiShopFilter.help"

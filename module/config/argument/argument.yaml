@@ -734,6 +734,7 @@ OpsiGeneral:
   OilLimit: 1000
   RepairThreshold: 0.4
   DoRandomMapEvent: true
+  YellowCoinPreserve: 100000
   AkashiShopFilter: |-
     ActionPoint > PurpleCoins
 OpsiAshBeacon:

@@ -447,6 +447,7 @@ class GeneratedConfig:
     OpsiGeneral_OilLimit = 1000
     OpsiGeneral_RepairThreshold = 0.4
     OpsiGeneral_DoRandomMapEvent = True
+    OpsiGeneral_YellowCoinPreserve = 100000
     OpsiGeneral_AkashiShopFilter = 'ActionPoint > PurpleCoins'
 
     # Group `OpsiAshBeacon`
@@ -502,7 +503,7 @@ class GeneratedConfig:
     # Group `OpsiHazard1Leveling`
     OpsiHazard1Leveling_TargetZone = 0  # 0, 44, 22
     OpsiHazard1Leveling_SirenResearch_Enable = False
-    OpsiHazard1Leveling_MinimumActionPointReserve = 200   
+    OpsiHazard1Leveling_MinimumActionPointReserve = 200
     OpsiHazard1Leveling_ExecuteFixedPatrolScan = False
 
     # Group `Daemon`

@@ -2570,6 +2570,10 @@
       "name": "完成地图随机事件",
       "help": "在自律寻敌完成后重新扫描一遍地图，购买明石商店，使用塞壬信息收集装置、使用塞壬探测装置、解锁两舰队机关"
     },
+    "YellowCoinPreserve": {
+      "name": "预留黄币数量",
+      "help": "根据是否已清空商店以及是否计划打侵蚀一预留黄币数量"
+    },
     "AkashiShopFilter": {
       "name": "商店过滤器",
       "help": "一般不需要修改，只买行动力和紫币即可"
@@ -2954,8 +2958,7 @@
       "Running": "运行中",
       "Pending": "队列中",
       "Waiting": "等待中",
-      "NoTask": "无任务",
-      "PlaceholderSwitched": "雪风大人的图片已切换nanoda"
+      "NoTask": "无任务"
     },
     "AddAlas": {
       "PopupTitle": "添加新配置",

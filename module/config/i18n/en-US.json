@@ -2570,6 +2570,10 @@
       "name": "Do Random Map Events",
       "help": "Rescan the whole map after auto search, purchase akashi's shop, use siren logging tower, use siren scanning device, unlock mechanism that require 2 fleets,"
     },
+    "YellowCoinPreserve": {
+      "name": "OpsiGeneral.YellowCoinPreserve.name",
+      "help": "OpsiGeneral.YellowCoinPreserve.help"
+    },
     "AkashiShopFilter": {
       "name": "Akashi Shop Filter",
       "help": "Generally does not need to be modified or re-arranged but can do so if desired\nBuy AP boxes and Purple Coins"

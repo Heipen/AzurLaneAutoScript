@@ -8538,6 +8538,10 @@
         "type": "checkbox",
         "value": true
       },
+      "YellowCoinPreserve": {
+        "type": "input",
+        "value": 100000
+      },
       "AkashiShopFilter": {
         "type": "textarea",
         "value": "ActionPoint > PurpleCoins"
@@ -9302,7 +9306,7 @@
       },
       "StayInZone": {
         "type": "checkbox",
-        "value": false  
+        "value": false
       }
     },
     "OpsiFleet": {
