@@ -1,4 +1,5 @@
 import time
+from sys import maxsize
 
 import inflection
 
