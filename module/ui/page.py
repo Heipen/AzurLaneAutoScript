@@ -149,8 +149,8 @@ page_campaign.link(button=CAMPAIGN_GOTO_EVENT, destination=page_sp)
 # page_coalition.link(button=NEONCITY_UI_HOME, destination=page_main)
 # page_coalition.link(button=NEONCITY_UI_BACK, destination=page_campaign)
 # page_campaign_menu.link(button=CAMPAIGN_MENU_GOTO_EVENT, destination=page_coalition)
-# DATEALANE
-page_coalition = Page(DATEALANE_COALITION_CHECK)
+# DAL
+page_coalition = Page(FROSTFALL_COALITION_CHECK)
 page_coalition.link(button=GOTO_MAIN, destination=page_main)
 page_coalition.link(button=BACK_ARROW, destination=page_campaign)
 page_campaign_menu.link(button=CAMPAIGN_MENU_GOTO_EVENT, destination=page_coalition)

@@ -66,6 +66,10 @@
       "name": "活动通用设置",
       "help": ""
     },
+    "Coalition": {
+      "name": "DATE A LANE",
+      "help": ""
+    },
     "Event": {
       "name": "活动图",
       "help": ""
@@ -80,10 +84,6 @@
     },
     "Hospital": {
       "name": "深谷来信",
-      "help": ""
-    },
-    "Coalition": {
-      "name": "DATE A LANE",
       "help": ""
     },
     "MaritimeEscort": {
@@ -915,6 +915,7 @@
       "coalition_20230323": "极地风暴",
       "coalition_20240627": "欢迎来到童心学院",
       "coalition_20250626": "迷彩都市的寻踪者",
+      "coalition_20251120": "DATE A LANE",
       "event_20200227_cn": "北境序曲",
       "event_20200312_cn": "复刻斯图尔特的硝烟",
       "event_20200326_cn": "微层混合",
@@ -1556,18 +1557,18 @@
     "Mode": {
       "name": "关卡名称",
       "help": "",
-      "AREA-1": "AREA-1",
-      "AREA-2": "AREA-2",
-      "AREA-3": "AREA-3",
-      "AREA-4": "AREA-4",
-      "AREA-5": "AREA-5",
-      "AREA-6": "AREA-6"
-    },
-    "MapMode": {
-      "name": "难度",
-      "help": "",
-      "normal": "普通",
-      "hard": "困难"
+      "area1-normal": "area1-normal",
+      "area1-hard": "area1-hard",
+      "area2-normal": "area2-normal",
+      "area2-hard": "area2-hard",
+      "area3-normal": "area3-normal",
+      "area3-hard": "area3-hard",
+      "area4-normal": "area4-normal",
+      "area4-hard": "area4-hard",
+      "area5-normal": "area5-normal",
+      "area5-hard": "area5-hard",
+      "area6-normal": "area6-normal",
+      "area6-hard": "area6-hard"
     },
     "Fleet": {
       "name": "出击队伍",
