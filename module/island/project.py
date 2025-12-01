@@ -328,6 +328,7 @@ class IslandProjectRun(IslandUI):
             if skip_first_screenshot:
                 skip_first_screenshot = False
             else:
+                self.device.sleep(0.5)
                 self.device.screenshot()
 
             if self.island_in_management(interval=5):
@@ -397,6 +398,7 @@ class IslandProjectRun(IslandUI):
             if skip_first_screenshot:
                 skip_first_screenshot = False
             else:
+                self.device.sleep(0.5)
                 self.device.screenshot()
             if self.appear(check_button, offset=(20, 20)):
                 break
@@ -407,9 +409,11 @@ class IslandProjectRun(IslandUI):
         self.interval_clear(ROLE_SELECT_CONFIRM)
         skip_first_screenshot=True
         while 1:
+            self.device.sleep(0.5)
             if skip_first_screenshot:
                 skip_first_screenshot = False
             else:
+                self.device.sleep(0.5)
                 self.device.screenshot()
             # End
             if self.appear(ISLAND_AMOUNT_MAX, offset=(20, 20)):
@@ -440,6 +444,7 @@ class IslandProjectRun(IslandUI):
             if skip_first_screenshot:
                 skip_first_screenshot = False
             else:
+                self.device.sleep(0.5)
                 self.device.screenshot()
 
             if timeout.reached():
@@ -507,6 +512,7 @@ class IslandProjectRun(IslandUI):
             if skip_first_screenshot:
                 skip_first_screenshot = False
             else:
+                self.device.sleep(0.5)
                 self.device.screenshot()
 
             current = self.get_current_product()
@@ -541,7 +547,7 @@ class IslandProjectRun(IslandUI):
             if drag:
                 last = current.items[-1]
                 self.device.click(last.button)
-                self.island_drag_next_page((0, -300), ISLAND_PRODUCT_ITEMS.area, 0.5)
+                self.island_drag_next_page((0, -300), ISLAND_PRODUCT_ITEMS.area, 1.0)
 
     def product_select_confirm(self, skip_first_screenshot=True):
         """
@@ -561,6 +567,7 @@ class IslandProjectRun(IslandUI):
             if skip_first_screenshot:
                 skip_first_screenshot = False
             else:
+                self.device.sleep(0.5)
                 self.device.screenshot()
 
             if timeout.reached():
@@ -602,14 +609,14 @@ class IslandProjectRun(IslandUI):
                 if self.island_in_management():
                     return True
 
-    def island_drag_next_page(self, vector, box, sleep=0.5):
+    def island_drag_next_page(self, vector, box, sleep=1.0):
         """
         Drag to the next page.
 
         Args:
             vector (tuple):
             box (tuple):
-            sleep (float):
+            sleep (float):`
         """
         logger.info('Island drag to next page')
         p1, p2 = random_rectangle_vector(vector, box=box, random_range=(0, -5, 0, 5))
@@ -630,6 +637,7 @@ class IslandProjectRun(IslandUI):
             if skip_first_screenshot:
                 skip_first_screenshot = False
             else:
+                self.device.sleep(0.5)
                 self.device.screenshot()
 
             projects = self.project_detect(self.device.image)
@@ -639,7 +647,7 @@ class IslandProjectRun(IslandUI):
                 logger.info(f'Ensured project: {project}')
                 break
 
-            self.island_drag_next_page((0, -500), ISLAND_PROJECT_SWIPE.area, 0.6)
+            self.island_drag_next_page((0, -500), ISLAND_PROJECT_SWIPE.area, 2.0)
 
     def project_receive_and_start(self, proj, button, character, option, ensure=True):
         """
@@ -717,6 +725,7 @@ class IslandProjectRun(IslandUI):
             if skip_first_screenshot:
                 skip_first_screenshot = False
             else:
+                self.device.sleep(0.5)
                 self.device.screenshot()
 
             if timeout.reached():
@@ -753,7 +762,7 @@ class IslandProjectRun(IslandUI):
 
             if end:
                 break
-            self.island_drag_next_page((0, -500), ISLAND_PROJECT_SWIPE.area, 0.6)
+            self.island_drag_next_page((0, -500), ISLAND_PROJECT_SWIPE.area, 2.0)
 
         # task delay
         future_finish = sorted([f for f in self.total.get('finish_time') if f is not None])

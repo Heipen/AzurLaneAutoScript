@@ -101,6 +101,7 @@ class IslandUI(UI):
             if skip_first_screenshot:
                 skip_first_screenshot = False
             else:
+                self.device.sleep(0.5)
                 self.device.screenshot()
 
             if self.island_in_management():
@@ -129,6 +130,7 @@ class IslandUI(UI):
             if skip_first_screenshot:
                 skip_first_screenshot = False
             else:
+                self.device.sleep(0.5)
                 self.device.screenshot()
 
             enabled = self.image_color_count(
