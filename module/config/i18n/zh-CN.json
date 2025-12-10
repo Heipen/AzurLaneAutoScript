@@ -1899,6 +1899,24 @@
       "help": ""
     }
   },
+  "IslandTimeControl": {
+    "_info": {
+      "name": "岛屿计划时间控制",
+      "help": ""
+    },
+    "TaskTimeDelay": {
+      "name": "任务延迟囤积X分钟",
+      "help": "岛屿计划的任务延迟X分钟后再执行，减少岛屿计划占用时间"
+    },
+    "ScreenShotDelay": {
+      "name": "截图前等待X秒",
+      "help": "岛屿计划截图前等待X秒，确保截图完整"
+    },
+    "DragDelay": {
+      "name": "拖动后等待X秒",
+      "help": ""
+    }
+  },
   "Island1": {
     "_info": {
       "name": "丰壤农田",

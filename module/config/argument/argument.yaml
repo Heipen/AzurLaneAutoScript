@@ -521,6 +521,10 @@ Awaken:
     option: [ level120, level125 ]
   Favourite:
     value: false
+IslandTimeControl:
+  TaskTimeDelay: 30
+  ScreenShotDelay: 0
+  DragDelay: 0.5
 Island1:
   Receive: false
   Option1:

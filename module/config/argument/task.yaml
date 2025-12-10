@@ -227,6 +227,7 @@ Reward:
       - Awaken
     Island:
       - Scheduler
+      - IslandTimeControl
       - IslandTransport
       - Island1
       - Island2

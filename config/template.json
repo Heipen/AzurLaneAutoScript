@@ -1476,6 +1476,11 @@
       "FailureInterval": 120,
       "ServerUpdate": "00:00"
     },
+    "IslandTimeControl": {
+      "TaskTimeDelay": 30,
+      "ScreenShotDelay": 0,
+      "DragDelay": 0.5
+    },
     "Island1": {
       "Receive": false,
       "Option1": 0,

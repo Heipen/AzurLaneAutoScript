@@ -1899,6 +1899,24 @@
       "help": "Awaken.Favourite.help"
     }
   },
+  "IslandTimeControl": {
+    "_info": {
+      "name": "IslandTimeControl._info.name",
+      "help": "IslandTimeControl._info.help"
+    },
+    "TaskTimeDelay": {
+      "name": "IslandTimeControl.TaskTimeDelay.name",
+      "help": "IslandTimeControl.TaskTimeDelay.help"
+    },
+    "ScreenShotDelay": {
+      "name": "IslandTimeControl.ScreenShotDelay.name",
+      "help": "IslandTimeControl.ScreenShotDelay.help"
+    },
+    "DragDelay": {
+      "name": "IslandTimeControl.DragDelay.name",
+      "help": "IslandTimeControl.DragDelay.help"
+    }
+  },
   "Island1": {
     "_info": {
       "name": "Island1._info.name",
