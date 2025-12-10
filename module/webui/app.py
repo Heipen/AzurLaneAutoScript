@@ -1858,7 +1858,7 @@ class AlasGUI(Frame):
 
         def show_update_toast():
             gradient = 'linear-gradient(90deg, #00b894, #0984e3)'
-            toast(t("Gui.Toast.ClickToUpdate"), duration=0, position="right", color=gradient, onclick=goto_update)
+            toast(t("Gui.Toast.ClickToUpdate"), duration=0, position="right", color='#4CCE75', onclick=goto_update)
 
             run_js(r"""
                 setTimeout(function(){
@@ -1871,15 +1871,15 @@ class AlasGUI(Frame):
                     try{
                         if (el.classList && el.classList.contains('toastify-right')){
                             el.style.position = 'fixed';
-                            el.style.top = '8px';
-                            el.style.right = '8px';
+                            el.style.top = '50px';
+                            el.style.right = '30px';
                             el.style.left = 'auto';
                             el.style.transform = 'none';
                             el.style.margin = '0';
                         } else {
                             el.style.position = 'fixed';
-                            el.style.top = '8px';
-                            el.style.left = '50%';
+                            el.style.top = '50px';
+                            el.style.left = '60%';
                             el.style.right = 'auto';
                             el.style.transform = 'translateX(-50%)';
                             el.style.margin = '0';
