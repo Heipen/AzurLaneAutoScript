@@ -120,20 +120,8 @@ class GemsFarming(CampaignRun, Dock, FleetEquipment, GemsEquipmentHandler):
         self.campaign.config.override(EnemyPriority_EnemyScaleBalanceWeight='S1_enemy_first')
 
     @property
-    def change_flagship(self):
-        return 'ship' in self.config.GemsFarming_ChangeFlagship
-
-    @property
-    def change_flagship_equip(self):
-        return 'equip' in self.config.GemsFarming_ChangeFlagship
-
-    @property
     def change_vanguard(self):
         return 'ship' in self.config.GemsFarming_ChangeVanguard
-
-    @property
-    def change_vanguard_equip(self):
-        return 'equip' in self.config.GemsFarming_ChangeVanguard
 
     @property
     def fleet_to_attack(self):
@@ -149,9 +137,7 @@ class GemsFarming(CampaignRun, Dock, FleetEquipment, GemsEquipmentHandler):
         Returns:
             bool: True if flagship changed.
         """
-
         logger.hr('Change flagship', level=1)
-        logger.attr('ChangeFlagship', self.config.GemsFarming_ChangeFlagship)
         self.fleet_enter(self.fleet_to_attack)
         if self.change_flagship_equip:
             logger.hr('Unmount flagship equipments', level=2)
@@ -421,7 +407,7 @@ class GemsFarming(CampaignRun, Dock, FleetEquipment, GemsEquipmentHandler):
 
     def triggered_stop_condition(self, oil_check=True):
         # Lv32 limit
-        if self.change_flagship and self.campaign.config.LV32_TRIGGERED:
+        if self.campaign.config.LV32_TRIGGERED:
             self._trigger_lv32 = True
             logger.hr('TRIGGERED LV32 LIMIT')
             return True
@@ -441,7 +427,7 @@ class GemsFarming(CampaignRun, Dock, FleetEquipment, GemsEquipmentHandler):
             mode (str): `normal` or `hard`
             total (int):
         """
-        self.config.STOP_IF_REACH_LV32 = self.change_flagship
+        self.config.override(STOP_IF_REACH_LV32=True)
 
         while 1:
             self._trigger_lv32 = False
@@ -457,9 +443,7 @@ class GemsFarming(CampaignRun, Dock, FleetEquipment, GemsEquipmentHandler):
 
             # End
             if self._trigger_lv32 or self._trigger_emotion:
-                success = True
-                if self.change_flagship:
-                    success = self.flagship_change()
+                success = self.flagship_change()
                 if self.change_vanguard:
                     success = success and self.vanguard_change()
 
