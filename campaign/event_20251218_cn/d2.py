@@ -6,7 +6,7 @@ from .d1 import Config as ConfigBase
 
 MAP = CampaignMap('D2')
 MAP.shape = 'J8'
-MAP.camera_data = ['E2', 'E6', 'F2', 'F6']
+MAP.camera_data = ['E3', 'E6', 'F3', 'F6']
 MAP.camera_data_spawn_point = ['E6']
 MAP.map_data = """
     -- -- -- -- -- ++ ME ++ -- --
@@ -50,7 +50,7 @@ A8, B8, C8, D8, E8, F8, G8, H8, I8, J8, \
 
 class Config(ConfigBase):
     # ===== Start of generated config =====
-    MAP_SIREN_TEMPLATE = ['Vboss_hermit', 'Vboss_chariot']
+    MAP_SIREN_TEMPLATE = ['Vboss_Hermit', 'Vboss_Chariot']
     MOVABLE_ENEMY_TURN = (2,)
     MAP_HAS_SIREN = True
     MAP_HAS_MOVABLE_ENEMY = True
