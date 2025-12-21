@@ -62,6 +62,7 @@ Farm:
       - StopCondition
       - Fleet
       - Submarine
+      - Emotion
 
 # ==================== Event ====================
 
@@ -357,6 +358,8 @@ Tool:
       - OpsiDaemon
     EventStory:
       - EventStory
+    BoxDisassemble:
+      - BoxDisassemble
     Benchmark:
       - Benchmark
     AzurLaneUncensored:

@@ -208,6 +208,7 @@ class OSShop(PortShop, AkashiShop):
         Pages:
             in: PORT_SUPPLY_CHECK
         """
+        self.os_shop_get_coins()
         items = self.scan_all()
         if not len(items):
             logger.warning('Empty OS shop.')
@@ -215,8 +216,7 @@ class OSShop(PortShop, AkashiShop):
         items = self.items_filter_in_os_shop(items)
         if not len(items):
             logger.warning('Nothing to buy.')
-            return False
-        self.os_shop_get_coins()
+            return False  
         skip_get_coins = True
         items.reverse()
         count = 0
@@ -262,12 +262,19 @@ class OSShop(PortShop, AkashiShop):
         """
         self.ui_click(grid, appear_button=self.is_in_map, check_button=PORT_SUPPLY_CHECK,
                       additional=self.handle_story_skip, skip_first_screenshot=True)
-        self.os_shop_buy(select_func=self.os_shop_get_item_to_buy_in_akashi)
+        with self.stat.new(
+            genre="opsi_akashi", method=self.config.DropRecord_AkashiRecord
+        ) as drop:
+            drop.handle_add(self)
+            self.os_shop_buy(select_func=self.os_shop_get_item_to_buy_in_akashi)
         self.ui_back(appear_button=PORT_SUPPLY_CHECK, check_button=self.is_in_map, skip_first_screenshot=True)
 
     @cached_property
     def yellow_coins_preserve(self):
-        return self.config.OpsiGeneral_YellowCoinPreserve
+        if self.is_cl1_enabled:
+            return self.config.cross_get(keys='OpsiHazard1Leveling.OpsiHazard1Leveling.OperationCoinsPreserve')
+        else:
+            return self.config.OS_NORMAL_YELLOW_COINS_PRESERVE
 
     def get_currency_coins(self, item):
         if item.cost == 'YellowCoins':

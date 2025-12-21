@@ -66,10 +66,6 @@
       "name": "イベント共通設定",
       "help": ""
     },
-    "Coalition": {
-      "name": "ネオンシティの探索者",
-      "help": ""
-    },
     "Event": {
       "name": "イベント海域",
       "help": ""
@@ -84,6 +80,10 @@
     },
     "Hospital": {
       "name": "病院探訪",
+      "help": ""
+    },
+    "Coalition": {
+      "name": "ネオンシティの探索者",
       "help": ""
     },
     "MaritimeEscort": {
@@ -269,6 +269,10 @@
     "EventStory": {
       "name": "Event Story",
       "help": ""
+    },
+    "BoxDisassemble": {
+      "name": "Task.BoxDisassemble.name",
+      "help": "Task.BoxDisassemble.help"
     },
     "Benchmark": {
       "name": "機能テスト",
@@ -728,6 +732,10 @@
       "name": "Error.SaveError.name",
       "help": "Error.SaveError.help"
     },
+    "StrictRestart": {
+      "name": "Error.StrictRestart.name",
+      "help": "Error.StrictRestart.help"
+    },
     "OnePushConfig": {
       "name": "Error.OnePushConfig.name",
       "help": "Error.OnePushConfig.help"
@@ -810,6 +818,12 @@
       "save": "save",
       "upload": "upload",
       "save_and_upload": "save_and_upload"
+    },
+    "AkashiRecord": {
+      "name": "DropRecord.AkashiRecord.name",
+      "help": "DropRecord.AkashiRecord.help",
+      "do_not": "do_not",
+      "save": "save"
     },
     "MeowfficerBuy": {
       "name": "DropRecord.MeowfficerBuy.name",
@@ -1267,6 +1281,10 @@
       "name": "Emotion.Fleet1Oath.name",
       "help": "Emotion.Fleet1Oath.help"
     },
+    "Fleet1Onsen": {
+      "name": "Emotion.Fleet1Onsen.name",
+      "help": "Emotion.Fleet1Onsen.help"
+    },
     "Fleet2Value": {
       "name": "Emotion.Fleet2Value.name",
       "help": "Emotion.Fleet2Value.help"
@@ -1293,6 +1311,10 @@
     "Fleet2Oath": {
       "name": "Emotion.Fleet2Oath.name",
       "help": "Emotion.Fleet2Oath.help"
+    },
+    "Fleet2Onsen": {
+      "name": "Emotion.Fleet2Onsen.name",
+      "help": "Emotion.Fleet2Onsen.help"
     }
   },
   "HpControl": {
@@ -1413,33 +1435,64 @@
       "name": "GemsFarming._info.name",
       "help": "GemsFarming._info.help"
     },
+    "ChangeFlagship": {
+      "name": "GemsFarming.ChangeFlagship.name",
+      "help": "GemsFarming.ChangeFlagship.help",
+      "ship": "ship",
+      "ship_equip": "ship_equip"
+    },
     "CommonCV": {
       "name": "GemsFarming.CommonCV.name",
       "help": "GemsFarming.CommonCV.help",
+      "custom": "custom",
       "any": "any",
+      "eagle": "eagle",
       "langley": "langley",
       "bogue": "bogue",
       "ranger": "ranger",
       "hermes": "hermes"
     },
+    "CommonCVFilter": {
+      "name": "GemsFarming.CommonCVFilter.name",
+      "help": "GemsFarming.CommonCVFilter.help"
+    },
     "ChangeVanguard": {
       "name": "GemsFarming.ChangeVanguard.name",
       "help": "GemsFarming.ChangeVanguard.help",
       "disabled": "disabled",
-      "ship": "ship"
+      "ship": "ship",
+      "ship_equip": "ship_equip"
     },
     "CommonDD": {
       "name": "GemsFarming.CommonDD.name",
       "help": "GemsFarming.CommonDD.help",
+      "custom": "custom",
       "any": "GemsFarming.CommonDD.any",
       "favourite": "GemsFarming.CommonDD.favourite",
       "aulick_or_foote": "GemsFarming.CommonDD.aulick_or_foote",
       "cassin_or_downes": "GemsFarming.CommonDD.cassin_or_downes",
-      "z20_or_z21": "GemsFarming.CommonDD.z20_or_z21"
+      "z20_or_z21": "GemsFarming.CommonDD.z20_or_z21",
+      "DDG": "DDG"
+    },
+    "CommonDDFilter": {
+      "name": "GemsFarming.CommonDDFilter.name",
+      "help": "GemsFarming.CommonDDFilter.help"
     },
     "EquipmentCode": {
       "name": "GemsFarming.EquipmentCode.name",
       "help": "GemsFarming.EquipmentCode.help"
+    },
+    "ALLowHighFlagshipLevel": {
+      "name": "GemsFarming.ALLowHighFlagshipLevel.name",
+      "help": "GemsFarming.ALLowHighFlagshipLevel.help"
+    },
+    "ALLowLowVanguardLevel": {
+      "name": "GemsFarming.ALLowLowVanguardLevel.name",
+      "help": "GemsFarming.ALLowLowVanguardLevel.help"
+    },
+    "DelayTaskIFNoFlagship": {
+      "name": "GemsFarming.DelayTaskIFNoFlagship.name",
+      "help": "GemsFarming.DelayTaskIFNoFlagship.help"
     },
     "CommissionLimit": {
       "name": "GemsFarming.CommissionLimit.name",
@@ -3801,10 +3854,6 @@
       "name": "OpsiGeneral.DoRandomMapEvent.name",
       "help": "OpsiGeneral.DoRandomMapEvent.help"
     },
-    "YellowCoinPreserve": {
-      "name": "OpsiGeneral.YellowCoinPreserve.name",
-      "help": "OpsiGeneral.YellowCoinPreserve.help"
-    },
     "AkashiShopFilter": {
       "name": "OpsiGeneral.AkashiShopFilter.name",
       "help": "OpsiGeneral.AkashiShopFilter.help"
@@ -3901,6 +3950,10 @@
     "CustomFilter": {
       "name": "OpsiShop.CustomFilter.name",
       "help": "OpsiShop.CustomFilter.help"
+    },
+    "DisableBeforeDate": {
+      "name": "OpsiShop.DisableBeforeDate.name",
+      "help": "OpsiShop.DisableBeforeDate.help"
     }
   },
   "OpsiVoucher": {
@@ -3925,12 +3978,28 @@
     "UseTuningSample": {
       "name": "OpsiDaily.UseTuningSample.name",
       "help": "OpsiDaily.UseTuningSample.help"
+    },
+    "SkipSirenResearchMission": {
+      "name": "OpsiDaily.SkipSirenResearchMission.name",
+      "help": "OpsiDaily.SkipSirenResearchMission.help"
+    },
+    "KeepMissionZone": {
+      "name": "OpsiDaily.KeepMissionZone.name",
+      "help": "OpsiDaily.KeepMissionZone.help"
+    },
+    "MissionZones": {
+      "name": "OpsiDaily.MissionZones.name",
+      "help": "OpsiDaily.MissionZones.help"
     }
   },
   "OpsiObscure": {
     "_info": {
       "name": "OpsiObscure._info.name",
       "help": "OpsiObscure._info.help"
+    },
+    "SkipHazard2Obscure": {
+      "name": "OpsiObscure.SkipHazard2Obscure.name",
+      "help": "OpsiObscure.SkipHazard2Obscure.help"
     },
     "ForceRun": {
       "name": "OpsiObscure.ForceRun.name",
@@ -3952,9 +4021,17 @@
       "name": "OpsiStronghold._info.name",
       "help": "OpsiStronghold._info.help"
     },
+    "SubmarineEveryCombat": {
+      "name": "OpsiStronghold.SubmarineEveryCombat.name",
+      "help": "OpsiStronghold.SubmarineEveryCombat.help"
+    },
     "ForceRun": {
       "name": "OpsiStronghold.ForceRun.name",
       "help": "OpsiStronghold.ForceRun.help"
+    },
+    "HasStronghold": {
+      "name": "OpsiStronghold.HasStronghold.name",
+      "help": "OpsiStronghold.HasStronghold.help"
     }
   },
   "OpsiMonthBoss": {
@@ -3989,6 +4066,7 @@
     "HazardLevel": {
       "name": "OpsiMeowfficerFarming.HazardLevel.name",
       "help": "OpsiMeowfficerFarming.HazardLevel.help",
+      "2": "2",
       "3": "3",
       "4": "4",
       "5": "5",
@@ -3999,9 +4077,9 @@
       "name": "OpsiMeowfficerFarming.TargetZone.name",
       "help": "OpsiMeowfficerFarming.TargetZone.help"
     },
-    "StayInZone": {
-      "name": "指定海域计划作战",
-      "help": "雪风大人温馨提示:打开这个功能并指定海域后，将会在指定海域进行计划作战，不会再回到港口nanoda!侵蚀三推荐NA海域东南B，侵蚀五推荐卡利比安海B或者C nanoda!"
+    "APPreserveUntilReset": {
+      "name": "OpsiMeowfficerFarming.APPreserveUntilReset.name",
+      "help": "OpsiMeowfficerFarming.APPreserveUntilReset.help"
     }
   },
   "OpsiHazard1Leveling": {
@@ -4016,10 +4094,6 @@
       "44": "44",
       "22": "22"
     },
-    "SirenResearch_Enable": {
-      "name": "塞壬研究装置",
-      "help": "雪风大人提醒：消耗紫币换黄币，一个月没有几十万海里慎用nanoda!"
-    },
     "MinimumActionPointReserve": {
       "name": "保留 X 点行动力",
       "help": "搏一搏，单车变摩托，雪风大人已经把幸运分给指挥官了nanoda，上吧nanoda！"
@@ -4027,6 +4101,14 @@
     "ExecuteFixedPatrolScan": {
       "name": "舰队强制移动",
       "help": "雪风大人温馨提示：开启后，将强制移动舰队以免找不到明石，指挥官你也不想因为找不到明石导致坠机nanoda？打开这个功能轻轻松松达到50万+海里每月nanoda，指挥官还在等什么nanoda!"
+    },
+    "OperationCoinsPreserve": {
+      "name": "OpsiHazard1Leveling.OperationCoinsPreserve.name",
+      "help": "OpsiHazard1Leveling.OperationCoinsPreserve.help"
+    },
+    "DoScanningDevice": {
+      "name": "OpsiHazard1Leveling.DoScanningDevice.name",
+      "help": "OpsiHazard1Leveling.DoScanningDevice.help"
     }
   },
   "Daemon": {
@@ -4063,6 +4145,36 @@
       "help": "EventStory.SkipBattle.help",
       "True": "True",
       "False": "False"
+    }
+  },
+  "BoxDisassemble": {
+    "_info": {
+      "name": "BoxDisassemble._info.name",
+      "help": "BoxDisassemble._info.help"
+    },
+    "UsePurpleBox": {
+      "name": "BoxDisassemble.UsePurpleBox.name",
+      "help": "BoxDisassemble.UsePurpleBox.help"
+    },
+    "PurpleBoxLimit": {
+      "name": "BoxDisassemble.PurpleBoxLimit.name",
+      "help": "BoxDisassemble.PurpleBoxLimit.help"
+    },
+    "UseBlueBox": {
+      "name": "BoxDisassemble.UseBlueBox.name",
+      "help": "BoxDisassemble.UseBlueBox.help"
+    },
+    "BlueBoxLimit": {
+      "name": "BoxDisassemble.BlueBoxLimit.name",
+      "help": "BoxDisassemble.BlueBoxLimit.help"
+    },
+    "UseWhiteBox": {
+      "name": "BoxDisassemble.UseWhiteBox.name",
+      "help": "BoxDisassemble.UseWhiteBox.help"
+    },
+    "WhiteBoxLimit": {
+      "name": "BoxDisassemble.WhiteBoxLimit.name",
+      "help": "BoxDisassemble.WhiteBoxLimit.help"
     }
   },
   "Benchmark": {

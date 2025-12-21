@@ -99,6 +99,8 @@ class ManualConfig:
     """
     module.campaign.gems_farming
     """
+    COMMON_CV_FILTER = 'bogue > ranger > langley > hermes'
+    COMMON_DD_FILTER =  'z20 > z21 > aulick > foote > cassin > downes'
     GEMS_EMOTION_TRIGGERED = False
 
     """
@@ -334,7 +336,9 @@ class ManualConfig:
     """
     OS_ACTION_POINT_BOX_USE = True
     OS_ACTION_POINT_PRESERVE = 0
+    OS_NORMAL_YELLOW_COINS_PRESERVE = 35000
     OS_NORMAL_PURPLE_COINS_PRESERVE = 100
+    OS_MISSION_COMPLETE = False
 
     """
     module.os.globe_detection

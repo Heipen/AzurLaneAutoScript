@@ -97,6 +97,7 @@ class GeneratedConfig:
     # Group `Error`
     Error_HandleError = True
     Error_SaveError = True
+    Error_StrictRestart = False
     Error_OnePushConfig = 'provider: null'
     Error_ScreenshotLength = 1
 
@@ -114,6 +115,7 @@ class GeneratedConfig:
     DropRecord_CommissionRecord = 'do_not'  # do_not, save, upload, save_and_upload
     DropRecord_CombatRecord = 'do_not'  # do_not, save
     DropRecord_OpsiRecord = 'do_not'  # do_not, save, upload, save_and_upload
+    DropRecord_AkashiRecord = 'do_not'  # do_not, save
     DropRecord_MeowfficerBuy = 'do_not'  # do_not, save
     DropRecord_MeowfficerTalent = 'do_not'  # do_not, save, upload, save_and_upload
 
@@ -177,11 +179,13 @@ class GeneratedConfig:
     Emotion_Fleet1Control = 'prevent_yellow_face'  # keep_exp_bonus, prevent_green_face, prevent_yellow_face, prevent_red_face
     Emotion_Fleet1Recover = 'not_in_dormitory'  # not_in_dormitory, dormitory_floor_1, dormitory_floor_2
     Emotion_Fleet1Oath = False
+    Emotion_Fleet1Onsen = False
     Emotion_Fleet2Value = 119
     Emotion_Fleet2Record = datetime.datetime(2020, 1, 1, 0, 0)
     Emotion_Fleet2Control = 'prevent_yellow_face'  # keep_exp_bonus, prevent_green_face, prevent_yellow_face, prevent_red_face
     Emotion_Fleet2Recover = 'not_in_dormitory'  # not_in_dormitory, dormitory_floor_1, dormitory_floor_2
     Emotion_Fleet2Oath = False
+    Emotion_Fleet2Onsen = False
 
     # Group `HpControl`
     HpControl_UseHpBalance = False
@@ -211,11 +215,17 @@ class GeneratedConfig:
     C124LargeLeveling_PickupAmmo = 3  # 3, 4, 5
 
     # Group `GemsFarming`
-    GemsFarming_CommonCV = 'any'  # any, langley, bogue, ranger, hermes
-    GemsFarming_ChangeVanguard = 'ship'  # disabled, ship
-    GemsFarming_CommonDD = 'any'  # any, favourite, aulick_or_foote, cassin_or_downes, z20_or_z21
+    GemsFarming_ChangeFlagship = 'ship_equip'  # ship, ship_equip
+    GemsFarming_CommonCV = 'any'  # custom, any, eagle, langley, bogue, ranger, hermes
+    GemsFarming_CommonCVFilter = 'bogue > ranger > langley > hermes'
+    GemsFarming_ChangeVanguard = 'ship_equip'  # disabled, ship, ship_equip
+    GemsFarming_CommonDD = 'any'  # custom, any, favourite, aulick_or_foote, cassin_or_downes, z20_or_z21, DDG
+    GemsFarming_CommonDDFilter = 'z20 > z21 > aulick > foote > cassin > downes'
     GemsFarming_EquipmentCode = 'DD: null\nbogue: null\nhermes: null\nlangley: null\nranger: null'
-    GemsFarming_CommissionLimit = True
+    GemsFarming_ALLowHighFlagshipLevel = False
+    GemsFarming_ALLowLowVanguardLevel = False
+    GemsFarming_DelayTaskIFNoFlagship = False
+    GemsFarming_CommissionLimit = False
 
     # Group `EventGeneral`
     EventGeneral_PtLimit = 0
@@ -575,7 +585,6 @@ class GeneratedConfig:
     OpsiGeneral_OilLimit = 1000
     OpsiGeneral_RepairThreshold = 0.4
     OpsiGeneral_DoRandomMapEvent = True
-    OpsiGeneral_YellowCoinPreserve = 100000
     OpsiGeneral_AkashiShopFilter = 'ActionPoint > PurpleCoins'
 
     # Group `OpsiAshBeacon`
@@ -600,6 +609,7 @@ class GeneratedConfig:
     # Group `OpsiShop`
     OpsiShop_PresetFilter = 'max_benefit_meta'  # max_benefit, max_benefit_meta, no_meta, all, custom
     OpsiShop_CustomFilter = 'LoggerAbyssalT6 > LoggerAbyssalT5 > LoggerObscure > LoggerAbyssalT4 > ActionPoint > PurpleCoins\n> GearDesignPlanT3 > PlateRandomT4 > DevelopmentMaterialT3 > GearDesignPlanT2 > GearPart\n> OrdnanceTestingReportT3 > OrdnanceTestingReportT2 > DevelopmentMaterialT2 > OrdnanceTestingReportT1\n> METARedBook > CrystallizedHeatResistantSteel > NanoceramicAlloy > NeuroplasticProstheticArm > SupercavitationGenerator'
+    OpsiShop_DisableBeforeDate = 0
 
     # Group `OpsiVoucher`
     OpsiVoucher_Filter = 'LoggerAbyssal > LoggerObscure > Book > Coin > Fragment'
@@ -607,15 +617,21 @@ class GeneratedConfig:
     # Group `OpsiDaily`
     OpsiDaily_DoMission = True
     OpsiDaily_UseTuningSample = True
+    OpsiDaily_SkipSirenResearchMission = False
+    OpsiDaily_KeepMissionZone = False
+    OpsiDaily_MissionZones = None
 
     # Group `OpsiObscure`
+    OpsiObscure_SkipHazard2Obscure = False
     OpsiObscure_ForceRun = False
 
     # Group `OpsiAbyssal`
     OpsiAbyssal_ForceRun = False
 
     # Group `OpsiStronghold`
+    OpsiStronghold_SubmarineEveryCombat = False
     OpsiStronghold_ForceRun = False
+    OpsiStronghold_HasStronghold = True
 
     # Group `OpsiMonthBoss`
     OpsiMonthBoss_Mode = 'normal'  # normal, normal_hard
@@ -624,15 +640,16 @@ class GeneratedConfig:
 
     # Group `OpsiMeowfficerFarming`
     OpsiMeowfficerFarming_ActionPointPreserve = 1000
-    OpsiMeowfficerFarming_HazardLevel = 5  # 3, 4, 5, 6, 10
+    OpsiMeowfficerFarming_HazardLevel = 5  # 2, 3, 4, 5, 6, 10
     OpsiMeowfficerFarming_TargetZone = 0
-    OpsiMeowfficerFarming_StayInZone = False
+    OpsiMeowfficerFarming_APPreserveUntilReset = False
 
     # Group `OpsiHazard1Leveling`
     OpsiHazard1Leveling_TargetZone = 0  # 0, 44, 22
-    OpsiHazard1Leveling_SirenResearch_Enable = False
     OpsiHazard1Leveling_MinimumActionPointReserve = 200
     OpsiHazard1Leveling_ExecuteFixedPatrolScan = False
+    OpsiHazard1Leveling_OperationCoinsPreserve = 100000
+    OpsiHazard1Leveling_DoScanningDevice = False
 
     # Group `Daemon`
     Daemon_EnterMap = True
@@ -643,6 +660,14 @@ class GeneratedConfig:
 
     # Group `EventStory`
     EventStory_SkipBattle = False  # True, False
+
+    # Group `BoxDisassemble`
+    BoxDisassemble_UsePurpleBox = False
+    BoxDisassemble_PurpleBoxLimit = 100
+    BoxDisassemble_UseBlueBox = False
+    BoxDisassemble_BlueBoxLimit = 1000
+    BoxDisassemble_UseWhiteBox = True
+    BoxDisassemble_WhiteBoxLimit = 2000
 
     # Group `Benchmark`
     Benchmark_DeviceType = 'emulator'  # emulator, plone_cloud_with_adb, phone_cloud_without_adb, android_phone, android_phone_vmos

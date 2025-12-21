@@ -233,10 +233,11 @@ class StorageHandler(GlobeOperation, ZoneManager):
         else:
             raise ScriptError(f'Unknown storage item: {item}')
 
-    def storage_checkout_item(self, item, skip_first_screenshot=True):
+    def storage_checkout_item(self, item, skip_obscure_hazard_2=False, skip_first_screenshot=True):
         """
         Args:
-            item (str): 'OBSCURE' or 'ABYSSAL'.
+            item (str): 'OBSCURE', 'ABYSSAL' or 'REPAIR_PACK'.
+            skip_obscure_hazard_2: if skip hazard 2 obscure
             skip_first_screenshot:
 
         Returns:
@@ -246,10 +247,15 @@ class StorageHandler(GlobeOperation, ZoneManager):
             in: STORAGE_CHECK
             out: is_in_map, in an obscure/abyssal zone if checkout.
                  is_in_map, in previous zone if no more obscure/abyssal coordinates.
+                 STORAGE_FLEET_CHOOSE, for using repair packs.
         """
         logger.hr(f'Storage checkout item {item}')
         if SCROLL_STORAGE.appear(main=self):
-            SCROLL_STORAGE.set_top(main=self, skip_first_screenshot=skip_first_screenshot)
+            if item == 'REPAIR_PACK':
+                # repair packs always at the bottom page
+                SCROLL_STORAGE.set_bottom(main=self, skip_first_screenshot=skip_first_screenshot)
+            else:
+                SCROLL_STORAGE.set_top(main=self, skip_first_screenshot=skip_first_screenshot)
 
         confirm_timer = Timer(0.6, count=2).start()
         while 1:
@@ -263,18 +269,24 @@ class StorageHandler(GlobeOperation, ZoneManager):
             logger.attr(f'Storage_{item}', len(items))
 
             if len(items):
-                self._storage_coordinate_checkout(items[0], types=(item,))
-                return True
+                for button in items:
+                    if skip_obscure_hazard_2:
+                        crop_image = crop(image, area_offset(button.area, (-25, -35)), copy=False)
+                        if TEMPLATE_STORAGE_OBSCURE_HAZARD_2.match(crop_image, similarity=0.92):
+                            continue
+                    self._storage_coordinate_checkout(button, types=(item,))
+                    return True
             if confirm_timer.reached():
                 logger.info(f'No more {item} items in storage')
                 self.storage_quit()
                 return False
 
-    def storage_get_next_item(self, item, use_logger=True):
+    def storage_get_next_item(self, item, use_logger=True, skip_obscure_hazard_2=False):
         """
         Args:
-            item (str): 'OBSCURE' or 'ABYSSAL'.
+            item (str): 'OBSCURE', 'ABYSSAL' or 'REPAIR_PACK'.
             use_logger: If use all loggers.
+            skip_obscure_hazard_2: if skip hazard 2 obscure
 
         Returns:
             bool: If checkout
@@ -283,11 +295,12 @@ class StorageHandler(GlobeOperation, ZoneManager):
             in: in_map
             out: is_in_map, in an obscure/abyssal zone if checkout.
                  is_in_map, in previous zone if no more obscure/abyssal coordinates.
+                 STORAGE_FLEET_CHOOSE, for using repair packs.
         """
         logger.hr('OS get next obscure')
         self.storage_enter()
         if use_logger:
             self.storage_logger_use_all()
 
-        result = self.storage_checkout_item(item)
+        result = self.storage_checkout_item(item, skip_obscure_hazard_2=skip_obscure_hazard_2)
         return result

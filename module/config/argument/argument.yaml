@@ -136,6 +136,7 @@ EmulatorInfo:
 Error:
   HandleError: true
   SaveError: true
+  StrictRestart: false
   OnePushConfig:
     type: textarea
     mode: yaml
@@ -166,6 +167,9 @@ DropRecord:
   OpsiRecord:
     value: do_not
     option: [ do_not, save, upload, save_and_upload ]
+  AkashiRecord:
+    value: do_not
+    option: [ do_not, save ]
   MeowfficerBuy:
     value: do_not
     option: [ do_not, save ]
@@ -275,6 +279,7 @@ Emotion:
     value: not_in_dormitory
     option: [ not_in_dormitory, dormitory_floor_1, dormitory_floor_2 ]
   Fleet1Oath: false
+  Fleet1Onsen: false
   Fleet2Value: 119
   Fleet2Record:
     value: 2020-01-01 00:00:00
@@ -286,6 +291,7 @@ Emotion:
     value: not_in_dormitory
     option: [ not_in_dormitory, dormitory_floor_1, dormitory_floor_2 ]
   Fleet2Oath: false
+  Fleet2Onsen: false
 HpControl:
   UseHpBalance: false
   UseEmergencyRepair: false
@@ -318,15 +324,22 @@ C124LargeLeveling:
     value: 3
     option: [ 3, 4, 5 ]
 GemsFarming:
+  ChangeFlagship:
+    value: ship_equip
+    option: [ ship, ship_equip ]
   CommonCV:
     value: any
-    option: [ any, langley, bogue, ranger, hermes ]
+    option: [ custom, any, eagle, langley, bogue, ranger, hermes ]
+  CommonCVFilter: |-
+    bogue > ranger > langley > hermes
   ChangeVanguard:
-    value: ship
-    option: [ disabled, ship ]
+    value: ship_equip
+    option: [ disabled, ship, ship_equip ]
   CommonDD:
     value: any
-    option: [ any, favourite, aulick_or_foote , cassin_or_downes, z20_or_z21 ]
+    option: [ custom, any, favourite, aulick_or_foote , cassin_or_downes, z20_or_z21, DDG]
+  CommonDDFilter: |-
+    z20 > z21 > aulick > foote > cassin > downes
   EquipmentCode:
     type: textarea
     mode: yaml
@@ -336,7 +349,10 @@ GemsFarming:
       hermes: null
       langley: null
       ranger: null
-  CommissionLimit: true
+  ALLowHighFlagshipLevel: false
+  ALLowLowVanguardLevel: false
+  DelayTaskIFNoFlagship: false
+  CommissionLimit: false
 
 # ==================== Event ====================
 
@@ -1002,7 +1018,6 @@ OpsiGeneral:
   OilLimit: 1000
   RepairThreshold: 0.4
   DoRandomMapEvent: true
-  YellowCoinPreserve: 100000
   AkashiShopFilter: |-
     ActionPoint > PurpleCoins
 OpsiAshBeacon:
@@ -1039,18 +1054,31 @@ OpsiShop:
     > GearDesignPlanT3 > PlateRandomT4 > DevelopmentMaterialT3 > GearDesignPlanT2 > GearPart
     > OrdnanceTestingReportT3 > OrdnanceTestingReportT2 > DevelopmentMaterialT2 > OrdnanceTestingReportT1
     > METARedBook > CrystallizedHeatResistantSteel > NanoceramicAlloy > NeuroplasticProstheticArm > SupercavitationGenerator
+  DisableBeforeDate: 0
 OpsiVoucher:
   Filter: |-
     LoggerAbyssal > LoggerObscure > Book > Coin > Fragment
 OpsiDaily:
   DoMission: true
   UseTuningSample: true
+  SkipSirenResearchMission: false
+  KeepMissionZone: false
+  MissionZones:
+    type: stored
+    value: null
+    display: hide
 OpsiObscure:
+  SkipHazard2Obscure: false
   ForceRun: false
 OpsiAbyssal:
   ForceRun: false
 OpsiStronghold:
+  SubmarineEveryCombat: false
   ForceRun: false
+  HasStronghold:
+    type: stored
+    value: True
+    display: hide
 OpsiMonthBoss:
   Mode:
     value: normal
@@ -1061,17 +1089,18 @@ OpsiMeowfficerFarming:
   ActionPointPreserve: 1000
   HazardLevel:
     value: 5
-    option: [ 3, 4, 5, 6, 10 ]
+    option: [ 2, 3, 4, 5, 6, 10 ]
   TargetZone:
     value: 0
-  StayInZone: false    
+  APPreserveUntilReset: false
 OpsiHazard1Leveling:
   TargetZone:
     value: 0
     option: [ 0, 44, 22 ]
-  SirenResearch_Enable: false
   MinimumActionPointReserve: 200        
   ExecuteFixedPatrolScan: false
+  OperationCoinsPreserve: 100000
+  DoScanningDevice: false
 
 # ==================== Tools ====================
 
@@ -1085,6 +1114,13 @@ EventStory:
     type: checkbox
     value: false
     option: [ true, false ]
+BoxDisassemble:
+  UsePurpleBox: false
+  PurpleBoxLimit: 100
+  UseBlueBox: false
+  BlueBoxLimit: 1000
+  UseWhiteBox: true
+  WhiteBoxLimit: 2000
 Benchmark:
   DeviceType:
     value: emulator

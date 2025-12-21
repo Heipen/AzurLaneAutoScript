@@ -66,10 +66,6 @@
       "name": "活动通用设置",
       "help": ""
     },
-    "Coalition": {
-      "name": "DATE A LANE",
-      "help": ""
-    },
     "Event": {
       "name": "活动图",
       "help": ""
@@ -84,6 +80,10 @@
     },
     "Hospital": {
       "name": "深谷来信",
+      "help": ""
+    },
+    "Coalition": {
+      "name": "DATE A LANE",
       "help": ""
     },
     "MaritimeEscort": {
@@ -268,6 +268,10 @@
     },
     "EventStory": {
       "name": "活动剧情",
+      "help": ""
+    },
+    "BoxDisassemble": {
+      "name": "拆装备箱",
       "help": ""
     },
     "Benchmark": {
@@ -728,6 +732,10 @@
       "name": "出错时，保存 Log 和截图",
       "help": ""
     },
+    "StrictRestart": {
+      "name": "敏感任务出错时禁止重启",
+      "help": "运行敏感任务出错时停止Alas，而不是重启游戏\n敏感任务包含隐秘海域、深渊海域、跨月每日"
+    },
     "OnePushConfig": {
       "name": "错误推送设置",
       "help": "发生无法处理的异常后，使用 Onepush 推送一条错误信息。配置方法见文档：https://github.com/LmeSzinc/AzurLaneAutoScript/wiki/Onepush-configuration-%5BCN%5D"
@@ -810,6 +818,12 @@
       "save": "保存",
       "upload": "上传",
       "save_and_upload": "保存并上传"
+    },
+    "AkashiRecord": {
+      "name": "大世界明石商店截图",
+      "help": "",
+      "do_not": "无操作",
+      "save": "保存"
     },
     "MeowfficerBuy": {
       "name": "指挥喵购买截图",
@@ -1267,6 +1281,10 @@
       "name": "一队全员已婚 (+10/h)",
       "help": ""
     },
+    "Fleet1Onsen": {
+      "name": "一队全员已放置温泉 (+10/h)",
+      "help": ""
+    },
     "Fleet2Value": {
       "name": "二队心情值",
       "help": ""
@@ -1292,6 +1310,10 @@
     },
     "Fleet2Oath": {
       "name": "二队全员已婚 (+10/h)",
+      "help": ""
+    },
+    "Fleet2Onsen": {
+      "name": "二队全员已放置温泉 (+10/h)",
       "help": ""
     }
   },
@@ -1413,33 +1435,64 @@
       "name": "刷紧急委托",
       "help": "警告: 这个功能可以让玩家获取少量的钻石，但不是一个能高效获取钻石的方法\n玩碧蓝航线不久的玩家, 很容易迷信零破和低耗等, 而忽视了角色养成\n运行这个功能只会让你自己感觉很充实, 而你的帐号实际零提升\n这个功能的主要用途，是让阵容成型的玩家获取额外的魔方，请理性地把钻石当作副产物\n\n这个功能将在旗舰32级之后更换旗舰\n关于紧急委托刷新机制, 可阅读 https://bbs.nga.cn/read.php?tid=27134956\n委托油耗比: A3 > A1 > 2-4 > 2-1, 有活动图时建议选活动图, 2-1会拣问号有更多物资\n一队会完成所有的战斗, 前排应当为百级零破驱逐带输出装, 后排应该为33级及以下白皮零破航母\n二队应提供跨队支援（跨队弹幕、跨队辅助）"
     },
+    "ChangeFlagship": {
+      "name": "更换旗舰",
+      "help": "当旗舰等级>=32或红脸时更换旗舰\n寻找等级在1-31之间的白皮航母，同时会在退役时选择更换下来的旗舰。所有等级大于1级的白皮航母均会被视为退役目标，请务必锁定不是目标的船。换船时更换旗舰装备，这通过记录之前的装备码到配置中来完成。",
+      "ship": "更换舰船",
+      "ship_equip": "更换舰船 + 装备"
+    },
     "CommonCV": {
       "name": "指定旗舰航母",
       "help": "",
+      "custom": "自定义",
       "any": "任意",
+      "eagle": "仅白鹰",
       "langley": "兰利",
       "bogue": "博格",
       "ranger": "突击者",
       "hermes": "竞技神"
     },
+    "CommonCVFilter": {
+      "name": "自定义旗舰航母过滤器",
+      "help": "使用自定义过滤器需将 \"指定旗舰航母\" 设置为 \"自定义\"，将按照过滤器顺序优先选择旗舰航母更换\nbogue：博格    ranger：突击者    langley：兰利    hermes：竞技神"
+    },
     "ChangeVanguard": {
       "name": "更换前排",
-      "help": "当前排红脸时更换前排，选择不更换则会强制红脸出击\n换前排通过找一艘心情不低于10、等级100的白鹰或铁血的白皮驱逐完成，所以尽量保证有足够多的驱逐。国服以外则为等级70的白鹰白船驱逐。\n\n换装备只会更换正在装备中的栏位，即使是白装也会更换。前排会更换全部5个装备。",
+      "help": "当前排红脸时更换前排，选择不更换则会强制红脸出击\n换前排通过找一艘心情不低于10、等级100的白鹰或铁血的白皮驱逐完成，所以尽量保证有足够多的驱逐。国服以外则为等级70的白鹰白船驱逐。",
       "disabled": "不更换",
-      "ship": "更换舰船"
+      "ship": "更换舰船",
+      "ship_equip": "更换舰船 + 装备"
     },
     "CommonDD": {
       "name": "指定前排",
       "help": "",
+      "custom": "自定义",
       "any": "任意",
       "favourite": "仅常用",
       "aulick_or_foote": "奥利克或富特",
       "cassin_or_downes": "卡辛或唐斯",
-      "z20_or_z21": "Z20或Z21"
+      "z20_or_z21": "Z20或Z21",
+      "DDG": "导驱"
+    },
+    "CommonDDFilter": {
+      "name": "自定义前排过滤器",
+      "help": "使用自定义过滤器需将 \"指定前排\" 设置为 \"自定义\"，将按照过滤器顺序优先选择前排更换\nz20：Z20    z21：Z21    aulick：奥利克    foote：富特    cassin：卡辛    downes：唐斯"
     },
     "EquipmentCode": {
       "name": "装备码",
-      "help": "仅当选择“更换舰船 + 装备”时生效。\n在换下舰船时，若设置里当前舰船装备码为null则会导出；在换上舰船时，若设置里当前舰船装备码为null则会使用上一艘舰船导出的装备码，否则使用设置里的装备码\n蓝叠模拟器用户需要先开启虚拟键盘，详见https://support.bluestacks.com/hc/zh-tw/articles/360061968892-%E5%A6%82%E4%BD%95%E5%9C%A8-BlueStacks-5-%E4%B8%8A%E4%BD%BF%E7%94%A8%E5%B0%8F%E9%8D%B5%E7%9B%A4-%E8%99%9B%E6%93%AC%E9%8D%B5%E7%9B%A4"
+      "help": "仅当选择“更换舰船 + 装备”时生效。\n在换下舰船时，若设置里当前舰船装备码为null则会导出；在换上舰船时，若设置里当前舰船装备码为null则会使用上一艘舰船导出的装备码，否则使用设置里的装备码\n蓝叠模拟器用户需要先开启虚拟键盘，详见https://support.bluestacks.com/hc/zh-tw/articles/360061968892-%E5%A6%82%E4%BD%95%E5%9C%A8-BlueStacks-5-%E4%B8%8A%E4%BD%BF%E7%94%A8%E5%B0%8F%E9%8D%B5%E7%9B%A4-%E8%99%9B%E6%93%AC%E9%8D%B5%E7%9B%A4\nDD：前排驱逐    bogue：博格    hermes：竞技神    langley：兰利    ranger：突击者"
+    },
+    "ALLowHighFlagshipLevel": {
+      "name": "仅更换满级后排",
+      "help": "打开后，更换旗舰时仅会选择100级的白皮轻航。\n使用时请保证船坞中有符合条件的舰船。"
+    },
+    "ALLowLowVanguardLevel": {
+      "name": "可更换低等级前排",
+      "help": "打开后，前排等级限制改为30级以上。若为困难模式（如CD图）则改为70级。"
+    },
+    "DelayTaskIFNoFlagship": {
+      "name": "没有可更换的旗舰时推迟任务",
+      "help": "更换旗舰时，若找不到满足条件的白皮航母，则推迟任务"
     },
     "CommissionLimit": {
       "name": "防止紧急委托数量过多",
@@ -3553,7 +3606,7 @@
       "noshiro": "能代",
       "sirius": "天狼星",
       "new_jersey": "新泽西",
-      "taihou": "鹩"
+      "taihou": "大凤"
     }
   },
   "Daily": {
@@ -3801,10 +3854,6 @@
       "name": "完成地图随机事件",
       "help": "在自律寻敌完成后重新扫描一遍地图，购买明石商店，使用塞壬信息收集装置、使用塞壬探测装置、解锁两舰队机关"
     },
-    "YellowCoinPreserve": {
-      "name": "预留黄币数量",
-      "help": "根据是否已清空商店以及是否计划打侵蚀一预留黄币数量"
-    },
     "AkashiShopFilter": {
       "name": "商店过滤器",
       "help": "一般不需要修改，只买行动力和紫币即可"
@@ -3901,6 +3950,10 @@
     "CustomFilter": {
       "name": "自定义过滤器",
       "help": "使用自定义过滤器需将 \"港口商店过滤器\" 设置为 \"自定义\"，并阅读 https://github.com/LmeSzinc/AzurLaneAutoScript/wiki/filter_string_cn"
+    },
+    "DisableBeforeDate": {
+      "name": "每月 X 号前，不购买大世界商店",
+      "help": "从指定日期的后一天开始，每天买一次大世界商店\n0 表示不限制，每天都购买"
     }
   },
   "OpsiVoucher": {
@@ -3925,12 +3978,28 @@
     "UseTuningSample": {
       "name": "使用效能样本",
       "help": "使用所有六种效能样本和强力效能样本"
+    },
+    "SkipSirenResearchMission": {
+      "name": "不做塞壬研究任务",
+      "help": "开启后，将跳过“塞壬研究·I”与“塞壬研究·II”两个任务\n塞壬研究任务使用黄币兑换紫币"
+    },
+    "KeepMissionZone": {
+      "name": "保留海域不清理",
+      "help": "完成每日任务后退出海域，下次任务刷在同一海域时不用再消耗行动力进入\n每个月的最后一天会对所有未清理海域进行清理"
+    },
+    "MissionZones": {
+      "name": "月底需要清理的海域",
+      "help": "这个数值是自动记录的，一般不需要修改"
     }
   },
   "OpsiObscure": {
     "_info": {
       "name": "隐秘海域",
       "help": "每隔27分钟清理一个隐秘海域，以保证空域搜索冷却\n使用此功能前必须满足以下条件：\n- 通关大世界主线并完成模拟战+塞壬试验场\n- 启用大世界开荒任务或使用战役信息记录仪（5000油道具）"
+    },
+    "SkipHazard2Obscure": {
+      "name": "不清理2级坐标",
+      "help": "开启后，将不会打侵蚀等级为2的隐秘海域"
     },
     "ForceRun": {
       "name": "无视运行间隔强制运行",
@@ -3952,9 +4021,17 @@
       "name": "塞壬要塞",
       "help": "清理每周的塞壬要塞\n使用此功能前必须满足以下条件：\n- 通关大世界主线并完成模拟战+塞壬试验场\n- 启用大世界开荒任务或使用战役信息记录仪（5000油道具）"
     },
+    "SubmarineEveryCombat": {
+      "name": "潜艇每战出击",
+      "help": "开启后，如果出击舰队过滤器中存在潜艇编队，则当潜艇编队弹药耗尽时，退出塞壬要塞并推迟任务"
+    },
     "ForceRun": {
       "name": "无视运行间隔强制运行",
       "help": "开启后将带来额外的行动力消耗，一般不用打开，慢慢打就好"
+    },
+    "HasStronghold": {
+      "name": "上次运行任务时是否找到塞壬要塞",
+      "help": "这个数值是自动记录的，一般不需要修改"
     }
   },
   "OpsiMonthBoss": {
@@ -3989,6 +4066,7 @@
     "HazardLevel": {
       "name": "侵蚀等级",
       "help": "按顺时针出击特定侵蚀等级的海域\n建议选 5 或 3，有更高的 猫点/行动力 比",
+      "2": "2",
       "3": "3",
       "4": "4",
       "5": "5",
@@ -3999,9 +4077,9 @@
       "name": "指定海域",
       "help": "仅出击指定的海域，可以用来获取大世界成就星星\n支持海域ID、国服/国际服/日服/台服海域名称，例如 \"51\", \"NA海域东南E\", \"NA Ocean SE Sector E\"\n填入默认值0，或者删除数值即可取消指定"
     },
-    "StayInZone": {
-      "name": "指定海域计划作战",
-      "help": "打开这个功能并指定海域后，将会在指定海域进行计划作战，不会再回到港口。侵蚀三推荐NA海域东南B，侵蚀五推荐卡利比安海B或者C。"
+    "APPreserveUntilReset": {
+      "name": "保留行动力直到月底",
+      "help": "\"保留 X 点行动力\" 设置不会在大世界重置前几天减少\n注意：开启后只会在跨月每日任务中消耗这些行动力，未启用跨月每日任务时该设置无效，这意味着你需要手动使用这些行动力以获得更高的收益"
     }
   },
   "OpsiHazard1Leveling": {
@@ -4016,10 +4094,6 @@
       "44": "44 | 西大陆架D",
       "22": "22 | NA海域西南B"
     },
-    "SirenResearch_Enable": {
-      "name": "塞壬研究装置",
-      "help": "消耗紫币换黄币，一个月没有几十万海里慎用!"
-    },
     "MinimumActionPointReserve": {
       "name": "保留 X 点行动力",
       "help": ""
@@ -4027,6 +4101,14 @@
     "ExecuteFixedPatrolScan": {
       "name": "舰队强制移动",
       "help": "开启后，将强制移动舰队以免找不到明石"
+    },
+    "OperationCoinsPreserve": {
+      "name": "保留 X 个作战补给凭证",
+      "help": "作战补给凭证低于 X 时运行短猫相接，不建议修改"
+    },
+    "DoScanningDevice": {
+      "name": "做塞壬探测装置",
+      "help": "消耗紫币换取黄币，可能会导致紫币不足"
     }
   },
   "Daemon": {
@@ -4063,6 +4145,36 @@
       "help": "",
       "True": "已启用",
       "False": "False"
+    }
+  },
+  "BoxDisassemble": {
+    "_info": {
+      "name": "拆解装备箱",
+      "help": "拆解仓库中的装备箱子，配置完成后启动并等待即可"
+    },
+    "UsePurpleBox": {
+      "name": "拆解紫色装备箱",
+      "help": ""
+    },
+    "PurpleBoxLimit": {
+      "name": "保留每种紫色装备箱 X 个",
+      "help": ""
+    },
+    "UseBlueBox": {
+      "name": "拆解蓝色装备箱",
+      "help": ""
+    },
+    "BlueBoxLimit": {
+      "name": "保留每种蓝色装备箱 X 个",
+      "help": ""
+    },
+    "UseWhiteBox": {
+      "name": "拆解白色装备箱",
+      "help": ""
+    },
+    "WhiteBoxLimit": {
+      "name": "保留每种白色装备箱 X 个",
+      "help": ""
     }
   },
   "Benchmark": {
