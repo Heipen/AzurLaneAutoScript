@@ -105,8 +105,32 @@ class AkashiShop(OSStatus, OSShopUI, Selector, MapEventHandler):
                 if not len(items):
                     return None
                 else:
+                    return items.pop()
+
+        return None
+
+    def os_shop_get_item_to_buy_in_akashi_all(self):
+        """
+        Returns:
+            list[Item]:
+        """
+        self.os_shop_get_coins()
+        items = self.os_shop_get_items_in_akashi()
+        # Shop supplies do not appear immediately, need to confirm if shop is empty.
+        for _ in range(2):
+            if not len(items) or any(not item.is_known_item() for item in items):
+                logger.warning('Empty akashi shop or empty items, confirming')
+                self.device.sleep((0.3, 0.5))
+                self.device.screenshot()
+                items = self.os_shop_get_items_in_akashi()
+                continue
+            else:
+                items = self.items_filter_in_akashi_shop(items)
+                if not len(items):
+                    return None
+                else:
                     total = sum(item.price / 40 for item in items)
                     logger.info(f'Total action points in akashi shop: {int(total)}')
-                    return items.pop()
+                    return items
 
         return None
