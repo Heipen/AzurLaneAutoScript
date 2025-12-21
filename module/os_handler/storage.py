@@ -142,6 +142,13 @@ class StorageHandler(GlobeOperation, ZoneManager):
                 logger.info('All loggers in storage have been used')
                 break
 
+    def logger_use(self, quit=True):
+        logger.hr('Logger use')
+        self.storage_enter()
+        self.storage_logger_use_all()
+        if quit:
+            self.storage_quit()
+
     def storage_sample_use_all(self, skip_first_screenshot=True):
         """
         Args:
@@ -172,11 +179,12 @@ class StorageHandler(GlobeOperation, ZoneManager):
                     break
         logger.info('All samples in storage have been used')
 
-    def tuning_sample_use(self):
+    def tuning_sample_use(self, quit=True):
         logger.hr('Turning sample use')
         self.storage_enter()
         self.storage_sample_use_all()
-        self.storage_quit()
+        if quit:
+            self.storage_quit()
 
     def _storage_coordinate_checkout(self, button, types=('OBSCURE',), skip_first_screenshot=True):
         """
