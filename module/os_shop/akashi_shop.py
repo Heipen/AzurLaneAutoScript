@@ -105,6 +105,8 @@ class AkashiShop(OSStatus, OSShopUI, Selector, MapEventHandler):
                 if not len(items):
                     return None
                 else:
+                    total = sum(item.price / 40 for item in items)
+                    logger.info(f'Total action points in akashi shop: {int(total)}')
                     return items.pop()
 
         return None
