@@ -125,8 +125,12 @@ class AkashiShop(OSStatus, OSShopUI, Selector, MapEventHandler):
                 items = self.os_shop_get_items_in_akashi()
                 continue
             else:
+                if len(items)!=6:
+                    logger.info('Akashi shop items not 6, not a new akashi')
+                    return None
                 items = self.items_filter_in_akashi_shop(items)
                 if not len(items):
+                    logger.info(f'Total action points in akashi shop: 0')
                     return None
                 else:
                     total = sum(item.price / 40 for item in items)
