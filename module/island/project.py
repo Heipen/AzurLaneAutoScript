@@ -378,7 +378,9 @@ class IslandProjectRun(IslandUI):
                 product = IslandProduct(self.device.image)
                 if product.valid:
                     self.total = self.total.add_by_eq(SelectedGrids([product]))
+                    self.device.sleep(0.3)
                     self.device.click(ISLAND_CLICK_SAFE_AREA)
+                    self.device.sleep(0.3)
                     break
                 else:
                     self.interval_clear(ROLE_SELECT_ENTER)
