@@ -329,6 +329,7 @@ class IslandProjectRun(IslandUI):
                 skip_first_screenshot = False
             else:
                 self.device.sleep(self.config.IslandTimeControl_ScreenShotDelay)
+                logger.info('Taking screenshot for island project receive')
                 self.device.screenshot()
 
             if self.island_in_management(interval=5):
@@ -401,6 +402,7 @@ class IslandProjectRun(IslandUI):
                 skip_first_screenshot = False
             else:
                 self.device.sleep(self.config.IslandTimeControl_ScreenShotDelay)
+                logger.info('Taking screenshot for island project character select_')
                 self.device.screenshot()
             if self.appear(check_button, offset=(20, 20)):
                 break
@@ -415,6 +417,7 @@ class IslandProjectRun(IslandUI):
                 skip_first_screenshot = False
             else:
                 self.device.sleep(self.config.IslandTimeControl_ScreenShotDelay)
+                logger.info('Taking screenshot for island project character confirm_')
                 self.device.screenshot()
             # End
             if self.appear(ISLAND_AMOUNT_MAX, offset=(20, 20)):
@@ -446,6 +449,7 @@ class IslandProjectRun(IslandUI):
                 skip_first_screenshot = False
             else:
                 self.device.sleep(self.config.IslandTimeControl_ScreenShotDelay)
+                logger.info('Taking screenshot for island project character select')
                 self.device.screenshot()
 
             if timeout.reached():
@@ -514,6 +518,7 @@ class IslandProjectRun(IslandUI):
                 skip_first_screenshot = False
             else:
                 self.device.sleep(self.config.IslandTimeControl_ScreenShotDelay)
+                logger.info('Taking screenshot for island product select')
                 self.device.screenshot()
 
             current = self.get_current_product()
@@ -569,6 +574,7 @@ class IslandProjectRun(IslandUI):
                 skip_first_screenshot = False
             else:
                 self.device.sleep(self.config.IslandTimeControl_ScreenShotDelay)
+                logger.info('Taking screenshot for island product confirm')
                 self.device.screenshot()
 
             if timeout.reached():
@@ -639,6 +645,7 @@ class IslandProjectRun(IslandUI):
                 skip_first_screenshot = False
             else:
                 self.device.sleep(self.config.IslandTimeControl_ScreenShotDelay)
+                logger.info('Taking screenshot for project ensure')
                 self.device.screenshot()
 
             projects = self.project_detect(self.device.image)
@@ -727,6 +734,7 @@ class IslandProjectRun(IslandUI):
                 skip_first_screenshot = False
             else:
                 self.device.sleep(self.config.IslandTimeControl_ScreenShotDelay)
+                logger.info('Taking screenshot for island project run')
                 self.device.screenshot()
 
             if timeout.reached():
