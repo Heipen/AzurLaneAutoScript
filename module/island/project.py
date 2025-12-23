@@ -735,6 +735,7 @@ class IslandProjectRun(IslandUI):
             else:
                 self.device.sleep(self.config.IslandTimeControl_ScreenShotDelay)
                 logger.info('Taking screenshot for island project run')
+                self.device.sleep(1.)
                 self.device.screenshot()
 
             if timeout.reached():
