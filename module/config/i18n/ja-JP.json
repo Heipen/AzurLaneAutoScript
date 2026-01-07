@@ -838,6 +838,14 @@
       "save": "save",
       "upload": "upload",
       "save_and_upload": "save_and_upload"
+    },
+    "TelemetryReport": {
+      "name": "DropRecord.TelemetryReport.name",
+      "help": "DropRecord.TelemetryReport.help"
+    },
+    "BugReport": {
+      "name": "DropRecord.BugReport.name",
+      "help": "DropRecord.BugReport.help"
     }
   },
   "Retirement": {
