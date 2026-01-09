@@ -327,8 +327,9 @@ class AlasGUI(Frame):
             def _render_opsi_stats():
                 try:
                     from module.statistics.opsi_month import get_opsi_stats, compute_monthly_cl1_akashi_ap
-
-                    s = get_opsi_stats().summary()
+                    # 使用当前实例名称获取统计数据
+                    instance_name = self.alas_name if hasattr(self, 'alas_name') and self.alas_name else None
+                    s = get_opsi_stats(instance_name=instance_name).summary()
                 except Exception as e:
                     with use_scope("opsi_stats", clear=True):
                         put_text(f"Failed to load OpSi stats: {e}")
@@ -362,7 +363,7 @@ class AlasGUI(Frame):
                     akashi_rate = "-"
 
                 try:
-                    ap_bought = compute_monthly_cl1_akashi_ap()
+                    ap_bought = compute_monthly_cl1_akashi_ap(instance_name=instance_name)
                 except Exception:
                     ap_bought = "-"
 
@@ -397,7 +398,7 @@ class AlasGUI(Frame):
                 table = [labels, values]
 
                 with use_scope("opsi_stats", clear=True):
-                    put_html('<div style="margin-top:12px; margin-bottom:8px; font-weight:600">侵蚀一数据收集</div>')
+                    put_html('<div style="margin-top:12px; margin-bottom:8px; font-weight:600">雪风大人的侵蚀一数据收集</div>')
                     put_row([put_text(f"当月购买体力: {ap_bought}")])
                     html = '<table style="width:100%; border-collapse:collapse;">'
                     html += '<thead><tr>' + ''.join([f'<th style="text-align:left;padding:6px">{l}</th>' for l in labels]) + '</tr></thead>'
@@ -413,7 +414,8 @@ class AlasGUI(Frame):
                             return
 
                         try:
-                            s_local = get_opsi_stats().summary() or {}
+                            instance_name_local = self.alas_name if hasattr(self, 'alas_name') and self.alas_name else None
+                            s_local = get_opsi_stats(instance_name=instance_name_local).summary() or {}
                         except Exception:
                             s_local = {}
 
@@ -434,7 +436,7 @@ class AlasGUI(Frame):
                             akashi_percent_local = 0.0
 
                         try:
-                            purchased_local = compute_monthly_cl1_akashi_ap() or 0
+                            purchased_local = compute_monthly_cl1_akashi_ap(instance_name=instance_name_local) or 0
                         except Exception:
                             purchased_local = 0
 
