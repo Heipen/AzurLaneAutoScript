@@ -9,11 +9,15 @@ from module.config.utils import (get_nearest_weekday_date,
                                  get_server_next_update,
                                  DEFAULT_TIME)
 from module.exception import RequestHumanTakeover, GameStuckError, ScriptError
+from module.equipment.assets import EQUIPMENT_OPEN
 from module.logger import logger
 from module.map.map_grids import SelectedGrids
+from module.os.assets import FLEET_FLAGSHIP
 from module.os.fleet import BossFleet
 from module.os.globe_operation import OSExploreError
 from module.os.map import OSMap
+from module.os.ship_exp import ship_info_get_level_exp
+from module.os.ship_exp_data import LIST_SHIP_EXP
 from module.os_handler.action_point import OCR_OS_ADAPTABILITY, ActionPointLimit
 from module.os_handler.assets import (OS_MONTHBOSS_NORMAL, OS_MONTHBOSS_HARD, OS_SUBMARINE_EMPTY,
                                       EXCHANGE_CHECK, EXCHANGE_ENTER, MISSION_COMPLETE_POPUP)
@@ -625,6 +629,90 @@ class OperationSiren(OSMap):
                 logger.debug(f'CL1 data submission failed: {e}')
 
             self.config.check_task_switch()
+
+
+    def os_check_leveling(self):
+        logger.hr('OS check leveling', level=1)
+        logger.attr('OpsiCheckLeveling_LastRun', self.config.OpsiCheckLeveling_LastRun)
+        time_run = self.config.OpsiCheckLeveling_LastRun + timedelta(days=1)
+        logger.info(f'Task OpsiCheckLeveling run time is {time_run}')
+        if datetime.now().replace(microsecond=0) < time_run:
+            logger.info('Not running time, skip')
+            return
+        target_level = self.config.OpsiCheckLeveling_TargetLevel
+        if not isinstance(target_level, int) or target_level < 0 or target_level > 125:
+            logger.error(f'Invalid target level: {target_level}, must be an integer between 0 and 125')
+            raise ScriptError(f'Invalid opsi ship target level: {target_level}')
+        if target_level == 0:
+            logger.info('Target level is 0, skip')
+            return
+
+        logger.attr('Fleet to check', self.config.OpsiFleet_Fleet)
+        self.fleet_set(self.config.OpsiFleet_Fleet)
+        self.ship_info_enter(FLEET_FLAGSHIP)
+        all_full_exp = True
+        
+        # 收集所有舰船数据
+        ship_data_list = []
+        position = 1
+
+        while 1:
+            self.device.screenshot()
+            level, exp = ship_info_get_level_exp(main=self)
+            total_exp = LIST_SHIP_EXP[level - 1] + exp
+            logger.info(f'Position: {position}, Level: {level}, Exp: {exp}, Total Exp: {total_exp}, Target Exp: {LIST_SHIP_EXP[target_level - 1]}')
+            
+            # 保存舰船数据
+            ship_data_list.append({
+                'position': position,
+                'level': level,
+                'current_exp': exp,
+                'total_exp': total_exp
+            })
+            
+            if total_exp < LIST_SHIP_EXP[target_level - 1]:
+                all_full_exp = False
+            
+            if not self.ship_view_next():
+                break
+            position += 1
+
+        # 保存所有舰船数据到JSON
+        try:
+            from module.statistics.ship_exp_stats import save_ship_exp_data
+            from module.statistics.opsi_month import get_opsi_stats
+            
+            # 获取当前实例名称
+            instance_name = self.config.config_name if hasattr(self.config, 'config_name') else None
+            
+            # 使用实例名获取战绩，确保战斗场次正确
+            current_battles = get_opsi_stats(instance_name=instance_name).summary().get('total_battles', 0)
+            
+            save_ship_exp_data(
+                ships=ship_data_list,
+                target_level=target_level,
+                fleet_index=self.config.OpsiFleet_Fleet,
+                battle_count_at_check=current_battles,
+                instance_name=instance_name  # 指定实例名称保存数据
+            )
+        except Exception as e:
+            logger.warning(f'Failed to save ship exp data: {e}')
+
+        if all_full_exp:
+            logger.info(f'All ships in fleet {self.config.OpsiFleet_Fleet} are full exp, '
+                        f'level {target_level} or above')
+            handle_notify(
+                self.config.Error_OnePushConfig,
+                title=f"Alas <{self.config.config_name}> level check passed",
+                content=f"<{self.config.config_name}> {self.config.task} reached level limit {target_level} or above."
+            )
+        self.ui_back(appear_button=EQUIPMENT_OPEN, check_button=self.is_in_map)
+        self.config.OpsiCheckLeveling_LastRun = datetime.now().replace(microsecond=0)
+        if all_full_exp and self.config.OpsiCheckLeveling_DelayAfterFull:
+            logger.info('Delay task after all ships are full exp')
+            self.config.task_delay(server_update=True)
+            self.config.task_stop()
+
 
     def _os_explore_task_delay(self):
         """

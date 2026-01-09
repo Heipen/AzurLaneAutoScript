@@ -655,6 +655,11 @@ class GeneratedConfig:
     OpsiHazard1Leveling_OperationCoinsPreserve = 100000
     OpsiHazard1Leveling_DoScanningDevice = False
 
+    # Group `OpsiCheckLeveling`
+    OpsiCheckLeveling_TargetLevel = 0
+    OpsiCheckLeveling_LastRun = datetime.datetime(2020, 1, 1, 0, 0)
+    OpsiCheckLeveling_DelayAfterFull = False
+
     # Group `Daemon`
     Daemon_EnterMap = True
 

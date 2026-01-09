@@ -505,6 +505,83 @@ class AlasGUI(Frame):
             put_scope("opsi_stats", [])
             _render_opsi_stats()
 
+            # ========== 舰船经验检测表格 ==========
+            def _render_ship_exp():
+                try:
+                    from module.statistics.ship_exp_stats import get_ship_exp_stats
+                    from module.statistics.opsi_month import get_opsi_stats as get_opsi_stats_func
+                    # 使用当前实例名称获取统计数据
+                    instance_name = self.alas_name if hasattr(self, 'alas_name') and self.alas_name else None
+                    stats = get_ship_exp_stats(instance_name=instance_name)
+                    if not stats.data or not stats.data.get('ships'):
+                        with use_scope("ship_exp_table", clear=True):
+                            put_html('<div style="color:#888; margin:12px 0">暂无舰船经验数据，请先运行"每日经验检测"任务</div>')
+                        return
+                    
+                    current_battles = get_opsi_stats_func(instance_name=instance_name).summary().get('total_battles', 0)
+                    target_level = stats.data.get('target_level', 125)
+                    avg_battle_time = stats.get_average_battle_time()
+                    exp_per_hour = stats.get_exp_per_hour()
+                    today_stats = stats.get_today_stats()
+                    
+                    # 从daily_stats获取今日战斗场次
+                    today_battles = today_stats.get('battle_count', 0) if today_stats else 0
+                    
+                    labels = ["舰位", "等级", "当前经验(本级)", "总经验", 
+                              "目标等级所需经验", "已战斗场次", "还需经验", 
+                              "还需出击", "预计时间"]
+                    
+                    rows = []
+                    for ship in stats.data.get('ships', []):
+                        progress = stats.calculate_progress(ship, target_level, current_battles)
+                        # 使用今日daily_stats的battle_count作为已战斗场次
+                        rows.append([
+                            progress['position'],
+                            progress['level'],
+                            progress['current_exp'],
+                            progress['total_exp'],
+                            progress['target_exp'],
+                            today_battles,  # 使用今日battle_count而非计算值
+                            progress['exp_needed'],
+                            progress['battles_needed'],
+                            progress['time_needed']
+                        ])
+                    
+                    with use_scope("ship_exp_table", clear=True):
+                        put_html('<div style="margin-top:16px; margin-bottom:8px; font-weight:600">每日经验检测：识别到的舰娘等级与升级进度</div>')
+                        put_text(f"上次检查时间: {stats.data.get('last_check_time', '-')}")
+                        
+                        # 显示效率统计
+                        put_row([
+                            put_text(f"平均战斗时间: {avg_battle_time:.1f}秒"),
+                            put_text(f"经验效率: {exp_per_hour:.0f}/小时"),
+                        ])
+                        
+                        # 显示今日统计
+                        if today_stats:
+                            run_minutes = int(today_stats.get('total_run_time', 0) // 60)
+                            put_row([
+                                put_text(f"今日战斗: {today_stats.get('battle_count', 0)}场"),
+                                put_text(f"今日经验: {today_stats.get('total_exp_gained', 0)}"),
+                                put_text(f"今日运行: {run_minutes}分钟"),
+                            ])
+                        
+                        html = '<table style="width:100%; border-collapse:collapse; margin-top:8px;">'
+                        html += '<thead><tr>' + ''.join([f'<th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">{l}</th>' for l in labels]) + '</tr></thead>'
+                        html += '<tbody>'
+                        for row in rows:
+                            html += '<tr>' + ''.join([f'<td style="text-align:center;padding:6px;border-bottom:1px solid #eee">{v}</td>' for v in row]) + '</tr>'
+                        html += '</tbody></table>'
+                        put_html(html)
+                        
+                        put_button("刷新", onclick=_render_ship_exp, color="off")
+                except Exception as e:
+                    with use_scope("ship_exp_table", clear=True):
+                        put_text(f"加载舰船经验数据失败: {e}")
+
+            put_scope("ship_exp_table", [])
+            _render_ship_exp()
+
         put_scope("_groups", [put_none(), put_scope("groups"), put_scope("navigator")])
 
         task_help: str = t(f"Task.{task}.help")
