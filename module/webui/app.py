@@ -397,7 +397,7 @@ class AlasGUI(Frame):
                 table = [labels, values]
 
                 with use_scope("opsi_stats", clear=True):
-                    put_html('<div style="margin-top:12px; margin-bottom:8px; font-weight:600">雪风大人的侵蚀一数据收集</div>')
+                    put_html('<div style="margin-top:12px; margin-bottom:8px; font-weight:600">侵蚀一数据收集</div>')
                     put_row([put_text(f"当月购买体力: {ap_bought}")])
                     html = '<table style="width:100%; border-collapse:collapse;">'
                     html += '<thead><tr>' + ''.join([f'<th style="text-align:left;padding:6px">{l}</th>' for l in labels]) + '</tr></thead>'
