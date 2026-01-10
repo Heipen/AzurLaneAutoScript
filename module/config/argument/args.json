@@ -11036,6 +11036,10 @@
           22
         ]
       },
+      "OperationCoinsPreserve": {
+        "type": "input",
+        "value": 100000
+      },
       "MinimumActionPointReserve": {
         "type": "input",
         "value": 200
@@ -11043,14 +11047,36 @@
       "ExecuteFixedPatrolScan": {
         "type": "checkbox",
         "value": false
-      },
-      "OperationCoinsPreserve": {
-        "type": "input",
-        "value": 100000
-      },
-      "DoScanningDevice": {
+      }
+    },
+    "OpsiSirenBug": {
+      "SirenResearch_Enable": {
         "type": "checkbox",
         "value": false
+      },
+      "SirenBug_Enable": {
+        "type": "checkbox",
+        "value": false
+      },
+      "SirenBug_Type": {
+        "type": "select",
+        "value": "dangerous",
+        "option": [
+          "dangerous",
+          "safe"
+        ]
+      },
+      "SirenBug_Zone": {
+        "type": "input",
+        "value": 0
+      },
+      "DisableTaskSwitchDuringBug": {
+        "type": "checkbox",
+        "value": false,
+        "option": [
+          true,
+          false
+        ]
       }
     },
     "OpsiFleet": {
@@ -11083,6 +11109,17 @@
       "DelayAfterFull": {
         "type": "checkbox",
         "value": false
+      }
+    },
+    "OpsiScheduling": {
+      "EnableSmartScheduling": {
+        "type": "checkbox",
+        "value": false
+      },
+      "ActionPointNotifyLevels": {
+        "type": "input",
+        "value": "500,1000,2000,3000",
+        "valuetype": "str"
       }
     },
     "Storage": {

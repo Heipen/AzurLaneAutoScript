@@ -29,6 +29,13 @@ from module.ui.page import page_os
 
 
 class OperationSiren(OSMap):
+    def __init__(self, *args, **kwargs):
+        try:
+            super().__init__(*args, **kwargs)
+        except Exception as e:
+            logger.exception("OperationSiren init failed")
+            raise
+
     def os_port_mission(self):
         """
         Visit all ports and do the daily mission in it.
@@ -345,7 +352,11 @@ class OperationSiren(OSMap):
                     logger.hr(f'OS meowfficer farming, zone_id={zone.zone_id}', level=1)
                     self.globe_goto(zone, types='SAFE', refresh=True)
                     self.fleet_set(self.config.OpsiFleet_Fleet)
-                    self.run_strategic_search()
+                    if self.run_strategic_search():
+                        self._solved_map_event = set()
+                        self._solved_fleet_mechanism = False
+                        self.clear_question()
+                        self.map_rescan()
                     self.handle_after_auto_search()
             else:
                 zones = self.zone_select(hazard_level=OpsiMeowfficerFarming_HazardLevel) \
@@ -446,17 +457,136 @@ class OperationSiren(OSMap):
         logger.attr('OpsiNextReset', next_reset)
         self.config.task_delay(target=next_reset)
 
+    def notify_push(self, title, content):
+        """
+        发送推送通知（智能调度功能）
+        
+        Args:
+            title (str): 通知标题（会自动添加实例名称前缀）
+            content (str): 通知内容
+            
+        Notes:
+            - 仅在启用智能调度时生效
+            - 需要在配置中设置 Error_OnePushConfig 才能发送推送
+            - 使用 onepush 库发送通知到配置的推送渠道
+            - 标题会自动格式化为 "[Alas <实例名>] 原标题" 的形式
+        """
+        # 检查是否启用智能调度
+        if not self.config.OpsiScheduling_EnableSmartScheduling:
+            return
+            
+        # 检查是否配置了推送
+        # 默认值是 'provider: null'，需要检查 provider 是否有效
+        push_config = self.config.Error_OnePushConfig
+        if not push_config or 'provider: null' in push_config or 'provider:null' in push_config:
+            logger.warning("推送配置未设置或 provider 为 null，跳过推送。请在 Alas 设置 -> 错误处理 -> OnePush 配置中设置有效的推送渠道。")
+            return
+        
+        # 获取实例名称并格式化标题
+        instance_name = getattr(self.config, 'config_name', 'Alas')
+        # 如果标题已经包含 [Alas]，替换为带实例名的版本
+        if title.startswith('[Alas]'):
+            formatted_title = f"[Alas <{instance_name}>]{title[6:]}"
+        else:
+            formatted_title = f"[Alas <{instance_name}>] {title}"
+            
+        # 导入并调用推送通知模块
+        from module.notify.notify import handle_notify
+        try:
+            success = handle_notify(
+                self.config.Error_OnePushConfig,
+                title=formatted_title,
+                content=content
+            )
+            if success:
+                logger.info(f"✓ 推送通知成功: {formatted_title}")
+            else:
+                logger.warning(f"✗ 推送通知失败: {formatted_title}")
+        except Exception as e:
+            logger.error(f"推送通知异常: {e}")
+
+    def check_and_notify_action_point_threshold(self):
+        """
+        检查行动力是否跨越阈值并发送推送通知
+        
+        应在每次执行 action_point_set() 后调用此方法
+        
+        功能说明:
+            1. 从配置中读取阈值列表（如 500, 1000, 2000, 3000）
+            2. 判断当前行动力所在的阈值区间
+            3. 如果跨越了新的阈值区间，发送推送通知
+            4. 记录上次通知的阈值，避免重复推送
+            
+        示例:
+            - 行动力从 400 升至 600，会推送"升至500+"
+            - 行动力从 1200 降至 900，会推送"降至1000以下"
+        """
+        # 检查是否启用智能调度
+        if not getattr(self.config, 'OpsiScheduling_EnableSmartScheduling', False):
+            return
+            
+        # 初始化上次通知的阈值记录（首次调用时为 None）
+        if not hasattr(self, '_last_notified_ap_threshold'):
+            self._last_notified_ap_threshold = None
+        
+        # 获取当前行动力总量
+        current_ap = self._action_point_total
+        
+        # 解析配置的阈值列表
+        try:
+            levels_str = getattr(self.config, 'OpsiScheduling_ActionPointNotifyLevels', '500, 1000, 2000, 3000')
+            thresholds = [int(x.strip()) for x in levels_str.split(',')]
+        except Exception as e:
+            logger.warning(f"解析行动力阈值配置失败: {e}")
+            return
+        
+        # 确定当前所在的阈值区间
+        # 从高到低遍历阈值，找到第一个小于等于当前行动力的阈值
+        current_threshold = None
+        for threshold in sorted(thresholds, reverse=True):
+            if current_ap >= threshold:
+                current_threshold = threshold
+                break
+        
+        # 如果跨越了阈值区间，发送推送通知
+        if current_threshold != self._last_notified_ap_threshold:
+            if current_threshold is not None:
+                # 判断是升至还是降至该阈值
+                if self._last_notified_ap_threshold is None:
+                    # 首次检测，直接通知当前所在区间
+                    direction = "当前"
+                elif self._last_notified_ap_threshold < current_threshold:
+                    # 行动力增加，升至更高阈值
+                    direction = "升至"
+                else:
+                    # 行动力减少，降至较低阈值
+                    direction = "降至"
+                
+                self.notify_push(
+                    title="[Alas] 行动力阈值变化",
+                    content=f"行动力{direction}{current_threshold}+ (当前: {current_ap})"
+                )
+            elif self._last_notified_ap_threshold is not None:
+                # 降到最低阈值以下
+                lowest = min(thresholds)
+                self.notify_push(
+                    title="[Alas] 行动力阈值变化", 
+                    content=f"行动力降至{lowest}以下 (当前: {current_ap})"
+                )
+            
+            # 更新上次通知的阈值记录
+            self._last_notified_ap_threshold = current_threshold
+
     def os_meowfficer_farming(self):
         """
         Recommend 3 or 5 for higher meowfficer searching point per action points ratio.
         """
         logger.hr(f'OS meowfficer farming, hazard_level={self.config.OpsiMeowfficerFarming_HazardLevel}', level=1)
-        if self.is_cl1_enabled and self.config.OpsiMeowfficerFarming_ActionPointPreserve < 1000:
-            logger.info('With CL1 leveling enabled, set action point preserve to 1000')
-            self.config.OpsiMeowfficerFarming_ActionPointPreserve = 1000
-        preserve = min(self.get_action_point_limit(), self.config.OpsiMeowfficerFarming_ActionPointPreserve)
-        #if getattr(self.config, 'OpsiMeowfficerFarming_StayInZone', False):
-        #    preserve = 0
+        if self.is_cl1_enabled and self.config.OpsiMeowfficerFarming_ActionPointPreserve < 500:
+            logger.info('With CL1 leveling enabled, set action point preserve to 500')
+            self.config.OpsiMeowfficerFarming_ActionPointPreserve = 500
+        preserve = min(self.get_action_point_limit(self.config.OpsiMeowfficerFarming_APPreserveUntilReset),
+                       self.config.OpsiMeowfficerFarming_ActionPointPreserve)
         if preserve == 0:
             self.config.override(OpsiFleet_Submarine=False)
         if self.is_cl1_enabled:
@@ -494,12 +624,60 @@ class OperationSiren(OSMap):
                 # When not running CL1 and use oil
                 keep_current_ap = True
                 check_rest_ap = True
-                if self.is_cl1_enabled and self.cl1_enough_yellow_coins:
+                if self.is_cl1_enabled and self.get_yellow_coins() >= self.config.OpsiHazard1Leveling_OperationCoinsPreserve:
                     check_rest_ap = False
                 if not self.is_cl1_enabled and self.config.OpsiGeneral_BuyActionPointLimit > 0:
                     keep_current_ap = False
-                self.action_point_set(cost=0, keep_current_ap=keep_current_ap, check_rest_ap=check_rest_ap)
+                if self.is_cl1_enabled and self.cl1_enough_yellow_coins:
+                    check_rest_ap = False
+                    try:
+                        self.action_point_set(cost=0, keep_current_ap=keep_current_ap, check_rest_ap=check_rest_ap)
+                    except ActionPointLimit:
+                        self.config.task_delay(server_update=True)
+                        self.config.task_call('OpsiHazard1Leveling')
+                        self.config.task_stop()
+                else:
+                    self.action_point_set(cost=0, keep_current_ap=keep_current_ap, check_rest_ap=check_rest_ap)
                 ap_checked = True
+                
+                # ===== 智能调度: 行动力阈值推送检查 =====
+                # 在设置行动力后检查是否跨越阈值并推送通知
+                self.check_and_notify_action_point_threshold()
+                
+                # ===== 智能调度: 短猫相接行动力不足检查 =====
+                # 检查当前行动力是否低于配置的保留值
+                if getattr(self.config, 'OpsiScheduling_EnableSmartScheduling', False):
+
+                    if self._action_point_total < self.config.OpsiMeowfficerFarming_ActionPointPreserve:
+                        logger.info(f'【智能调度】短猫相接行动力不足 ({self._action_point_total} < {self.config.OpsiMeowfficerFarming_ActionPointPreserve})')
+                        
+                        # 获取当前黄币数量
+                        yellow_coins = self.get_yellow_coins()
+                        
+                        # 推送通知
+                        if self.is_cl1_enabled:
+                            self.notify_push(
+                                title="[Alas] 短猫相接 - 切换至侵蚀1",
+                                content=f"行动力 {self._action_point_total} 不足 (需要 {self.config.OpsiMeowfficerFarming_ActionPointPreserve})\n黄币: {yellow_coins}\n推迟短猫1小时，切换至侵蚀1继续执行"
+                            )
+                        else:
+                            self.notify_push(
+                                title="[Alas] 短猫相接 - 行动力不足",
+                                content=f"行动力 {self._action_point_total} 不足 (需要 {self.config.OpsiMeowfficerFarming_ActionPointPreserve})\n黄币: {yellow_coins}\n推迟1小时"
+                            )
+                        
+                        # 推迟短猫1小时
+                        logger.info('推迟短猫相接1小时')
+                        self.config.task_delay(minute=60)
+                        
+                        # 如果启用了侵蚀1，立即切换回侵蚀1继续执行
+                        if self.is_cl1_enabled:
+                            logger.info('切换回侵蚀1继续执行')
+                            with self.config.multi_set():
+                                self.config.task_call('OpsiHazard1Leveling')
+                        
+                        # 停止当前短猫任务
+                        self.config.task_stop()
 
             # (1252, 1012) is the coordinate of zone 134 (the center zone) in os_globe_map.png
             if self.config.OpsiMeowfficerFarming_TargetZone != 0:
@@ -512,7 +690,11 @@ class OperationSiren(OSMap):
                     logger.hr(f'OS meowfficer farming, zone_id={zone.zone_id}', level=1)
                     self.globe_goto(zone, types='SAFE', refresh=True)
                     self.fleet_set(self.config.OpsiFleet_Fleet)
-                    self.run_strategic_search()
+                    if self.run_strategic_search():
+                        self._solved_map_event = set()
+                        self._solved_fleet_mechanism = False
+                        self.clear_question()
+                        self.map_rescan()
                     self.handle_after_auto_search()
                     self.config.check_task_switch()
             else:
@@ -555,22 +737,60 @@ class OperationSiren(OSMap):
                 self.config.OS_ACTION_POINT_PRESERVE = 0
             logger.attr('OS_ACTION_POINT_PRESERVE', self.config.OS_ACTION_POINT_PRESERVE)
 
-            if self.get_yellow_coins() < self.config.OpsiHazard1Leveling_OperationCoinsPreserve:
-                logger.info(f'Reach the limit of yellow coins, preserve={self.config.OpsiHazard1Leveling_OperationCoinsPreserve}')
-                with self.config.multi_set():
-                    self.config.task_delay(minute=27, server_update=True)
-                    if not self.is_in_opsi_explore():
-                        if self.nearest_task_cooling_down is None:
-                            for task in ['OpsiAbyssal', 'OpsiObscure']:
-                                self.config.task_call(task, force_call=False)
-                            if self.config.is_task_enabled('OpsiStronghold'):
-                                if self.config.cross_get(keys='OpsiStronghold.OpsiStronghold.HasStronghold'):
-                                    self.config.task_call('OpsiStronghold')
-                                else:
-                                    logger.info('No stronghold left, skip task call')
-                        self.config.task_call('OpsiMeowfficerFarming', force_call=False)
-                self.config.task_stop()
 
+            # ===== 智能调度: 黄币检查与任务切换 =====
+            # 检查黄币是否低于保留值
+            yellow_coins = self.get_yellow_coins()
+            if self.config.OpsiScheduling_EnableSmartScheduling:
+                # 启用了智能调度
+                if yellow_coins < self.config.OpsiHazard1Leveling_OperationCoinsPreserve:
+                    logger.info(f'【智能调度】黄币不足 ({yellow_coins} < {self.config.OpsiHazard1Leveling_OperationCoinsPreserve}), 需要执行短猫相接')
+
+                    # 先获取当前行动力数据（包含箱子里的行动力）
+                    # 需要先进入行动力界面才能读取数据
+                    self.action_point_enter()
+                    self.action_point_safe_get()
+                    self.action_point_quit()
+
+                    # 使用 cross_get 读取短猫相接任务的行动力保留值（而非当前任务的配置）
+                    meow_ap_preserve = int(self.config.cross_get(
+                        keys='OpsiMeowfficerFarming.OpsiMeowfficerFarming.ActionPointPreserve',
+                        default=1000
+                    ))
+
+                    # 检查行动力是否足够执行短猫相接
+                    if self._action_point_total < meow_ap_preserve:
+                        # 行动力也不足，推迟并推送通知
+                        logger.warning(f'行动力不足以执行短猫 ({self._action_point_total} < {meow_ap_preserve})')
+
+                        self.notify_push(
+                            title="[Alas] 侵蚀1 - 黄币与行动力双重不足",
+                            content=f"黄币 {yellow_coins} 低于保留值 {self.config.OpsiHazard1Leveling_OperationCoinsPreserve}\n行动力 {self._action_point_total} 不足 (需要 {meow_ap_preserve})\n推迟1小时"
+                        )
+
+                        logger.info('推迟侵蚀1任务1小时')
+                        self.config.task_delay(minute=60)
+                        self.config.task_stop()
+                    else:
+                        # 行动力充足，切换到短猫相接获取黄币
+                        logger.info(f'行动力充足 ({self._action_point_total}), 切换到短猫相接获取黄币')
+                        self.notify_push(
+                            title="[Alas] 侵蚀1 - 切换至短猫相接",
+                            content=f"黄币 {yellow_coins} 低于保留值 {self.config.OpsiHazard1Leveling_OperationCoinsPreserve}\n行动力: {self._action_point_total} (需要 {meow_ap_preserve})\n切换至短猫相接获取黄币"
+                        )
+
+                        with self.config.multi_set():
+                            self.config.task_call('OpsiMeowfficerFarming')
+                        self.config.task_stop()
+            else:
+                # 未启用智能调度，保持原有逻辑
+                if yellow_coins < self.config.OpsiHazard1Leveling_OperationCoinsPreserve:
+                    logger.info(f'Reach the limit of yellow coins, preserve={self.config.OpsiHazard1Leveling_OperationCoinsPreserve}')
+                    with self.config.multi_set():
+                        self.config.task_delay(server_update=True)
+                    self.config.task_stop()
+
+            # 获取当前区域
             self.get_current_zone()
 
             # Preset action point to 70
@@ -578,7 +798,27 @@ class OperationSiren(OSMap):
             keep_current_ap = True
             if self.config.OpsiGeneral_BuyActionPointLimit > 0:
                 keep_current_ap = False
-            self.action_point_set(cost=70, keep_current_ap=keep_current_ap, check_rest_ap=True)
+            self.action_point_set(cost=120, keep_current_ap=keep_current_ap, check_rest_ap=True)
+
+            # ===== 智能调度: 行动力阈值推送检查 =====
+            # 在设置行动力后检查是否跨越阈值并推送通知
+            self.check_and_notify_action_point_threshold()
+
+            # ===== 智能调度: 最低行动力保留检查 =====
+            # 检查当前行动力是否低于最低保留值
+            if getattr(self.config, 'OpsiScheduling_EnableSmartScheduling', False):
+                min_reserve = self.config.OpsiHazard1Leveling_MinimumActionPointReserve
+                if self._action_point_total < min_reserve:
+                    logger.warning(f'【智能调度】行动力低于最低保留 ({self._action_point_total} < {min_reserve})')
+
+                    self.notify_push(
+                        title="[Alas] 侵蚀1 - 行动力低于最低保留",
+                        content=f"当前行动力 {self._action_point_total} 低于最低保留 {min_reserve}，推迟1小时"
+                    )
+
+                    logger.info('推迟侵蚀1任务1小时')
+                    self.config.task_delay(minute=60)
+                    self.config.task_stop()
 
             if self.config.OpsiHazard1Leveling_TargetZone != 0:
                 zone = self.config.OpsiHazard1Leveling_TargetZone
@@ -588,14 +828,27 @@ class OperationSiren(OSMap):
             if self.zone.zone_id != zone or not self.is_zone_name_hidden:
                 self.globe_goto(self.name_to_zone(zone), types='SAFE', refresh=True)
             self.fleet_set(self.config.OpsiFleet_Fleet)
-            self.run_strategic_search()
-            self.get_current_zone()
-            if self.is_zone_name_hidden and not len(self._solved_map_event):
-                self.fleets_clear_question()
-            if self.config.OpsiHazard1Leveling_ExecuteFixedPatrolScan:
-                exec_fixed = getattr(self.config, 'OpsiHazard1Leveling_ExecuteFixedPatrolScan', False)
-                if exec_fixed:
-                    self._execute_fixed_patrol_scan(ExecuteFixedPatrolScan=True)
+            search_completed = self.run_strategic_search()
+
+            # 只有战略搜索正常完成时才执行重扫（被中断时不执行）
+            if search_completed:
+                # ===== 第一次重扫：战略搜索后的完整镜头重扫 =====
+                self._solved_map_event = set()
+                self._solved_fleet_mechanism = False
+                self.clear_question()
+                self.map_rescan()
+
+                # ===== 舰队移动搜索（如果启用且没有发现事件）=====
+                if self.config.OpsiHazard1Leveling_ExecuteFixedPatrolScan:
+                    exec_fixed = getattr(self.config, 'OpsiHazard1Leveling_ExecuteFixedPatrolScan', False)
+                    # 只有在第一次重扫没有发现事件时才执行舰队移动
+                    if exec_fixed and not self._solved_map_event:
+                        self._execute_fixed_patrol_scan(ExecuteFixedPatrolScan=True)
+                        # ===== 第二次重扫：舰队移动后再次重扫 =====
+                        self._solved_map_event = set()
+                        self.clear_question()
+                        self.map_rescan()
+
             self.handle_after_auto_search()
             solved_events = getattr(self, '_solved_map_event', set())
             if 'is_akashi' in solved_events:

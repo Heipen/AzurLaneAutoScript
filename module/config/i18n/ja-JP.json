@@ -4111,6 +4111,10 @@
       "44": "44",
       "22": "22"
     },
+    "OperationCoinsPreserve": {
+      "name": "OpsiHazard1Leveling.OperationCoinsPreserve.name",
+      "help": "OpsiHazard1Leveling.OperationCoinsPreserve.help"
+    },
     "MinimumActionPointReserve": {
       "name": "保留 X 点行动力",
       "help": "搏一搏，单车变摩托，雪风大人已经把幸运分给指挥官了nanoda，上吧nanoda！"
@@ -4118,14 +4122,36 @@
     "ExecuteFixedPatrolScan": {
       "name": "舰队强制移动",
       "help": "雪风大人温馨提示：开启后，将强制移动舰队以免找不到明石，指挥官你也不想因为找不到明石导致坠机nanoda？打开这个功能轻轻松松达到50万+海里每月nanoda，指挥官还在等什么nanoda!"
+    }
+  },
+  "OpsiSirenBug": {
+    "_info": {
+      "name": "OpsiSirenBug._info.name",
+      "help": "OpsiSirenBug._info.help"
     },
-    "OperationCoinsPreserve": {
-      "name": "OpsiHazard1Leveling.OperationCoinsPreserve.name",
-      "help": "OpsiHazard1Leveling.OperationCoinsPreserve.help"
+    "SirenResearch_Enable": {
+      "name": "OpsiSirenBug.SirenResearch_Enable.name",
+      "help": "OpsiSirenBug.SirenResearch_Enable.help"
     },
-    "DoScanningDevice": {
-      "name": "OpsiHazard1Leveling.DoScanningDevice.name",
-      "help": "OpsiHazard1Leveling.DoScanningDevice.help"
+    "SirenBug_Enable": {
+      "name": "OpsiSirenBug.SirenBug_Enable.name",
+      "help": "OpsiSirenBug.SirenBug_Enable.help"
+    },
+    "SirenBug_Type": {
+      "name": "OpsiSirenBug.SirenBug_Type.name",
+      "help": "OpsiSirenBug.SirenBug_Type.help",
+      "dangerous": "dangerous",
+      "safe": "safe"
+    },
+    "SirenBug_Zone": {
+      "name": "OpsiSirenBug.SirenBug_Zone.name",
+      "help": "OpsiSirenBug.SirenBug_Zone.help"
+    },
+    "DisableTaskSwitchDuringBug": {
+      "name": "OpsiSirenBug.DisableTaskSwitchDuringBug.name",
+      "help": "OpsiSirenBug.DisableTaskSwitchDuringBug.help",
+      "True": "True",
+      "False": "False"
     }
   },
   "OpsiCheckLeveling": {
@@ -4144,6 +4170,20 @@
     "DelayAfterFull": {
       "name": "OpsiCheckLeveling.DelayAfterFull.name",
       "help": "OpsiCheckLeveling.DelayAfterFull.help"
+    }
+  },
+  "OpsiScheduling": {
+    "_info": {
+      "name": "OpsiScheduling._info.name",
+      "help": "OpsiScheduling._info.help"
+    },
+    "EnableSmartScheduling": {
+      "name": "OpsiScheduling.EnableSmartScheduling.name",
+      "help": "OpsiScheduling.EnableSmartScheduling.help"
+    },
+    "ActionPointNotifyLevels": {
+      "name": "OpsiScheduling.ActionPointNotifyLevels.name",
+      "help": "OpsiScheduling.ActionPointNotifyLevels.help"
     }
   },
   "Daemon": {

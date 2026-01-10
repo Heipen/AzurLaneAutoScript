@@ -4111,6 +4111,10 @@
       "44": "44 | 西大陆架D",
       "22": "22 | NA海域西南B"
     },
+    "OperationCoinsPreserve": {
+      "name": "保留 X 个作战补给凭证",
+      "help": "作战补给凭证低于 X 时运行短猫相接，不建议修改"
+    },
     "MinimumActionPointReserve": {
       "name": "保留 X 点行动力",
       "help": ""
@@ -4118,14 +4122,36 @@
     "ExecuteFixedPatrolScan": {
       "name": "舰队强制移动",
       "help": "开启后，将强制移动舰队以免找不到明石"
+    }
+  },
+  "OpsiSirenBug": {
+    "_info": {
+      "name": "塞壬研究装置Bug利用",
+      "help": "专门用于配置塞壬研究装置及其Bug利用的相关选项"
     },
-    "OperationCoinsPreserve": {
-      "name": "保留 X 个作战补给凭证",
-      "help": "作战补给凭证低于 X 时运行短猫相接，不建议修改"
+    "SirenResearch_Enable": {
+      "name": "塞壬研究装置",
+      "help": "消耗紫币换黄币，一个月没有几十万海里慎用!"
     },
-    "DoScanningDevice": {
-      "name": "做塞壬探测装置",
-      "help": "消耗紫币换取黄币，可能会导致紫币不足"
+    "SirenBug_Enable": {
+      "name": "塞壬研究装置Bug利用(实验性)",
+      "help": "利用塞壬研究装置Bug，无限刷取高侵蚀区域塞壬研究装置资源\n启用该功能前需启用塞壬研究装置功能，否则该功能将不生效"
+    },
+    "SirenBug_Type": {
+      "name": "海域类型切换",
+      "help": "选择前往的海域是安全海域还是普通海域",
+      "dangerous": "普通海域",
+      "safe": "安全海域"
+    },
+    "SirenBug_Zone": {
+      "name": "指定Bug利用区域(实验性)",
+      "help": "指定已刷出塞壬研究装置的高侵蚀区域\n支持海域ID、国服/国际服/日服/台服海域名称，例如 \"51\", \"NA海域东南E\", \"NA Ocean SE Sector E\"\n填入默认值0，或者删除数值即可取消指定"
+    },
+    "DisableTaskSwitchDuringBug": {
+      "name": "Bug利用期间禁止任务切换 (实验性)",
+      "help": "⚠️ 实验性功能 ⚠️\nBug利用期间临时禁用调度器的任务切换检查，避免被委托、日常等任务打断\n如果Bug利用过程中经常被其他到时任务中断，可以启用此选项",
+      "True": "True",
+      "False": "False"
     }
   },
   "OpsiCheckLeveling": {
@@ -4144,6 +4170,20 @@
     "DelayAfterFull": {
       "name": "到达目标等级后推迟任务",
       "help": ""
+    }
+  },
+  "OpsiScheduling": {
+    "_info": {
+      "name": "智能调度Beta",
+      "help": "侵蚀1与短猫相接之间的智能调度功能\n启用后将根据黄币和行动力自动切换任务并发送推送通知"
+    },
+    "EnableSmartScheduling": {
+      "name": "启用智能调度",
+      "help": "启用后将自动管理侵蚀1和短猫相接之间的切换s\n• 黄币不足且行动力充足时 → 自动切换到短猫获取黄币\n• 黄币不足且行动力也不足时 → 推迟1小时并推送通知\n• 短猫中行动力不足时 → 推迟短猫并切换回侵蚀1\n• 侵蚀1行动力低于最低保留时 → 推迟1小时并推送通知\n• 行动力跨越阈值时 → 发送推送通知"
+    },
+    "ActionPointNotifyLevels": {
+      "name": "行动力推送阈值",
+      "help": "行动力升至或降至这些阈值时会发送推送通知\n使用逗号分隔多个阈值，例如: 500,1000,2000,3000\n注意：需要在 Alas - 错误处理 中配置推送通知才能生效"
     }
   },
   "Daemon": {
