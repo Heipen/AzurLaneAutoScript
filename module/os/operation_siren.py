@@ -12,6 +12,7 @@ from module.exception import RequestHumanTakeover, GameStuckError, ScriptError
 from module.equipment.assets import EQUIPMENT_OPEN
 from module.logger import logger
 from module.map.map_grids import SelectedGrids
+from module.notify import handle_notify
 from module.os.assets import FLEET_FLAGSHIP
 from module.os.fleet import BossFleet
 from module.os.globe_operation import OSExploreError
