@@ -1044,7 +1044,14 @@ class OperationSiren(OSMap):
                 submarine_call=self.config.OpsiFleet_Submarine)
             self._os_explore_task_delay()
 
-            finished_combat = self.run_auto_search()
+            if self.name_to_zone(zone).hazard_level == 6 and self.config.OpsiExplore_DisableRandomMapEventInHazard6:
+                finished_combat = self.run_auto_search(rescan=False)
+                logger.info(f'Hazard 6 zone cleared: {self.name_to_zone(zone)}, Disabled random map event')
+            elif self.name_to_zone(zone).hazard_level == 5 and self.config.OpsiExplore_DisableRandomMapEventInHazard5:
+                finished_combat = self.run_auto_search(rescan=False)
+                logger.info(f'Hazard 5 zone cleared: {self.name_to_zone(zone)}, Disabled random map event')
+            else:
+                finished_combat = self.run_auto_search()
             self.config.OpsiExplore_LastZone = zone
             logger.info(f'Zone cleared: {self.name_to_zone(zone)}')
             if finished_combat == 0:

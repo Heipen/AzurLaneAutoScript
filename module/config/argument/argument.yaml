@@ -1043,6 +1043,8 @@ OpsiFleet:
 OpsiExplore:
   SpecialRadar: false
   ForceRun: false
+  DisableRandomMapEventInHazard6: false
+  DisableRandomMapEventInHazard5: false
   LastZone: 0
 OpsiShop:
   PresetFilter:

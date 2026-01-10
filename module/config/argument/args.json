@@ -10348,6 +10348,14 @@
         "type": "checkbox",
         "value": false
       },
+      "DisableRandomMapEventInHazard6": {
+        "type": "checkbox",
+        "value": false
+      },
+      "DisableRandomMapEventInHazard5": {
+        "type": "checkbox",
+        "value": false
+      },
       "LastZone": {
         "type": "input",
         "value": 0
