@@ -22,7 +22,7 @@ from module.os.camera import OSCamera
 from module.os.map_base import OSCampaignMap
 from module.os_ash.ash import OSAsh
 from module.os_combat.combat import Combat
-from module.os_handler.assets import AUTO_SEARCH_REWARD, CLICK_SAFE_AREA, IN_MAP, PORT_ENTER
+from module.os_handler.assets import AUTO_SEARCH_REWARD, CLICK_SAFE_AREA, IN_MAP, PORT_ENTER, TEMPLATE_STORAGE_SHIP_EMPTY
 from module.os_shop.assets import PORT_SUPPLY_CHECK
 from module.ui.assets import BACK_ARROW
 
@@ -202,9 +202,8 @@ class OSFleet(OSCamera, Combat, Fleet, OSAsh):
     def _storage_hp_get(self):
         super().hp_get()
         ship_icon = self._hp_grid().crop((-29, -165, 106, -30))
-        # gray background if no ship
-        has_ship = [not self.image_color_count(button, color=(36, 41, 46), threshold=221, count=15000)
-                    for button in ship_icon.buttons]
+        has_ship = [not TEMPLATE_STORAGE_SHIP_EMPTY.match(
+                    self.image_crop(button, copy=False)) for button in ship_icon.buttons]
         need_repair = [not repair for repair in self.hp_has_ship]
         for index, repair in enumerate(need_repair):
             if repair:
@@ -448,7 +447,7 @@ class OSFleet(OSCamera, Combat, Fleet, OSAsh):
             # Arrive
             # Check colors, because screen goes black when something is unlocking.
             # A direct use of IN_MAP, basically `self.is_in_map() and IN_MAP.match_template_color()`
-            if self.match_template_color(IN_MAP, offset=(200, 5)):
+            if self.match_template_color(IN_MAP, offset=(200, 5), threshold=50):
                 self.update_os()
                 current = self.view.backend.homo_loca
                 logger.attr('homo_loca', current)

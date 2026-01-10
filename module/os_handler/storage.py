@@ -1,12 +1,13 @@
 from module.base.timer import Timer
-from module.base.utils import rgb2gray
+from module.base.utils import area_offset, crop, rgb2gray
 from module.combat.assets import GET_ITEMS_1, GET_ITEMS_2
 from module.exception import ScriptError
-from module.handler.assets import GET_MISSION
+from module.handler.assets import GET_MISSION, POPUP_CANCEL
 from module.logger import logger
 from module.os.globe_operation import GlobeOperation
 from module.os.globe_zone import ZoneManager
 from module.os_handler.assets import *
+from module.storage.assets import BOX_USE
 from module.ui.scroll import Scroll
 
 SCROLL_STORAGE = Scroll(STORATE_SCROLL, color=(247, 211, 66))
@@ -91,6 +92,10 @@ class StorageHandler(GlobeOperation, ZoneManager):
             if self.appear_then_click(STORAGE_USE, offset=(180, 30), interval=5):
                 self.interval_reset(STORAGE_CHECK)
                 continue
+            if self.appear_then_click(BOX_USE, offset=(180, 30), interval=5):
+                self.interval_reset(STORAGE_CHECK)
+                success = True
+                continue
             if self.appear_then_click(GET_ITEMS_1, interval=5):
                 self.interval_reset(STORAGE_CHECK)
                 success = True
@@ -133,6 +138,7 @@ class StorageHandler(GlobeOperation, ZoneManager):
 
             image = rgb2gray(self.device.image)
             items = TEMPLATE_STORAGE_LOGGER.match_multi(image, similarity=0.5)
+            items.extend(TEMPLATE_STORAGE_LOGGER_UNLOCK.match_multi(image, similarity=0.75))
             logger.attr('Storage_logger', len(items))
 
             if len(items):
@@ -186,6 +192,99 @@ class StorageHandler(GlobeOperation, ZoneManager):
         if quit:
             self.storage_quit()
 
+    def repair_ship_select(self, button, skip_first_screenshot=True):
+        """
+        Args:
+            button (Button): Ship
+            skip_first_screenshot:
+
+        Returns:
+            bool: if selected
+
+        Pages:
+            in: STORAGE_FLEET_CHOOSE
+            out: STORAGE_FLEET_CHOOSE
+        """
+        # click area above hp bar to avoid click effects
+        click_area = (button.area[0] + 40, button.area[1] - 100, button.area[2] - 10, button.area[3] - 50)
+        click_button = Button(area=click_area, color=(0, 0, 0), button=click_area, name='STORAGE_SHIP_SELECT')
+        timeout = Timer(5, count=3).start()
+        while 1:
+            if skip_first_screenshot:
+                skip_first_screenshot = False
+            else:
+                self.device.screenshot()
+
+            image = self.image_crop(area_offset(button.area, (0, 10)), copy=False)
+            # End
+            # blue background for area below hp bar means ship selected
+            if self.image_color_count(image, color=(93, 148, 203), count=300):
+                logger.info('Storage Ship Selected')
+                self.interval_clear(STORAGE_FLEET_CHOOSE)
+                return True
+            if timeout.reached():
+                logger.warning('Wait storage ship select timeout')
+                self.interval_clear(STORAGE_FLEET_CHOOSE)
+                return False
+
+            if self.appear(STORAGE_FLEET_CHOOSE, offset=(20, 20), interval=2):
+                self.device.click(click_button)
+                continue
+
+    def repair_pack_use_confirm(self, button, skip_first_screenshot=True):
+        """
+        Args:
+            button (Button): Ship
+            skip_first_screenshot:
+
+        Pages:
+            in: STORAGE_FLEET_CHOOSE
+            out: STORAGE_FLEET_CHOOSE
+        """
+        self.interval_clear(POPUP_CANCEL)
+        self.device.click_record_clear()
+        while 1:
+            if skip_first_screenshot:
+                skip_first_screenshot = False
+            else:
+                self.device.screenshot()
+
+            image = self.image_crop(area_offset(button.area, (0, 10)), copy=False)
+            # End
+            if self.appear(STORAGE_REPAIR_CONFIRM, offset=(20, 20)) and \
+                    not self.image_color_count(image, color=(93, 148, 203), count=300):
+                logger.info('Ship Fixed')
+                break
+            if self.handle_popup_cancel('STORAGE_REPAIR_FULL_CANCEL'):
+                logger.info('No need to fix this ship')
+                break
+
+            if self.appear_then_click(STORAGE_REPAIR_CONFIRM, offset=(20, 20)):
+                continue
+
+
+    def repair_pack_use(self, button):
+        """
+        Select a ship that needs to be repaired, then use repair packs
+
+        Args:
+            button (Button): Ship
+
+        Pages:
+            in: STORAGE_FLEET_CHOOSE
+            out: STORAGE_FLEET_CHOOSE
+        """
+        self.repair_ship_select(button)
+        self.repair_pack_use_confirm(button)
+
+    def storage_repair_cancel(self):
+        """
+        Pages:
+            in: STORAGE_FLEET_CHOOSE
+            out: STORAGE_CHECK
+        """
+        self.ui_click(STORAGE_REPAIR_CANCEL, STORAGE_CHECK, retry_wait=2, skip_first_screenshot=True)
+
     def _storage_coordinate_checkout(self, button, types=('OBSCURE',), skip_first_screenshot=True):
         """
         Args:
@@ -195,7 +294,7 @@ class StorageHandler(GlobeOperation, ZoneManager):
 
         Pages:
             in: STORAGE_CHECK
-            out: is_in_map, in an obscure zone.
+            out: is_in_map, in an obscure zone, or STORAGE_FLEET_CHOOSE.
         """
         self.interval_clear([
             STORAGE_CHECK,
@@ -221,6 +320,8 @@ class StorageHandler(GlobeOperation, ZoneManager):
             # End
             if self.is_zone_pinned():
                 break
+            if types[0] == 'REPAIR_PACK' and self.appear(STORAGE_FLEET_CHOOSE, offset=(20, 20)):
+                return
 
         self.zone_type_select(types)
         self.globe_enter(zone=self.name_to_zone(72))
@@ -229,7 +330,7 @@ class StorageHandler(GlobeOperation, ZoneManager):
     def _storage_item_to_template(item):
         """
         Args:
-            item (str): 'OBSCURE' or 'ABYSSAL'.
+            item (str): 'OBSCURE', 'ABYSSAL' or 'REPAIR_PACK'.
 
         Returns:
             Template:
@@ -238,6 +339,8 @@ class StorageHandler(GlobeOperation, ZoneManager):
             return TEMPLATE_STORAGE_OBSCURE
         elif item == 'ABYSSAL':
             return TEMPLATE_STORAGE_ABYSSAL
+        elif item == 'REPAIR_PACK':
+            return TEMPLATE_STORAGE_REPAIR_PACK
         else:
             raise ScriptError(f'Unknown storage item: {item}')
 
