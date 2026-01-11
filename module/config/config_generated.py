@@ -655,6 +655,7 @@ class GeneratedConfig:
     OpsiHazard1Leveling_OperationCoinsPreserve = 100000
     OpsiHazard1Leveling_MinimumActionPointReserve = 200
     OpsiHazard1Leveling_ExecuteFixedPatrolScan = False
+    OpsiHazard1Leveling_RecordNonCL1AP = False
 
     # Group `OpsiSirenBug`
     OpsiSirenBug_SirenResearch_Enable = False

@@ -1111,6 +1111,7 @@ OpsiHazard1Leveling:
   OperationCoinsPreserve: 100000
   MinimumActionPointReserve: 200
   ExecuteFixedPatrolScan: false
+  RecordNonCL1AP: false
 OpsiSirenBug:
   SirenResearch_Enable: false
   SirenBug_Enable: false

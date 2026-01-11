@@ -11062,6 +11062,10 @@
       "ExecuteFixedPatrolScan": {
         "type": "checkbox",
         "value": false
+      },
+      "RecordNonCL1AP": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "OpsiSirenBug": {
