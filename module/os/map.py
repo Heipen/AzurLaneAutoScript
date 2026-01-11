@@ -979,8 +979,8 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
 
     def _should_skip_siren_research_for_explore(self):
         # 检查月度开荒是否配置跳过塞壬研究装置
-        skip_levle = self.config.cross_get(keys="OpsiExplore.OpsiExplore.IfSkipSirenResearch")
-        if skip_levle == 0:
+        skip_level = self.config.cross_get(keys="OpsiExplore.OpsiExplore.IfSkipSirenResearch")
+        if skip_level == 0:
             return False
         
         # 检查是否由月度开荒调用
@@ -991,13 +991,13 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
         
         # 根据海域难度决定是否跳过
         hazard_level = self.zone.hazard_level
-        if skip_levle == 6 and hazard_level == 6:
+        if skip_level == 6 and hazard_level == 6:
             logger.info(f'[月度开荒] 海域危险度 {hazard_level} = 6, 跳过塞壬研究装置')
             return True
-        if skip_levle == 65 and hazard_level >= 5:
+        if skip_level == 65 and hazard_level >= 5:
             logger.info(f'[月度开荒] 海域危险度 {hazard_level} >= 5, 跳过塞壬研究装置')
             return True
-        if skip_levle == 654 and hazard_level >= 4:
+        if skip_level == 654 and hazard_level >= 4:
             logger.info(f'[月度开荒] 海域危险度 {hazard_level} >= 4, 跳过塞壬研究装置')
             return True
         return False
