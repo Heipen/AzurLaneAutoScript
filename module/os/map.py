@@ -978,15 +978,16 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
         return False
 
     def _should_skip_siren_research_for_explore(self):
+
+        # 检查是否由月度开荒调用
+        is_explore = getattr(self, 'is_in_task_explore', False)
+        logger.hr(f'检查月度开荒是否跳过塞壬研究装置, is_explore={is_explore}', level=2)
+        if not is_explore:
+            return False
+
         # 检查月度开荒是否配置跳过塞壬研究装置
         skip_level = self.config.cross_get(keys="OpsiExplore.OpsiExplore.IfSkipSirenResearch")
         if skip_level == 0:
-            return False
-        
-        # 检查是否由月度开荒调用
-        stack = inspect.stack()
-        is_called_by_os_explore = any(frame.function == '_os_explore' for frame in stack)
-        if not is_called_by_os_explore:
             return False
         
         # 根据海域难度决定是否跳过
