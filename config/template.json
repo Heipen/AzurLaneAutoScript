@@ -2220,10 +2220,7 @@
     },
     "OpsiHazard1Leveling": {
       "TargetZone": 0,
-<<<<<<< HEAD
-=======
       "YellowCoinPreserve": 100000,
->>>>>>> 12593a0a0 (add:遥测配置)
       "MinimumActionPointReserve": 200,
       "ExecuteFixedPatrolScan": false,
       "OperationCoinsPreserve": 100000,
@@ -2240,8 +2237,6 @@
       "Fleet": 1,
       "Submarine": false
     },
-<<<<<<< HEAD
-=======
     "OpsiCheckLeveling": {
       "TargetLevel": 0,
       "LastRun": "2020-01-01 00:00:00",
@@ -2251,7 +2246,6 @@
       "EnableSmartScheduling": false,
       "ActionPointNotifyLevels": "500,1000,2000,3000"
     },
->>>>>>> 12593a0a0 (add:遥测配置)
     "Storage": {
       "Storage": {}
     }
