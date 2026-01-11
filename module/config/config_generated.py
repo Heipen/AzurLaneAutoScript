@@ -608,8 +608,6 @@ class GeneratedConfig:
     # Group `OpsiExplore`
     OpsiExplore_SpecialRadar = False
     OpsiExplore_ForceRun = False
-    OpsiExplore_DisableRandomMapEventInHazard6 = False
-    OpsiExplore_DisableRandomMapEventInHazard5 = False
     OpsiExplore_LastZone = 0
 
     # Group `OpsiShop`

@@ -3945,14 +3945,6 @@
       "name": "OpsiExplore.ForceRun.name",
       "help": "OpsiExplore.ForceRun.help"
     },
-    "DisableRandomMapEventInHazard6": {
-      "name": "OpsiExplore.DisableRandomMapEventInHazard6.name",
-      "help": "OpsiExplore.DisableRandomMapEventInHazard6.help"
-    },
-    "DisableRandomMapEventInHazard5": {
-      "name": "OpsiExplore.DisableRandomMapEventInHazard5.name",
-      "help": "OpsiExplore.DisableRandomMapEventInHazard5.help"
-    },
     "LastZone": {
       "name": "OpsiExplore.LastZone.name",
       "help": "OpsiExplore.LastZone.help"

@@ -3945,14 +3945,6 @@
       "name": "无视运行间隔强制运行",
       "help": "开启后将带来额外的行动力消耗，一般不用打开，慢慢打就好"
     },
-    "DisableRandomMapEventInHazard6": {
-      "name": "禁用6级坐标随机事件",
-      "help": "开启后，6级难度海域将不会触发随机事件，需手动检查一遍，若有塞壬信息收集装置则可方便卡bug"
-    },
-    "DisableRandomMapEventInHazard5": {
-      "name": "禁用5级坐标随机事件",
-      "help": "同上"
-    },
     "LastZone": {
       "name": "上一次完成的区域",
       "help": "自动更新的数值，填0可重置进度，重置后自动跳过已开荒的海域\n支持海域ID、国服/国际服/日服/台服海域名称，例如 \"51\", \"NA海域东南E\", \"NA Ocean SE Sector E\""
