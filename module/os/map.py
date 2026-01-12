@@ -919,13 +919,6 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
         Returns:
             int: Number of finished combat
         """
-        # Siren bug count sleep
-        # Only apply sleep when running OpsiHazard1Leveling (the task that uses the bug exploit)
-        if self.config.task.command == 'OpsiHazard1Leveling':
-            count = self.config.OpsiSirenBug_SirenBug_DailyCount
-            if count > 0:
-                logger.info(f'Siren bug usage count: {count}, sleep {count}s before auto search')
-                time.sleep(count)
 
         finished_combat = 0
         for _ in range(5):
@@ -1664,6 +1657,13 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                 self.os_map_goto_globe(unpin=False)
                 self.globe_goto(target_zone, types=(siren_bug_type.upper(),), refresh=True)
                 self.zone_init()
+
+                # Siren bug count sleep
+                SirenBug_DailyCount = self.config.OpsiSirenBug_SirenBug_DailyCount
+                if SirenBug_DailyCount > 0:
+                    logger.info(f'Siren bug usage count: {SirenBug_DailyCount}, sleep {SirenBug_DailyCount}s before auto search')
+                    time.sleep(SirenBug_DailyCount)
+
                 self.map_init(map_=None)
                 camera_queue = self.map.camera_data
 
