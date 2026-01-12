@@ -990,7 +990,6 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
 
         # 检查是否由月度开荒调用
         is_explore = getattr(self, 'is_in_task_explore', False)
-        logger.hr(f'检查月度开荒是否跳过塞壬研究装置, is_explore={is_explore}', level=2)
         if not is_explore:
             return False
 
