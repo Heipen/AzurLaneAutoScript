@@ -132,9 +132,6 @@
       "SSR": false,
       "RetireAmount": "retire_all"
     },
-    "YukikazeTaskManager": {
-      "TaskPriorityAdjustment": "Restart\n> OpsiCrossMonth\n> Commission > Tactical > Research\n> Exercise\n> Dorm > Meowfficer > Guild > Gacha\n> Reward\n> ShopFrequent > ShopOnce > Shipyard > Freebies\n> PrivateQuarters\n> OpsiExplore\n> Minigame > Awaken\n> OpsiAshBeacon\n> OpsiDaily > OpsiShop > OpsiVoucher\n> OpsiAbyssal > OpsiStronghold > OpsiObscure > OpsiArchive\n> Daily > Hard > OpsiAshBeacon > OpsiAshAssist > OpsiMonthBoss\n> Sos > EventSp > EventA > EventB > EventC > EventD\n> RaidDaily > CoalitionSp > WarArchives > MaritimeEscort\n> Event > Event2 > Raid > Hospital > HospitalEvent > Coalition > Main > Main2 > Main3\n> OpsiMeowfficerFarming\n> GemsFarming\n> OpsiHazard1Leveling"
-    },
     "Storage": {
       "Storage": {}
     }
@@ -465,54 +462,6 @@
       "Enable": false,
       "CoinLimit": 10000,
       "TaskCall": "Main"
-    },
-    "Storage": {
-      "Storage": {}
-    }
-  },
-  "Coalition": {
-    "Scheduler": {
-      "Enable": false,
-      "NextRun": "2020-01-01 00:00:00",
-      "Command": "Coalition",
-      "SuccessInterval": 30,
-      "FailureInterval": 30,
-      "ServerUpdate": "00:00"
-    },
-    "Campaign": {
-      "Name": "dynamic",
-      "Event": "campaign_main",
-      "Mode": "normal",
-      "UseClearMode": true,
-      "UseFleetLock": true,
-      "UseAutoSearch": false,
-      "Use2xBook": false,
-      "AmbushEvade": true
-    },
-    "Coalition": {
-      "Mode": "area1-normal",
-      "Fleet": "single"
-    },
-    "StopCondition": {
-      "OilLimit": 1000,
-      "RunCount": 0,
-      "MapAchievement": "non_stop",
-      "StageIncrease": false,
-      "GetNewShip": false,
-      "ReachLevel": 0
-    },
-    "Emotion": {
-      "Mode": "calculate",
-      "Fleet1Value": 119,
-      "Fleet1Record": "2020-01-01 00:00:00",
-      "Fleet1Control": "prevent_yellow_face",
-      "Fleet1Recover": "not_in_dormitory",
-      "Fleet1Oath": false,
-      "Fleet2Value": 119,
-      "Fleet2Record": "2020-01-01 00:00:00",
-      "Fleet2Control": "prevent_yellow_face",
-      "Fleet2Recover": "not_in_dormitory",
-      "Fleet2Oath": false
     },
     "Storage": {
       "Storage": {}
@@ -2019,6 +1968,8 @@
     "OpsiExplore": {
       "SpecialRadar": false,
       "ForceRun": false,
+      "IfSkipSirenResearch": 0,
+      "SkipedSirenResearch": null,
       "LastZone": 0
     },
     "OpsiFleet": {
@@ -2220,18 +2171,19 @@
     },
     "OpsiHazard1Leveling": {
       "TargetZone": 0,
-      "YellowCoinPreserve": 100000,
+      "OperationCoinsPreserve": 100000,
       "MinimumActionPointReserve": 200,
       "ExecuteFixedPatrolScan": false,
-      "OperationCoinsPreserve": 100000,
-      "DoScanningDevice": false
+      "RecordNonCL1AP": false
     },
     "OpsiSirenBug": {
       "SirenResearch_Enable": false,
       "SirenBug_Enable": false,
       "SirenBug_Type": "dangerous",
       "SirenBug_Zone": 0,
-      "DisableTaskSwitchDuringBug": false
+      "DisableTaskSwitchDuringBug": false,
+      "SirenBug_DailyCount": 0,
+      "SirenBug_DailyCountRecord": "2020-01-01 00:00:00"
     },
     "OpsiFleet": {
       "Fleet": 1,
