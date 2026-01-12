@@ -4,6 +4,7 @@ from sys import maxsize
 
 import inflection
 
+from datetime import datetime
 from module.base.timer import Timer
 from module.config.config import TaskEnd
 from module.config.utils import get_os_reset_remain
@@ -918,6 +919,14 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
         Returns:
             int: Number of finished combat
         """
+        # Siren bug count sleep
+        # Only apply sleep when running OpsiHazard1Leveling (the task that uses the bug exploit)
+        if self.config.task.command == 'OpsiHazard1Leveling':
+            count = self.config.OpsiSirenBug_SirenBug_DailyCount
+            if count > 0:
+                logger.info(f'Siren bug usage count: {count}, sleep {count}s before auto search')
+                time.sleep(count)
+
         finished_combat = 0
         for _ in range(5):
             backup = self.config.temporary(Campaign_UseAutoSearch=True)
@@ -1246,18 +1255,22 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             logger.info(f'[移动装置] 移动完成,结果: {result}')
             
             if getattr(self, 'is_siren_device_confirmed', False):
-                # 执行自律寻敌
+                # 保存标志状态，因为二次重扫可能会重置它
+                siren_confirmed = True
+                
                 # 执行自律寻敌
                 logger.info('[装置处理] 执行自律寻敌')
                 self.os_auto_search_run(drop=drop)
+
+                # 先标记为已处理，防止二次重扫时再次处理塞壬装置
+                self._solved_map_event.add('is_scanning_device')
 
                 # 二次重扫，防止出现意外情况导致装置处理失败
                 logger.info('[装置处理] 执行二次重扫')
                 self.map_rescan_current(drop=drop)
                 
-                self._solved_map_event.add('is_scanning_device')
-                
-                if getattr(self, 'is_siren_device_confirmed', False):
+                # 使用保存的标志状态，而不是重新检查（因为二次重扫可能会重置它）
+                if siren_confirmed:
                     logger.info('[装置处理] 已确认为塞壬研究装置，检查是否需要执行Bug利用')
                     self._handle_siren_bug_reinteract(drop=drop)
                 else:
@@ -1753,6 +1766,13 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             self.globe_goto(erosion_one_zone, types=('SAFE', 'DANGEROUS'), refresh=True)
             self.zone_init()
             logger.info('【塞壬Bug利用】返回侵蚀一区域完成')
+
+            # Increase bug count
+            self.config.OpsiSirenBug_SirenBug_DailyCount += 1
+            self.config.OpsiSirenBug_SirenBug_DailyCountRecord = datetime.now()
+            count = self.config.OpsiSirenBug_SirenBug_DailyCount
+            logger.info(f'Siren bug exploitation successful, daily count: {count}')
+
             self.run_auto_search(question=True, rescan='full', after_auto_search=True)
             
             # 发送成功通知

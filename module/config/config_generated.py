@@ -663,6 +663,8 @@ class GeneratedConfig:
     OpsiSirenBug_SirenBug_Type = 'dangerous'  # dangerous, safe
     OpsiSirenBug_SirenBug_Zone = 0
     OpsiSirenBug_DisableTaskSwitchDuringBug = False  # True, False
+    OpsiSirenBug_SirenBug_DailyCount = 0
+    OpsiSirenBug_SirenBug_DailyCountRecord = datetime.datetime(2020, 1, 1, 0, 0)
 
     # Group `OpsiCheckLeveling`
     OpsiCheckLeveling_TargetLevel = 0

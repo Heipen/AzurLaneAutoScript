@@ -4168,6 +4168,14 @@
       "help": "OpsiSirenBug.DisableTaskSwitchDuringBug.help",
       "True": "True",
       "False": "False"
+    },
+    "SirenBug_DailyCount": {
+      "name": "OpsiSirenBug.SirenBug_DailyCount.name",
+      "help": "OpsiSirenBug.SirenBug_DailyCount.help"
+    },
+    "SirenBug_DailyCountRecord": {
+      "name": "OpsiSirenBug.SirenBug_DailyCountRecord.name",
+      "help": "OpsiSirenBug.SirenBug_DailyCountRecord.help"
     }
   },
   "OpsiCheckLeveling": {
