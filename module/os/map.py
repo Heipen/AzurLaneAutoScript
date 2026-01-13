@@ -1724,7 +1724,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                                     logger.info('[Bug利用] 第1组确认成功')
                             else:
                                 logger.warning('[Bug利用] 第1组选项点击失败')
-                                raise Exception('第1组选项点击失败，跳过后续操作')
+                                raise RuntimeError('第1组选项点击失败，跳过后续操作')
                             
                             # 第2次：选择第2个选项
                             logger.info('[Bug利用] 等待第2组选项（选择第2个）')
@@ -1736,7 +1736,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                                     logger.info('[Bug利用] 第2组确认成功')
                             else:
                                 logger.warning('[Bug利用] 第2组选项点击失败')
-                                raise Exception('第2组选项点击失败，跳过后续操作')
+                                raise RuntimeError('第2组选项点击失败，跳过后续操作')
                             
                             # 第3次：选择第3个选项
                             logger.info('[Bug利用] 等待第3组选项（选择第3个）')
@@ -1748,7 +1748,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                                     logger.info('[Bug利用] 第3组确认成功')
                             else:
                                 logger.warning('[Bug利用] 第3组选项点击失败')
-                                raise Exception('第3组选项点击失败，跳过后续操作')
+                                raise RuntimeError('第3组选项点击失败，跳过后续操作')
 
                             device_handled = True
                             logger.info('[Bug利用] 所有选项处理完成')
@@ -1756,7 +1756,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
 
                 if not device_handled:
                     logger.warning(f'区域{siren_bug_zone}未找到塞壬研究装置，跳过后续操作')
-                    raise Exception('未找到塞壬研究装置')
+                    raise RuntimeError('未找到塞壬研究装置')
 
             # Bug利用核心操作完成，清除禁用任务切换标志
             if disable_task_switch and hasattr(self.config, '_disable_task_switch'):
@@ -1789,7 +1789,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             except Exception as notify_err:
                 logger.debug(f'发送成功通知失败: {notify_err}')
 
-        except Exception as e:
+        except (RuntimeError, Exception) as e:
             logger.error(f'塞壬研究装置BUG利用失败: {e}', exc_info=True)
             
             # 异常时清除标志
