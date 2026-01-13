@@ -1807,6 +1807,10 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             except Exception as notify_err:
                 logger.debug(f'发送失败通知失败: {notify_err}')
             
+            # 为避免卡在选项中，尝试选择最后一个选项退出
+            if self._select_story_option_by_index(target_index=2, options_count=3):
+                logger.info('异常处理：已尝试选择最后一个选项退出剧情')
+
             # 尝试返回侵蚀一
             try:
                 self.os_map_goto_globe(unpin=False)
