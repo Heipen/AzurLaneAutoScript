@@ -575,7 +575,8 @@ class GemsFarming(CampaignRun, GemsEquipmentHandler, Retirement):
         """
         Change flagship and calculate emotion
         """
-        target_ship = max(ship, key=lambda s: (s.level, s.emotion))
+        target_ship = max(ship, key=lambda s: (s.emotion, -s.level))
+        logger.info(f'Selected flagship: Lv{target_ship.level}'f'Emotion:{target_ship.emotion}')
         if self.config.GemsFarming_ALLowHighFlagshipLevel:
             self.set_emotion(target_ship.emotion)
         self._ship_change_confirm(target_ship.button)
