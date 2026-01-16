@@ -467,6 +467,13 @@ class GemsFarming(CampaignRun, GemsEquipmentHandler, Retirement):
         logger.info(f'Search for Common {ship_type}.')
         if ship_type.lower() == 'cv' and self.config.GemsFarming_CommonCV != 'custom':
             filter_string = self.config.COMMON_CV_FILTER
+            common_ship = self.get_common_ship_filter(filter_string, ship_type=ship_type)
+            templates = globals()[f'TEMPLATE_COMMON_{ship_type}']
+            candidates = []
+            for name in common_ship:
+                template = templates[name.upper()]
+                candidates = candidates + self.find_candidates(template, scanner)
+            return candidates
         else:
             filter_string =  self.config.__getattribute__(f'GemsFarming_Common{ship_type}Filter')
         sort_dsc_first = ship_type.lower() == 'dd'
