@@ -128,7 +128,7 @@ class FleetEmotion:
     def update(self):
         recover_count = int(int(datetime.now().timestamp()) // 360 - int(self.record.timestamp()) // 360)
         recover_count = max(recover_count, 0)
-        self.current = min(max(self.value, 0) + self.speed * recover_count, self.max)
+        self.current = max(min(max(self.value, 0) + self.speed * recover_count, self.max), self.value)
 
     def get_recovered(self, expected_reduce=0):
         """
