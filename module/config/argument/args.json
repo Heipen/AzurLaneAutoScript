@@ -10621,9 +10621,9 @@
         "value": false
       },
       "MissionZones": {
-        "type": "stored",
+        "type": "textarea",
         "value": null,
-        "display": "hide"
+        "display": "disabled"
       }
     },
     "OpsiFleet": {

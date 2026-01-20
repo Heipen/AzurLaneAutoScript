@@ -963,9 +963,9 @@ OpsiDaily:
   SkipSirenResearchMission: false
   KeepMissionZone: false
   MissionZones:
-    type: stored
+    type: textarea
     value: null
-    display: hide
+    display: disabled
 OpsiObscure:
   SkipHazard2Obscure: false
   ForceRun: false
