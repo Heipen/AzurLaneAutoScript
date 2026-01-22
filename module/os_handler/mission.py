@@ -3,6 +3,7 @@ from datetime import timedelta
 from module.base.timer import Timer
 from module.base.utils import *
 from module.config.utils import DEFAULT_TIME, get_os_next_reset
+from module.config.utils import DEFAULT_TIME, get_os_next_reset
 from module.logger import logger
 from module.map_detection.utils import fit_points
 from module.os.assets import GLOBE_GOTO_MAP

@@ -18,12 +18,14 @@ class StorageHandler(GlobeOperation, ZoneManager):
         return self.appear(STORAGE_CHECK, offset=(20, 20))
 
     def storage_enter(self):
+    def storage_enter(self):
         """
         Pages:
             in: is_in_map, STORAGE_ENTER
             out: STORAGE_CHECK
         """
         logger.info('Storage enter')
+        for _ in self.loop():
         for _ in self.loop():
             # End
             if self.is_in_storage():
