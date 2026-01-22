@@ -7,7 +7,6 @@ from module.map.map_grids import SelectedGrids
 from module.os.map import OSMap
 
 
-
 class OpsiCrossMonth(OSMap):
     def os_cross_month_end(self):
         self.config.task_delay(target=get_os_next_reset() - timedelta(minutes=10))

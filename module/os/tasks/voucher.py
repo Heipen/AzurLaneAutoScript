@@ -1,4 +1,3 @@
-
 from module.config.utils import get_os_next_reset
 from module.logger import logger
 from module.os.map import OSMap
