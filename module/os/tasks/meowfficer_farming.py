@@ -111,7 +111,7 @@ class OpsiMeowfficerFarming(OSMap):
                         self.config.task_stop()
 
             # (1252, 1012) is the coordinate of zone 134 (the center zone) in os_globe_map.png
-            if self.config.OpsiMeowfficerFarming_TargetZone != 0 and not self.config.OpsiMeowfficerFarming_StayInZone:
+            if self.config.OpsiMeowfficerFarming_TargetZone != 0:
                 try:
                     zone = self.name_to_zone(self.config.OpsiMeowfficerFarming_TargetZone)
                 except ScriptError:
@@ -120,67 +120,33 @@ class OpsiMeowfficerFarming(OSMap):
                 else:
                     logger.hr(f'OS meowfficer farming, zone_id={zone.zone_id}', level=1)
                     self.globe_goto(zone, types='SAFE', refresh=True)
+                    keep_current_ap = True
+                    if self.config.OpsiGeneral_BuyActionPointLimit > 0:
+                        keep_current_ap = False
+                    self.action_point_set(zone=zone, keep_current_ap=keep_current_ap, check_rest_ap=True)
                     self.fleet_set(self.config.OpsiFleet_Fleet)
-                    if self.run_strategic_search():
+                    self.os_order_execute(recon_scan=False, submarine_call=self.config.OpsiFleet_Submarine)
+                    search_completed = False
+                    try:
+                        search_completed = self.run_strategic_search()
+                    except TaskEnd:
+                        raise
+                    except Exception as e:
+                        logger.warning(f'Strategic search exception: {e}')
+
+                    if search_completed:
                         self._solved_map_event = set()
                         self._solved_fleet_mechanism = False
                         self.clear_question()
                         self.map_rescan()
-                    self.handle_after_auto_search()
+
+                    try:
+                        self.handle_after_auto_search()
+                    except Exception:
+                        logger.exception('Exception in handle_after_auto_search')
+
                     self.config.check_task_switch()
-                continue
-
-            if self.config.OpsiMeowfficerFarming_StayInZone:
-                if self.config.OpsiMeowfficerFarming_TargetZone == 0:
-                    logger.warning('StayInZone 已启用但未设置 TargetZone，跳过本次出击')
-                    self.config.task_delay(server_update=True)
-                    self.config.task_stop()
-                try:
-                    zone = self.name_to_zone(self.config.OpsiMeowfficerFarming_TargetZone)
-                except ScriptError:
-                    logger.error('无法定位配置的 TargetZone，停止任务')
-                    self.config.task_delay(server_update=True)
-                    self.config.task_stop()
-                logger.hr(f'OS meowfficer farming (stay in zone), zone_id={zone.zone_id}', level=1)
-                self.get_current_zone()
-                if self.zone.zone_id != zone.zone_id or not self.is_zone_name_hidden:
-                    self.globe_goto(zone, types='SAFE', refresh=True)
-
-                #self.config.OS_ACTION_POINT_PRESERVE = 0
-                keep_current_ap = True
-                if self.config.OpsiGeneral_BuyActionPointLimit > 0:
-                    keep_current_ap = False
-
-                self.action_point_set(cost=120, keep_current_ap=keep_current_ap, check_rest_ap=True)
-                self.fleet_set(self.config.OpsiFleet_Fleet)
-                self.os_order_execute(recon_scan=False, submarine_call=self.config.OpsiFleet_Submarine)
-                search_completed = False
-                try:
-                    search_completed = self.run_strategic_search()
-                except TaskEnd:
-                    raise
-                except Exception as e:
-                    logger.warning(f'Strategic search exception: {e}')
-
-                if search_completed:
-                    self._solved_map_event = set()
-                    self._solved_fleet_mechanism = False
-                    self.clear_question()
-                    self.map_rescan()
-
-                try:
-                    self.handle_after_auto_search()
-                except Exception:
-                    logger.exception('Exception in handle_after_auto_search')
-
-                #if not self.is_zone_name_hidden:
-                #    try:
-                #        self.globe_goto(zone, types='SAFE', refresh=True)
-                #    except Exception as e2:
-                #        logger.warning(f'重新进入目标海域失败: {e2}')
-
-                self.config.check_task_switch()
-                continue
+                    continue
 
             zones = self.zone_select(hazard_level=self.config.OpsiMeowfficerFarming_HazardLevel) \
                 .delete(SelectedGrids([self.zone])) \
