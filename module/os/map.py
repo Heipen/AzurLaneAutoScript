@@ -716,13 +716,12 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
         data = self._load_cl1_monthly()
         return int(data.get(key, 0))
 
-    def os_auto_search_daemon(self, drop=None, strategic=False, interrupt=None, skip_first_screenshot=True):
+    def os_auto_search_daemon(self, drop=None, strategic=False, interrupt=None):
         """
         Args:
             drop (DropRecord):
             strategic (bool): True if running in strategic search
             interrupt (callable):
-            skip_first_screenshot:
 
         Returns:
             int: Number of finished battle
@@ -757,12 +756,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
         finished_combat = 0
         died_timer = Timer(1.5, count=3)
         self.hp_reset()
-        while 1:
-            if skip_first_screenshot:
-                skip_first_screenshot = False
-            else:
-                self.device.screenshot()
-
+        for _ in self.loop():
             # End
             if not unlock_checked and unlock_check_timer.reached():
                 logger.critical('Unable to use auto search in current zone')
@@ -823,7 +817,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
 
         return finished_combat
 
-    def interrupt_auto_search(self, goto_main=True, skip_first_screenshot=True):
+    def interrupt_auto_search(self, goto_main=True):
         """
         Args:
             goto_main (bool): If go to the page_main
@@ -840,12 +834,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
         pause_interval = Timer(0.5, count=1)
         in_main_timer = Timer(3, count=6)
         in_map_timer = Timer(1, count=6)
-        while 1:
-            if skip_first_screenshot:
-                skip_first_screenshot = False
-            else:
-                self.device.screenshot()
-
+        for _ in self.loop():
             # End
             if self.is_in_main():
                 logger.info('Auto search interrupted')
@@ -925,7 +914,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             backup = self.config.temporary(Campaign_UseAutoSearch=True)
             try:
                 if strategic:
-                    self.strategic_search_start(skip_first_screenshot=True)
+                    self.strategic_search_start()
                 combat = self.os_auto_search_daemon(drop=drop, strategic=strategic, interrupt=interrupt)
                 finished_combat += combat
             except CampaignEnd:
@@ -1351,6 +1340,8 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
     def map_rescan(self, rescan_mode='full', drop=None):
         if self.zone.is_port:
             logger.info('Current zone is a port, do not need rescan')
+            return False
+        if self.is_cl1_enabled and not self.config.is_task_enabled('OpsiMeowfficerFarming'):
             return False
 
         for _ in range(5):

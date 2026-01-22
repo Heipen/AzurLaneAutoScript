@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from module.base.timer import Timer
 from module.base.utils import *
-from module.config.utils import get_os_next_reset, DEFAULT_TIME
+from module.config.utils import DEFAULT_TIME, get_os_next_reset
 from module.logger import logger
 from module.map_detection.utils import fit_points
 from module.os.assets import GLOBE_GOTO_MAP
@@ -42,7 +42,7 @@ class MissionHandler(GlobeOperation, ZoneManager):
     def is_in_os_mission(self):
         return self.appear(MISSION_CHECK, offset=(20, 20))
 
-    def os_mission_enter(self, skip_siren_mission=False, skip_first_screenshot=True):
+    def os_mission_enter(self, skip_siren_mission=False):
         """
         Enter mission list and claim mission reward.
 
@@ -60,12 +60,7 @@ class MissionHandler(GlobeOperation, ZoneManager):
         logger.info('OS mission enter')
         checkout_offset = (-20, -20, 20, 20)
         confirm_timer = Timer(2, count=6).start()
-        while 1:
-            if skip_first_screenshot:
-                skip_first_screenshot = False
-            else:
-                self.device.screenshot()
-
+        for _ in self.loop():
             # End
             if self.is_in_os_mission() \
                     and not self.appear(MISSION_FINISH, offset=checkout_offset) \
@@ -112,14 +107,9 @@ class MissionHandler(GlobeOperation, ZoneManager):
                 continue
         return checkout_offset
 
-    def os_mission_quit(self, skip_first_screenshot=True):
+    def os_mission_quit(self):
         logger.info('OS mission quit')
-        while 1:
-            if skip_first_screenshot:
-                skip_first_screenshot = False
-            else:
-                self.device.screenshot()
-
+        for _ in self.loop():
             # End
             # sometimes you have os mission popup without black-blurred background
             # MISSION_QUIT and is_in_map appears
@@ -164,13 +154,7 @@ class MissionHandler(GlobeOperation, ZoneManager):
             return False
 
         logger.info('Checkout os mission')
-        skip_first_screenshot = True
-        while 1:
-            if skip_first_screenshot:
-                skip_first_screenshot = False
-            else:
-                self.device.screenshot()
-
+        for _ in self.loop():
             # End
             if self.is_zone_pinned():
                 if self.get_zone_pinned_name() == 'ARCHIVE':
@@ -191,13 +175,12 @@ class MissionHandler(GlobeOperation, ZoneManager):
                 # Popup: Submarine will retreat after exiting current zone.
                 continue
 
-    def os_mission_overview_accept(self, skip_siren_mission=False, skip_first_screenshot=True):
+    def os_mission_overview_accept(self, skip_siren_mission=False):
         """
         Accept all missions in mission overview.
 
         Args:
             skip_siren_mission (bool): if skip siren research missions
-            skip_first_screenshot (bool):
         Returns:
             bool: True if all missions accepted or no mission found.
                   False if unable to accept more missions.
@@ -215,15 +198,11 @@ class MissionHandler(GlobeOperation, ZoneManager):
                       skip_first_screenshot=True)
 
         # MISSION_OVERVIEW_CHECK
+        confirm_timer = Timer(1, count=3).start()
         success = True
-        while 1:
-            if skip_first_screenshot:
-                skip_first_screenshot = False
-            else:
-                self.device.screenshot()
-
-            # End
+        for _ in self.loop():
             if self.handle_manjuu():
+                confirm_timer.reset()
                 continue
             if self.info_bar_count():
                 if skip_siren_mission:
