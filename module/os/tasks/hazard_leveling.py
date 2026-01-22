@@ -354,7 +354,7 @@ class OpsiHazard1Leveling(OSMap):
 
         logger.attr('Fleet to check', self.config.OpsiFleet_Fleet)
         self.fleet_set(self.config.OpsiFleet_Fleet)
-        self.equip_enter(FLEET_FLAGSHIP)
+        self.ship_info_enter(FLEET_FLAGSHIP)
         all_full_exp = True
         
         # 收集所有舰船数据
@@ -378,7 +378,7 @@ class OpsiHazard1Leveling(OSMap):
             if total_exp < LIST_SHIP_EXP[target_level - 1]:
                 all_full_exp = False
             
-            if not self.equip_view_next():
+            if not self.ship_view_next():
                 break
             position += 1
 
