@@ -1718,7 +1718,9 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
 
                             # 首先检测是否遇到的是柱子
                             if self.appear_then_click(REWARD_BOX_THIRD_OPTION, offset=(20, 20), interval=3):
-                                logger.warning('[Bug利用] 检测到柱子选项，重新开始寻找装置')
+                                logger.warning('[Bug利用] 检测到宝箱选项，重新开始寻找装置')
+                                find_device_timer.reset()
+                                camera_queue = self.map.camera_data
                                 self._solved_map_event.remove('is_scanning_device')
                                 continue  
 
