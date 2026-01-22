@@ -355,8 +355,12 @@ class OSShop(PortShop, AkashiShop):
             except Exception:
                     logger.exception('Failed to persist CL1 akashi monthly count')
         
-        self.os_shop_get_item_to_buy_in_akashi_all()
-        self.os_shop_buy(select_func=self.os_shop_get_item_to_buy_in_akashi)
+        with self.stat.new(
+            genre="opsi_akashi", method=self.config.DropRecord_AkashiRecord
+        ) as drop:
+            drop.handle_add(self)
+            self.os_shop_get_item_to_buy_in_akashi_all()
+            self.os_shop_buy(select_func=self.os_shop_get_item_to_buy_in_akashi)
         self.ui_back(appear_button=PORT_SUPPLY_CHECK, check_button=self.is_in_map, skip_first_screenshot=True)
 
     @cached_property
