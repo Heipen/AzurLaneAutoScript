@@ -1802,6 +1802,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                                 find_device_timer.reset()
                                 camera_queue = self.map.camera_data
                                 self._solved_map_event.remove('is_scanning_device')
+                                time.sleep(1.0)
                                 continue  
 
                             # 第1次：选择第2个选项
@@ -1848,17 +1849,6 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                     logger.warning(f'区域{siren_bug_zone}未找到塞壬研究装置，跳过后续操作')
                     raise RuntimeError('未找到塞壬研究装置')
 
-            # Bug利用核心操作完成，清除禁用任务切换标志
-            if disable_task_switch and hasattr(self.config, '_disable_task_switch'):
-                self.config._disable_task_switch = False
-                logger.info('【塞壬Bug利用】核心操作完成，恢复任务切换')
-
-            # 返回侵蚀一区域
-            logger.info('【塞壬Bug利用】返回侵蚀一区域')
-            self.os_map_goto_globe(unpin=False)
-            self.globe_goto(erosion_one_zone, types=('SAFE', 'DANGEROUS'), refresh=True)
-            logger.info('【塞壬Bug利用】返回侵蚀一区域完成')
-
             # Increase bug count
             self.config.OpsiSirenBug_SirenBug_DailyCount += 1
             self.config.OpsiSirenBug_SirenBug_DailyCountRecord = datetime.now()
@@ -1876,7 +1866,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             except Exception as notify_err:
                 logger.debug(f'发送成功通知失败: {notify_err}')
             
-            count_limit = self.config.OpsiSirenBug_SirenBug_DailyCountLimit
+            count_limit = self.config.OpsiSirenBug_SirenBug_CountLimit
             if count_limit > 0 and count >= count_limit:
                 logger.info(f'已达到塞壬Bug自动处理阈值 ({count_limit}次)，开始自动收菜')
                 if siren_bug_type == 'safe':
@@ -1885,6 +1875,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                     self.fleet_set(1 if self.config.OpsiFleet_Fleet != 1 else 2)
                 self.os_auto_search_run()
                 self.fleet_set(self.config.OpsiFleet_Fleet)
+                self.config.OpsiSirenBug_SirenBug_DailyCount = 0
                 logger.info('自动收菜完成，返回正常任务流程')
                 try:
                     if hasattr(self, 'notify_push'):
@@ -1894,6 +1885,17 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                         )
                 except Exception as notify_err:
                     logger.debug(f'发送自动收菜完成通知失败: {notify_err}')
+
+            # Bug利用核心操作完成，清除禁用任务切换标志
+            if disable_task_switch and hasattr(self.config, '_disable_task_switch'):
+                self.config._disable_task_switch = False
+                logger.info('【塞壬Bug利用】核心操作完成，恢复任务切换')
+
+            # 返回侵蚀一区域
+            logger.info('【塞壬Bug利用】返回侵蚀一区域')
+            self.os_map_goto_globe(unpin=False)
+            self.globe_goto(erosion_one_zone, types=('SAFE', 'DANGEROUS'), refresh=True)
+            logger.info('【塞壬Bug利用】返回侵蚀一区域完成')
 
         except (RuntimeError, Exception) as e:
             logger.error(f'塞壬研究装置BUG利用失败: {e}', exc_info=True)
