@@ -665,6 +665,7 @@ class GeneratedConfig:
     OpsiSirenBug_DisableTaskSwitchDuringBug = False  # True, False
     OpsiSirenBug_SirenBug_DailyCount = 0
     OpsiSirenBug_SirenBug_DailyCountRecord = datetime.datetime(2020, 1, 1, 0, 0)
+    OpsiSirenBug_SirenBug_CountLimit = 0
 
     # Group `OpsiCheckLeveling`
     OpsiCheckLeveling_TargetLevel = 0

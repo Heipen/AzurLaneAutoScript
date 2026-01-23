@@ -4210,6 +4210,10 @@
     "SirenBug_DailyCountRecord": {
       "name": "Bug次数记录时间(实验性)",
       "help": ""
+    },
+    "SirenBug_CountLimit": {
+      "name": "自动处理阈值(实验性)",
+      "help": "实验性功能，可能导致把塞壬研究装置刷没，刷没后果自负\n当利用Bug次数达到设置阈值时，使用当前舰队卡住敌舰并使用另一舰队收菜。设为0则不启用该功能"
     }
   },
   "OpsiCheckLeveling": {

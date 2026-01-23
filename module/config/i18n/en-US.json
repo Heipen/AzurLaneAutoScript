@@ -4210,6 +4210,10 @@
     "SirenBug_DailyCountRecord": {
       "name": "OpsiSirenBug.SirenBug_DailyCountRecord.name",
       "help": "OpsiSirenBug.SirenBug_DailyCountRecord.help"
+    },
+    "SirenBug_CountLimit": {
+      "name": "OpsiSirenBug.SirenBug_CountLimit.name",
+      "help": "OpsiSirenBug.SirenBug_CountLimit.help"
     }
   },
   "OpsiCheckLeveling": {
