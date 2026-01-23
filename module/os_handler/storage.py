@@ -318,9 +318,9 @@ class StorageHandler(GlobeOperation, ZoneManager):
         if SCROLL_STORAGE.appear(main=self):
             if item == 'REPAIR_PACK':
                 # repair packs always at the bottom page
-                SCROLL_STORAGE.set_bottom(main=self, skip_first_screenshot=skip_first_screenshot)
+                SCROLL_STORAGE.set_bottom(main=self)
             else:
-                SCROLL_STORAGE.set_top(main=self, skip_first_screenshot=skip_first_screenshot)
+                SCROLL_STORAGE.set_top(main=self)
 
         confirm_timer = Timer(0.6, count=2).start()
         for _ in self.loop():
