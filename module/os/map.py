@@ -1340,8 +1340,6 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
         if self.zone.is_port:
             logger.info('Current zone is a port, do not need rescan')
             return False
-        if self.is_cl1_enabled and not self.config.is_task_enabled('OpsiMeowfficerFarming'):
-            return False
 
         for _ in range(5):
             if not self._solved_fleet_mechanism:
