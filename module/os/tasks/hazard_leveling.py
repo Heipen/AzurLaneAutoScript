@@ -31,10 +31,7 @@ class OpsiHazard1Leveling(OSMap):
         # 检查是否启用智能调度
         if not self.config.OpsiScheduling_EnableSmartScheduling:
             return
-        # 检查是否启用推送大世界相关邮件
-        if not self.config.OpsiGeneral_NotifyOpsiMail:
-            return
-            
+
         # 检查是否配置了推送
         # 默认值是 'provider: null'，需要检查 provider 是否有效
         push_config = self.config.Error_OnePushConfig
