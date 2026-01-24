@@ -1870,6 +1870,8 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             count_limit = self.config.OpsiSirenBug_SirenBug_CountLimit
             if count_limit > 0 and count >= count_limit:
                 logger.info(f'已达到塞壬Bug自动处理阈值 ({count_limit}次)，开始自动收菜')
+                # 禁用塞壬研究装置的处理
+                self.config._disable_siren_research = True
                 if siren_bug_type == 'safe':
                     self.os_auto_search_daemon_until_combat()
                     logger.info('遇到敌舰，卡位完成')
@@ -1877,6 +1879,8 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                 self.os_auto_search_run()
                 self.fleet_set(self.config.OpsiFleet_Fleet)
                 self.config.OpsiSirenBug_SirenBug_DailyCount = 0
+                # 恢复塞壬研究装置的处理
+                self.config._disable_siren_research = False
                 logger.info('自动收菜完成，返回正常任务流程')
                 try:
                     if hasattr(self, 'notify_push'):
