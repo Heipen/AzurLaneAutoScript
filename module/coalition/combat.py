@@ -1,3 +1,4 @@
+import time
 from module.base.timer import Timer
 from module.campaign.campaign_base import CampaignBase
 from module.coalition.assets import *
@@ -25,7 +26,7 @@ class CoalitionCombat(CoalitionUI, CampaignBase):
                 skip_first_screenshot = False
             else:
                 self.device.screenshot()
-
+            time.sleep(0.5)
             # End
             if self.is_combat_loading():
                 break
