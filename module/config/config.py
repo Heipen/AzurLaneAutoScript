@@ -295,8 +295,8 @@ class AzurLaneConfig(ConfigUpdater, ManualConfig, GeneratedConfig, ConfigWatcher
                 if isinstance(next_run, datetime) and next_run > limit:
                     deep_set(self.data, keys=f"{task}.Scheduler.NextRun", value=now)
 
-        limit_next_run(["Commission", "Reward"], limit=now + timedelta(hours=12, seconds=-1))
-        limit_next_run(["Research"], limit=now + timedelta(hours=24, seconds=-1))
+        # limit_next_run(["Commission", "Reward"], limit=now + timedelta(hours=12, seconds=-1))
+        # limit_next_run(["Research"], limit=now + timedelta(hours=24, seconds=-1))
         limit_next_run(["OpsiExplore", "OpsiCrossMonth", "OpsiVoucher", "OpsiMonthBoss", "OpsiShop"],
                        limit=now + timedelta(days=31, seconds=-1))
         limit_next_run(["OpsiArchive"], limit=now + timedelta(days=7, seconds=-1))
