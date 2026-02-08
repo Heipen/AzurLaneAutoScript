@@ -1957,14 +1957,6 @@
     "TaskTimeDelay": {
       "name": "IslandTimeControl.TaskTimeDelay.name",
       "help": "IslandTimeControl.TaskTimeDelay.help"
-    },
-    "ScreenShotDelay": {
-      "name": "IslandTimeControl.ScreenShotDelay.name",
-      "help": "IslandTimeControl.ScreenShotDelay.help"
-    },
-    "DragDelay": {
-      "name": "IslandTimeControl.DragDelay.name",
-      "help": "IslandTimeControl.DragDelay.help"
     }
   },
   "Island1": {

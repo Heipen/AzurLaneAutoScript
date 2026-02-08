@@ -652,8 +652,6 @@ class IslandProjectRun(IslandUI):
             if skip_first_screenshot:
                 skip_first_screenshot = False
             else:
-                self.device.sleep(self.config.IslandTimeControl_ScreenShotDelay)
-                logger.info('Taking screenshot for project ensure')
                 self.device.screenshot()
 
             projects = self.project_detect(self.device.image)
@@ -663,7 +661,7 @@ class IslandProjectRun(IslandUI):
                 logger.info(f'Ensured project: {project}')
                 break
 
-            self.island_drag_next_page((0, -500), ISLAND_PROJECT_SWIPE.area, self.config.IslandTimeControl_DragDelay)
+            self.island_drag_next_page((0, -500), ISLAND_PROJECT_SWIPE.area, 0.6)
 
     def project_receive_and_start(self, proj, button, character, option, project_id, ensure=True):
         """
@@ -771,7 +769,7 @@ class IslandProjectRun(IslandUI):
 
             if end:
                 break
-            self.island_drag_next_page((0, -500), ISLAND_PROJECT_SWIPE.area, self.config.IslandTimeControl_DragDelay)
+            self.island_drag_next_page((0, -500), ISLAND_PROJECT_SWIPE.area, 0.6)
 
         # task delay
         future_finish = sorted([f for f in self.total.get('finish_time') if f is not None])

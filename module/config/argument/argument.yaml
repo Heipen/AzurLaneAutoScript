@@ -538,8 +538,6 @@ Awaken:
     value: false
 IslandTimeControl:
   TaskTimeDelay: 30
-  ScreenShotDelay: 0
-  DragDelay: 0.5
 _Island:
   IslandOption4: &IslandOption4
     value: 0

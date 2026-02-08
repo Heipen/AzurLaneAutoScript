@@ -7720,14 +7720,6 @@
       "TaskTimeDelay": {
         "type": "input",
         "value": 30
-      },
-      "ScreenShotDelay": {
-        "type": "input",
-        "value": 0
-      },
-      "DragDelay": {
-        "type": "input",
-        "value": 0.5
       }
     },
     "Island1": {

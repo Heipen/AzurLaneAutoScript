@@ -1533,9 +1533,7 @@
       "ServerUpdate": "00:00"
     },
     "IslandTimeControl": {
-      "TaskTimeDelay": 30,
-      "ScreenShotDelay": 0,
-      "DragDelay": 0.5
+      "TaskTimeDelay": 30
     },
     "Island1": {
       "Receive": false,

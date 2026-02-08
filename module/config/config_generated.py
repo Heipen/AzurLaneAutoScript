@@ -335,8 +335,6 @@ class GeneratedConfig:
 
     # Group `IslandTimeControl`
     IslandTimeControl_TaskTimeDelay = 30
-    IslandTimeControl_ScreenShotDelay = 0
-    IslandTimeControl_DragDelay = 0.5
 
     # Group `Island1`
     Island1_Receive = False
