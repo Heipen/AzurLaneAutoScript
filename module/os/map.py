@@ -1816,7 +1816,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                                     logger.info('[Bug利用] 第1组确认成功')
                             else:
                                 logger.warning('[Bug利用] 第1组选项点击失败')
-                                raise RuntimeError('第1组选项点击失败，跳过后续操作')
+                                raise MapWalkError('第1组选项点击失败，跳过后续操作')
                             
                             # 第2次：选择第2个选项
                             logger.info('[Bug利用] 等待第2组选项（选择第2个）')
@@ -1828,7 +1828,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                                     logger.info('[Bug利用] 第2组确认成功')
                             else:
                                 logger.warning('[Bug利用] 第2组选项点击失败')
-                                raise RuntimeError('第2组选项点击失败，跳过后续操作')
+                                raise MapWalkError('第2组选项点击失败，跳过后续操作')
                             
                             # 第3次：选择第3个选项
                             logger.info('[Bug利用] 等待第3组选项（选择第3个）')
@@ -1840,7 +1840,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                                     logger.info('[Bug利用] 第3组确认成功')
                             else:
                                 logger.warning('[Bug利用] 第3组选项点击失败')
-                                raise RuntimeError('第3组选项点击失败，跳过后续操作')
+                                raise MapWalkError('第3组选项点击失败，跳过后续操作')
 
                             device_handled = True
                             logger.info('[Bug利用] 所有选项处理完成')
@@ -1848,7 +1848,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
 
                 if not device_handled:
                     logger.warning(f'区域{siren_bug_zone}未找到塞壬研究装置，跳过后续操作')
-                    raise RuntimeError('未找到塞壬研究装置')
+                    raise MapWalkError('未找到塞壬研究装置')
 
             # Increase bug count
             self.config.OpsiSirenBug_SirenBug_DailyCount += 1
@@ -1902,8 +1902,8 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             self.globe_goto(erosion_one_zone, types=('SAFE', 'DANGEROUS'), refresh=True)
             logger.info('【塞壬Bug利用】返回侵蚀一区域完成')
 
-        except (RuntimeError, Exception) as e:
-            logger.error(f'塞壬研究装置BUG利用失败: {e}', exc_info=True)
+        except (MapWalkError) as e:
+            logger.error(f'塞壬研究装置BUG利用失败: {e}')
             
             # 异常时清除标志
             if disable_task_switch and hasattr(self.config, '_disable_task_switch'):
