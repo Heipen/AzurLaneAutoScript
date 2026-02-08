@@ -1857,15 +1857,15 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             logger.info(f'Siren bug exploitation successful, daily count: {count}')
 
             # 发送成功通知
-            try:
-                if hasattr(self, 'notify_push'):
-                    zone_type_text = "安全海域" if siren_bug_type == 'safe' else "普通海域"
-                    self.notify_push(
-                        title="[Alas] 塞壬Bug利用 - 完成",
-                        content=f"已完成塞壬研究装置Bug利用\\n目标区域: {target_zone} ({zone_type_text})\\n已返回侵蚀一区域"
-                    )
-            except Exception as notify_err:
-                logger.debug(f'发送成功通知失败: {notify_err}')
+            # try:
+            #     if hasattr(self, 'notify_push'):
+            #         zone_type_text = "安全海域" if siren_bug_type == 'safe' else "普通海域"
+            #         self.notify_push(
+            #             title="[Alas] 塞壬Bug利用 - 完成",
+            #             content=f"已完成塞壬研究装置Bug利用\\n目标区域: {target_zone} ({zone_type_text})\\n已返回侵蚀一区域"
+            #         )
+            # except Exception as notify_err:
+            #     logger.debug(f'发送成功通知失败: {notify_err}')
             
             count_limit = self.config.OpsiSirenBug_SirenBug_CountLimit
             if count_limit > 0 and count >= count_limit:
