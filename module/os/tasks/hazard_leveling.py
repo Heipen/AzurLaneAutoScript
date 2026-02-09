@@ -281,11 +281,13 @@ class OpsiHazard1Leveling(OSMap):
 
             # 只有战略搜索正常完成时才执行重扫（被中断时不执行）
             if search_completed:
+                logger.info('计划作战完成，执行重扫')
                 # ===== 第一次重扫：战略搜索后的完整镜头重扫 =====
                 self._solved_map_event = set()
                 self._solved_fleet_mechanism = False
                 self.clear_question()
                 self.map_rescan()
+                logger.info(f'重扫完成，已处理事件: {self._solved_map_event}')
 
                 # ===== 舰队移动搜索（如果启用且没有发现事件）=====
                 if self.config.OpsiHazard1Leveling_ExecuteFixedPatrolScan:
