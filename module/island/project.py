@@ -365,7 +365,7 @@ class IslandProjectRun(IslandUI):
             # UI additional
             if self.island_in_management(interval=5):
                 self.device.click(button)
-                self.device.sleep(0.1)
+                self.device.sleep(0.2)
                 click_timer.reset()
                 continue
 
@@ -413,7 +413,7 @@ class IslandProjectRun(IslandUI):
                 if product.valid:
                     self.total = self.total.add_by_eq(SelectedGrids([product]))
                     self.device.click(ISLAND_CLICK_SAFE_AREA)
-                    self.device.sleep(0.1)
+                    self.device.sleep(0.2)
                     break
                 else:
                     self.interval_clear(ROLE_SELECT_ENTER)
