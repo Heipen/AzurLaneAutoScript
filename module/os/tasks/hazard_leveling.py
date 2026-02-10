@@ -290,15 +290,16 @@ class OpsiHazard1Leveling(OSMap):
                 logger.info(f'重扫完成，已处理事件: {self._solved_map_event}')
 
                 # ===== 舰队移动搜索（如果启用且没有发现事件）=====
-                if self.config.OpsiHazard1Leveling_ExecuteFixedPatrolScan:
-                    exec_fixed = getattr(self.config, 'OpsiHazard1Leveling_ExecuteFixedPatrolScan', False)
+                if self.config.cross_get(keys='OpsiHazard1Leveling.OpsiHazard1Leveling.ExecuteFixedPatrolScan', default=False):
                     # 只有在第一次重扫没有发现事件时才执行舰队移动
-                    if exec_fixed and not self._solved_map_event:
+                    if not self._solved_map_event:
                         self._execute_fixed_patrol_scan(ExecuteFixedPatrolScan=True)
                         # ===== 第二次重扫：舰队移动后再次重扫 =====
+                        logger.info('执行舰队移动后再次重扫')
                         self._solved_map_event = set()
                         self.clear_question()
                         self.map_rescan()
+                        logger.info(f'第二次重扫完成，已处理事件: {self._solved_map_event}')
 
             self.handle_after_auto_search()
             solved_events = getattr(self, '_solved_map_event', set())
