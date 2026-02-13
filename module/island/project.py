@@ -769,7 +769,7 @@ class IslandProjectRun(IslandUI):
 
             if end:
                 break
-            self.island_drag_next_page((0, -500), ISLAND_PROJECT_SWIPE.area, 0.6)
+            self.island_drag_next_page((0, -500), ISLAND_PROJECT_SWIPE.area, 1.6)
 
         # task delay
         future_finish = sorted([f for f in self.total.get('finish_time') if f is not None])
