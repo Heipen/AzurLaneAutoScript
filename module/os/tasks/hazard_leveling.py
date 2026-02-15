@@ -303,6 +303,15 @@ class OpsiHazard1Leveling(OSMap):
 
             self.handle_after_auto_search()
             solved_events = getattr(self, '_solved_map_event', set())
+            if 'is_akashi' in solved_events:
+                try:
+                    from module.statistics.cl1_database import db as cl1_db
+                    instance_name = getattr(self.config, 'config_name', 'default')
+                    cl1_db.increment_akashi_encounter(instance_name)
+                    logger.info('Successfully incremented CL1 akashi encounter in DB')
+                except Exception:
+                    logger.exception('Failed to persist CL1 akashi encounter to DB')
+
 
             # 每次循环结束后提交CL1数据
             try:
