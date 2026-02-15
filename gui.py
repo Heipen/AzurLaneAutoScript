@@ -84,8 +84,51 @@ def func(ev: threading.Event):
     else:
         uvicorn.run("module.webui.app:app", host=host, port=port, factory=True)
 
+def run_cl1_migration():
+    """
+    启动时尝试迁移 CL1 统计数据 (JSON -> SQLite)
+    """
+    try:
+        from pathlib import Path
+        from module.statistics.cl1_database import db, Cl1Database
+        logger.hr("Checking CL1 Migration")
+        
+        project_root = Path(__file__).parent
+        log_dir = project_root / 'log' / 'cl1'
+        
+        if not log_dir.exists():
+            logger.warning(f"Log directory not found: {log_dir}")
+            return
+
+        migrated_count = 0
+        dependencies = [p for p in log_dir.iterdir()]
+        logger.info(f"Scanning {log_dir}, found {len(dependencies)} items: {[p.name for p in dependencies]}")
+
+        # 扫描 log/cl1 下的所有子文件夹
+        for instance_dir in dependencies:
+            if instance_dir.is_dir():
+                json_file = instance_dir / 'cl1_monthly.json'
+                if json_file.exists():
+                    logger.info(f"Found legacy data for instance: {instance_dir.name}")
+                    try:
+                        db.migrate_from_json(json_file, instance_dir.name)
+                        migrated_count += 1
+                    except Exception as e:
+                        logger.error(f"Failed to migrate {instance_dir.name}: {e}")
+                else:
+                     logger.info(f"No cl1_monthly.json in {instance_dir.name}")
+            else:
+                logger.info(f"Skipping non-directory: {instance_dir.name}")
+        
+        if migrated_count > 0:
+            logger.info(f"Migration completed for {migrated_count} instance(s).")
+            
+    except Exception as e:
+        logger.exception(f"Error during CL1 migration check: {e}")
 
 if __name__ == "__main__":
+    # 尝试迁移 CL1 数据
+    run_cl1_migration()
     if State.deploy_config.EnableReload:
         should_exit = False
         while not should_exit:

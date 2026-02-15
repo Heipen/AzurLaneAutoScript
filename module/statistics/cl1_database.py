@@ -29,6 +29,7 @@ class Cl1Database:
         self._ensure_dir()
         self._init_db()
         self._encryption_key = self._derive_key()
+        self._auto_migrate()
 
     def _ensure_dir(self):
         try:
@@ -211,6 +212,24 @@ class Cl1Database:
 
         except Exception as e:
             logger.exception(f"Failed to migrate CL1 data from JSON: {e}")
+
+    def _auto_migrate(self):
+        """
+        初始化时自动扫描 log/cl1 下的所有实例并迁移旧数据
+        """
+        if not self.db_dir.exists():
+            return
+            
+        # logger.info(f"Scanning for legacy CL1 data in {self.db_dir}...")
+        try:
+            for instance_dir in self.db_dir.iterdir():
+                if instance_dir.is_dir():
+                    json_file = instance_dir / 'cl1_monthly.json'
+                    if json_file.exists():
+                        # logger.info(f"Found legacy data for instance: {instance_dir.name}")
+                        self.migrate_from_json(json_file, instance_dir.name)
+        except Exception as e:
+            logger.error(f"Error during auto migration scan: {e}")
 
 # 单例实例
 db = Cl1Database()
