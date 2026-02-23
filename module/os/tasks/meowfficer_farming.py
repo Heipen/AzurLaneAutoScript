@@ -363,12 +363,6 @@ class OpsiMeowfficerFarming(OSMap):
             # 优先检查塞壬探测装置搜索模式，即使设置了 TargetZone 也会先执行搜索
             siren_search_enabled = self.config.OpsiMeowfficerFarming_SirenDetectorSearch_Enable
             logger.info(f'塞壬探测装置搜索模式检查：SirenDetectorSearch_Enable={siren_search_enabled}')
-            if siren_search_enabled:
-                # 临时禁用指定海域计划作战（StayInZone），强制使用普通短猫模式
-                self._original_stay_in_zone = self.config.OpsiMeowfficerFarming_StayInZone
-                if self._original_stay_in_zone:
-                    self.config.OpsiMeowfficerFarming_StayInZone = False
-                    logger.info('塞壬探测装置搜索模式：临时禁用指定海域计划作战')
 
             # (1252, 1012) is the coordinate of zone 134 (the center zone) in os_globe_map.png
             # 只有在塞壬探测装置搜索模式未开启时才执行 TargetZone 分支
@@ -553,9 +547,6 @@ class OpsiMeowfficerFarming(OSMap):
                         if hasattr(self.config, '_disable_siren_research'):
                             delattr(self.config, '_disable_siren_research')
                             logger.info('塞壬探测装置搜索模式结束：清除 _disable_siren_research 标志')
-                        # 恢复指定海域计划作战设置
-                        if hasattr(self, '_original_stay_in_zone'):
-                            self.config.OpsiMeowfficerFarming_StayInZone = self._original_stay_in_zone
                         # 不处理卡住的敌人，直接跳过本次出击
                         self.handle_after_auto_search()
                         self.config.check_task_switch()
@@ -583,11 +574,6 @@ class OpsiMeowfficerFarming(OSMap):
                 if hasattr(self.config, '_disable_siren_research'):
                     delattr(self.config, '_disable_siren_research')
                     logger.info('塞壬探测装置搜索模式结束：清除 _disable_siren_research 标志')
-                
-                # 恢复指定海域计划作战设置
-                if hasattr(self, '_original_stay_in_zone'):
-                    self.config.OpsiMeowfficerFarming_StayInZone = self._original_stay_in_zone
-                    logger.info(f'塞壬探测装置搜索模式结束：恢复指定海域计划作战为 {self._original_stay_in_zone}')
             else:
                 # 普通模式：直接执行自律搜索
                 self.run_auto_search()
