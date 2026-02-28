@@ -83,6 +83,15 @@ class OpsiHazard1Leveling(OSMap):
         # 获取当前行动力总量
         current_ap = self._action_point_total
         
+        # 保存体力快照到数据库（用于 WebUI 体力变化曲线图）
+        try:
+            from module.statistics.cl1_database import db as cl1_db
+            instance_name = getattr(self.config, 'config_name', 'default')
+            source = 'cl1' if getattr(self, 'is_in_task_cl1_leveling', False) else 'meow'
+            cl1_db.add_ap_snapshot(instance_name, current_ap, source=source)
+        except Exception:
+            logger.exception('Failed to save AP snapshot')
+        
         # 解析配置的阈值列表
         try:
             levels_str = getattr(self.config, 'OpsiScheduling_ActionPointNotifyLevels', '500, 1000, 2000, 3000')
