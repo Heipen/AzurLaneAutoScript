@@ -300,6 +300,8 @@ class AzurLaneConfig(ConfigUpdater, ManualConfig, GeneratedConfig, ConfigWatcher
         limit_next_run(["OpsiExplore", "OpsiCrossMonth", "OpsiVoucher", "OpsiMonthBoss", "OpsiShop"],
                        limit=now + timedelta(days=31, seconds=-1))
         limit_next_run(["OpsiArchive"], limit=now + timedelta(days=7, seconds=-1))
+        limit_next_run(["OpsiAshBeacon", "OpsiAshAssist"], limit=now + timedelta(days=20, seconds=-1))
+        limit_next_run(["Hard"], limit=now + timedelta(days=2, seconds=-1))
         limit_next_run(self.args.keys(), limit=now + timedelta(hours=24, seconds=-1))
 
         """
