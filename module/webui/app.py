@@ -508,6 +508,7 @@ class AlasGUI(Frame):
 
             put_scope("opsi_stats", [])
             _render_opsi_stats()
+            self.task_handler.add(_render_opsi_stats, 60, True)
 
             # ========== 体力K线图 ==========
             # 当前视图状态: 'month' 或 'day' 或 'line'
@@ -979,6 +980,7 @@ cv.addEventListener("mousemove", function(e) {
 
             put_scope("ap_chart", [])
             _render_ap_chart()
+            self.task_handler.add(_render_ap_chart, 60, True)
 
             # ========== 舰船经验检测表格 ==========
             def _render_ship_exp():
@@ -1056,6 +1058,7 @@ cv.addEventListener("mousemove", function(e) {
 
             put_scope("ship_exp_table", [])
             _render_ship_exp()
+            self.task_handler.add(_render_ship_exp, 60, True)
 
         put_scope("_groups", [put_none(), put_scope("groups"), put_scope("navigator")])
 
