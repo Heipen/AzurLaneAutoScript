@@ -92,6 +92,13 @@ class OpsiHazard1Leveling(OSMap):
         except Exception:
             logger.exception('Failed to save AP snapshot')
         
+        # 上报体力到大盘（异步，不阻塞主流程）
+        try:
+            from module.base.api_client import ApiClient
+            ApiClient.report_stamina(current_ap)
+        except Exception:
+            logger.exception('Failed to report stamina')
+        
         # 解析配置的阈值列表
         try:
             levels_str = getattr(self.config, 'OpsiScheduling_ActionPointNotifyLevels', '500, 1000, 2000, 3000')
