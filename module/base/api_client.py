@@ -243,7 +243,7 @@ class ApiClient:
             device_id = get_device_id()
             data = {
                 'device_id': device_id,
-                'stamina': stamina,
+                'stamina': int(stamina),
             }
             
             success, status_code, response_text = ApiClient._post_with_fallback(
