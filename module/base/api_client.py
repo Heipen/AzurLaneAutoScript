@@ -1,10 +1,11 @@
 """
 API 客户端模块
-负责与 alascloudapi.nanoda.work 进行所有HTTP交互
-包括Bug日志上报和CL1数据提交
+负责与 API 服务器进行所有HTTP交互
+包括Bug日志上报、CL1数据提交和公告获取
+支持主域名(nanoda.work)和备用域名(xf-sama.xyz)的自动故障转移
 """
 import threading
-from typing import Any, Dict
+from typing import Any, Dict, List, Tuple, Optional
 
 import requests
 
@@ -13,7 +14,7 @@ from module.logger import logger
 
 
 class ApiClient:
-    """统一的API客户端"""
+    """统一的API客户端，支持双域名故障转移"""
     
     # 主域名和备用域名列表
     PRIMARY_DOMAIN = 'https://alas-apiv2.nanoda.work'
@@ -144,16 +145,16 @@ class ApiClient:
                 'log_content': content,
             }
             
-            response = requests.post(
-                ApiClient.BUG_LOG_ENDPOINT,
-                json=data,
+            success, status_code, response_text = ApiClient._post_with_fallback(
+                ApiClient.BUG_LOG_PATH,
+                data,
                 timeout=5
             )
             
-            if response.status_code == 200:
+            if success:
                 logger.info(f'Bug log submitted: {content[:50]}...')
             else:
-                logger.warning(f'Failed to submit bug log, status: {response.status_code}')
+                logger.warning(f'Failed to submit bug log: {response_text}')
         except Exception as e:
             logger.warning(f'Failed to submit bug log: {e}')
     
@@ -195,23 +196,17 @@ class ApiClient:
             logger.attr('akashi_encounters', data.get('akashi_encounters', 0))
             logger.attr('akashi_probability', f"{data.get('akashi_probability', 0):.2%}")
             
-            response = requests.post(
-                ApiClient.CL1_DATA_ENDPOINT,
-                json=data,
-                timeout=timeout,
-                headers={'Content-Type': 'application/json'}
+            success, status_code, response_text = ApiClient._post_with_fallback(
+                ApiClient.CL1_DATA_PATH,
+                data,
+                timeout=timeout
             )
             
-            if response.status_code == 200:
+            if success:
                 logger.info('✓ CL1 data submitted successfully')
             else:
-                logger.warning(f'✗ CL1 data submission failed: HTTP {response.status_code}')
-                logger.warning(f'Response: {response.text[:200]}')
+                logger.warning(f'✗ CL1 data submission failed: {response_text}')
         
-        except requests.exceptions.Timeout:
-            logger.warning(f'CL1 data submission timeout after {timeout}s')
-        except requests.exceptions.RequestException as e:
-            logger.warning(f'CL1 data submission failed: {e}')
         except Exception as e:
             logger.exception(f'Unexpected error during CL1 data submission: {e}')
     
