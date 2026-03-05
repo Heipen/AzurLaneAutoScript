@@ -305,31 +305,7 @@ class OSShop(PortShop, AkashiShop):
         """
         self.ui_click(grid, appear_button=self.is_in_map, check_button=PORT_SUPPLY_CHECK,
                       additional=self.handle_story_skip, skip_first_screenshot=True)
-        
-        #记录遇到明石次数
-        is_cl1 = getattr(self, 'is_in_task_cl1_leveling', False) and getattr(self, 'is_cl1_enabled', False)
-                        
-        # 检查配置是否允许记录非CL1来源的体力
-        record_non_cl1 = True
-        if hasattr(self, 'config') and hasattr(self.config, 'OpsiHazard1Leveling_RecordNonCL1AP'):
-            record_non_cl1 = self.config.OpsiHazard1Leveling_RecordNonCL1AP
-        logger.info(f'CL1 Akashi encounter recording: is_cl1={is_cl1}, record_non_cl1={record_non_cl1}')
-        if is_cl1 or record_non_cl1:
-            try:
-                key = f"{datetime.now():%Y-%m}-akashi"
-                data = self._load_cl1_monthly()
-                data[key] = int(data.get(key, 0)) + 1
-                self._save_cl1_monthly(data)
-                logger.attr('cl1_akashi_monthly', data[key])
-            except Exception:
-                    logger.exception('Failed to persist CL1 akashi monthly count')
-        
-        with self.stat.new(
-            genre="opsi_akashi", method=self.config.DropRecord_AkashiRecord
-        ) as drop:
-            drop.handle_add(self)
-            self.os_shop_get_item_to_buy_in_akashi_all()
-            self.os_shop_buy(select_func=self.os_shop_get_item_to_buy_in_akashi)
+        self.os_shop_buy(select_func=self.os_shop_get_item_to_buy_in_akashi)
         self.ui_back(appear_button=PORT_SUPPLY_CHECK, check_button=self.is_in_map, skip_first_screenshot=True)
 
     @cached_property
