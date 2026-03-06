@@ -83,6 +83,22 @@ class OpsiHazard1Leveling(OSMap):
         # 获取当前行动力总量
         current_ap = self._action_point_total
         
+        # 保存体力快照到数据库（用于 WebUI 体力变化曲线图）
+        try:
+            from module.statistics.cl1_database import db as cl1_db
+            instance_name = getattr(self.config, 'config_name', 'default')
+            source = 'cl1' if getattr(self, 'is_in_task_cl1_leveling', False) else 'meow'
+            cl1_db.add_ap_snapshot(instance_name, current_ap, source=source)
+        except Exception:
+            logger.exception('Failed to save AP snapshot')
+        
+        # 上报体力到大盘（异步，不阻塞主流程）
+        try:
+            from module.base.api_client import ApiClient
+            ApiClient.report_stamina(current_ap)
+        except Exception:
+            logger.exception('Failed to report stamina')
+        
         # 解析配置的阈值列表
         try:
             levels_str = getattr(self.config, 'OpsiScheduling_ActionPointNotifyLevels', '500, 1000, 2000, 3000')
@@ -303,6 +319,15 @@ class OpsiHazard1Leveling(OSMap):
 
             self.handle_after_auto_search()
             solved_events = getattr(self, '_solved_map_event', set())
+            if 'is_akashi' in solved_events:
+                try:
+                    from module.statistics.cl1_database import db as cl1_db
+                    instance_name = getattr(self.config, 'config_name', 'default')
+                    cl1_db.increment_akashi_encounter(instance_name)
+                    logger.info('Successfully incremented CL1 akashi encounter in DB')
+                except Exception:
+                    logger.exception('Failed to persist CL1 akashi encounter to DB')
+
 
             # 每次循环结束后提交CL1数据
             try:
