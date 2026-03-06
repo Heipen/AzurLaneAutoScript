@@ -568,14 +568,13 @@ class AlasGUI(Frame):
                     from collections import OrderedDict
                     candles = OrderedDict()
                     if current_view == 'day':
-                        today = _dt.now().date()
-                        today_points = [p for p in raw_points if p['dt'].date() == today]
-                        if not today_points:
-                            last_date = raw_points[-1]['dt'].date()
-                            today_points = [p for p in raw_points if p['dt'].date() == last_date]
-                            today = last_date
+                        now = _dt.now()
+                        start_time = now - timedelta(hours=24*3)
+
+                        today_points = [p for p in raw_points if p['dt'] >= start_time]
+
                         for p in today_points:
-                            hour_key = p['dt'].strftime('%H:00')
+                            hour_key = p['dt'].strftime('%d-%H:00')
                             if hour_key not in candles:
                                 candles[hour_key] = {'open': p['ap'], 'high': p['ap'], 'low': p['ap'], 'close': p['ap'], 'count': 1}
                             else:
@@ -584,7 +583,7 @@ class AlasGUI(Frame):
                                 c['low'] = min(c['low'], p['ap'])
                                 c['close'] = p['ap']
                                 c['count'] += 1
-                        view_title = f"天视图 ({today.strftime('%m-%d')} 小时K线)"
+                        view_title = "3日视图 (小时K线)"
                     else:
                         for p in raw_points:
                             day_key = p['dt'].strftime('%m-%d')
@@ -973,7 +972,7 @@ cv.addEventListener("mousemove", function(e) {
                         _render_ap_chart()
                     put_row([
                         put_button("分时(详细波动)", onclick=lambda: _switch_view('line'), color="off" if current_view!='line' else "primary"),
-                        put_button("天视图(小时K)", onclick=lambda: _switch_view('day'), color="off" if current_view!='day' else "primary"),
+                        put_button("3日视图(小时K)", onclick=lambda: _switch_view('day'), color="off" if current_view!='day' else "primary"),
                         put_button("月视图(日K)", onclick=lambda: _switch_view('month'), color="off" if current_view!='month' else "primary"),
                         put_button("刷新", onclick=_render_ap_chart, color="off"),
                     ], size="auto")
