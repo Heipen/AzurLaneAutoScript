@@ -783,6 +783,11 @@ class AzurLaneAutoScript:
                     logger.critical("The error appears to be fatal and unrecoverable by restarting.")
                     self.save_error_log()
                     logger.critical("Scheduler is now terminating. Manual intervention is required.")
+                    handle_notify(
+                        self.config.Error_OnePushConfig,
+                        title=f"Alas <{self.config_name}> fatal error",
+                        content=f"<{self.config_name}> Scheduler terminated after {consecutive_global_failures} consecutive global failures.\nLast error: {str(e)}",
+                    )
                     exit(1)   # 达到上限，强制终止程序
 
                  # --- 尝试重启 ---
