@@ -255,7 +255,7 @@ class OpsiHazard1Leveling(OSMap):
             keep_current_ap = True
             if self.config.OpsiGeneral_BuyActionPointLimit > 0:
                 keep_current_ap = False
-            self.action_point_set(cost=120, keep_current_ap=keep_current_ap, check_rest_ap=True)
+            self.action_point_set(cost=90, keep_current_ap=keep_current_ap, check_rest_ap=True)
 
             # ===== 智能调度: 行动力阈值推送检查 =====
             # 在设置行动力后检查是否跨越阈值并推送通知
