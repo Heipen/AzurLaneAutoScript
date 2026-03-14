@@ -5,6 +5,7 @@ from module.logger import logger
 from module.map.map_grids import SelectedGrids
 from module.os.map import OSMap
 from module.os_handler.action_point import ActionPointLimit
+from module.notify import handle_notify
 
 
 class OpsiMeowfficerFarming(OSMap):
@@ -70,7 +71,8 @@ class OpsiMeowfficerFarming(OSMap):
         
         if yellow_coins >= return_threshold:
             logger.info(f'黄币充足 ({yellow_coins} >= {return_threshold})，切换回侵蚀1继续执行')
-            self.notify_push(
+            handle_notify(
+                self.config.Error_OnePushConfig,
                 title="[Alas] 短猫相接 - 黄币充足",
                 content=f"黄币 {yellow_coins} 达到阈值 {return_threshold}\n切换回侵蚀1继续执行"
             )
@@ -336,12 +338,14 @@ class OpsiMeowfficerFarming(OSMap):
                         
                         # 推送通知
                         if self.is_cl1_enabled:
-                            self.notify_push(
+                            handle_notify(
+                                self.config.Error_OnePushConfig,
                                 title="[Alas] 短猫相接 - 切换至侵蚀1",
                                 content=f"行动力 {self._action_point_total} 不足 (需要 {self.config.OpsiMeowfficerFarming_ActionPointPreserve})\n黄币: {yellow_coins}\n推迟短猫1小时，切换至侵蚀1继续执行"
                             )
                         else:
-                            self.notify_push(
+                            handle_notify(
+                                self.config.Error_OnePushConfig,
                                 title="[Alas] 短猫相接 - 行动力不足",
                                 content=f"行动力 {self._action_point_total} 不足 (需要 {self.config.OpsiMeowfficerFarming_ActionPointPreserve})\n黄币: {yellow_coins}\n推迟1小时"
                             )
