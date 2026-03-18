@@ -1701,6 +1701,8 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             return
         
         erosion_one_zone = self.name_to_zone(current_zone_id)
+
+        force_reward = False
         
         logger.hr(f'RUN SIREN BUG EXPLOITATION')
         
@@ -1734,6 +1736,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
 
                 find_device_timer = Timer(30, count=1).start()
                 self._solved_map_event = set()
+                device_found = False
                 device_handled = False
 
                 while find_device_timer.reached() is False and not device_handled:
@@ -1755,6 +1758,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                     if grids and grids[0].is_scanning_device and 'is_scanning_device' not in self._solved_map_event:
                         grid = grids[0]
                         logger.info(f'找到塞壬研究装置: {grid}')
+                        device_found = True
 
                         # 移动舰队至塞壬研究装置，触发剧情
                         self.device.click(grid)
@@ -1829,13 +1833,17 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                     time.sleep(0.5)
 
                 if not device_handled:
-                    logger.warning(f'区域{siren_bug_zone}未找到塞壬研究装置，跳过后续操作')
+                    if not device_found:
+                        logger.warning(f'区域{siren_bug_zone}未找到塞壬研究装置，跳过后续操作')
+                        # 没找到吊机自动关闭bug利用
+                        if getattr(self.config, 'OpsiSirenBug_SirenBug_AutoDisable', False):
+                            self.config.OpsiSirenBug_SirenBug_Enable = False
 
-                    # 没找到吊机自动关闭bug利用
-                    if getattr(self.config, 'OpsiSirenBug_SirenBug_AutoDisable', False):
-                        self.config.OpsiSirenBug_SirenBug_Enable = False
-
-                    raise RuntimeError('未找到塞壬研究装置')
+                        raise RuntimeError('未找到塞壬研究装置')
+                    else:
+                        logger.warning(f'找到塞壬研究装置但无法进入剧情，执行自动收菜（如果配置了自动收菜）')
+                        force_reward = True
+                    
 
             # Increase bug count
             self.config.OpsiSirenBug_SirenBug_DailyCount += 1
@@ -1855,7 +1863,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             #     logger.debug(f'发送成功通知失败: {notify_err}')
             
             count_limit = self.config.OpsiSirenBug_SirenBug_CountLimit
-            if count_limit > 0 and count >= count_limit:
+            if count_limit > 0 and (count >= count_limit or force_reward):
                 logger.info(f'已达到塞壬Bug自动处理阈值 ({count_limit}次)，开始自动收菜')
                 # 禁用塞壬研究装置的处理
                 self.config._disable_siren_research = True
