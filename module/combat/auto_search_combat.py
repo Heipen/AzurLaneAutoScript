@@ -6,6 +6,7 @@ from module.exception import CampaignEnd
 from module.handler.assets import AUTO_SEARCH_MAP_OPTION_ON
 from module.logger import logger
 from module.map.map_operation import MapOperation
+from module.statistics.azurstats import DropImage
 
 
 class AutoSearchCombat(MapOperation, Combat, CampaignStatus):
@@ -196,9 +197,12 @@ class AutoSearchCombat(MapOperation, Combat, CampaignStatus):
             if self.is_combat_executing():
                 logger.info('is_combat_executing')
                 break
-            if self.is_in_auto_search_menu() or self._handle_auto_search_menu_missing():
+            # 自律作战总结算画面截图
+            if self.is_in_auto_search_menu():
+                self.auto_search_campaign_end_drop()
                 raise CampaignEnd
-
+            if self._handle_auto_search_menu_missing():
+                raise CampaignEnd
     def auto_search_combat_execute(self, emotion_reduce, fleet_index):
         """
         Args:
@@ -223,7 +227,11 @@ class AutoSearchCombat(MapOperation, Combat, CampaignStatus):
                 continue
 
             # End
-            if self.is_in_auto_search_menu() or self._handle_auto_search_menu_missing():
+            # 自律作战总结算画面截图
+            if self.is_in_auto_search_menu():
+                self.auto_search_campaign_end_drop()
+                raise CampaignEnd
+            if self._handle_auto_search_menu_missing():
                 raise CampaignEnd
             pause = self.is_combat_executing()
             if pause:
@@ -269,7 +277,12 @@ class AutoSearchCombat(MapOperation, Combat, CampaignStatus):
                 continue
 
             # End
-            if self.is_in_auto_search_menu() or self._handle_auto_search_menu_missing():
+            # 自律作战总结算画面截图
+            if self.is_in_auto_search_menu():
+                self.auto_search_campaign_end_drop()
+                self.device.screenshot_interval_set()
+                raise CampaignEnd
+            if self._handle_auto_search_menu_missing():
                 self.device.screenshot_interval_set()
                 raise CampaignEnd
             if self.is_combat_executing():
@@ -299,7 +312,11 @@ class AutoSearchCombat(MapOperation, Combat, CampaignStatus):
             if self.is_auto_search_running():
                 self._auto_search_status_confirm = False
                 break
-            if self.is_in_auto_search_menu() or self._handle_auto_search_menu_missing():
+            # 自律作战总结算画面截图
+            if self.is_in_auto_search_menu():
+                self.auto_search_campaign_end_drop()
+                raise CampaignEnd
+            if self._handle_auto_search_menu_missing():
                 raise CampaignEnd
 
             # Combat status
@@ -350,3 +367,33 @@ class AutoSearchCombat(MapOperation, Combat, CampaignStatus):
         self.auto_search_combat_status()
 
         logger.info('Combat end.')
+
+    def auto_search_campaign_end_drop(self, drop=None):
+        """
+        自律作战结束时的总结算截图。
+        仅在自律作战全部完成后调用一次，截取总结算画面。
+
+        Args:
+            drop (DropImage): 掉落记录对象，为 None 时根据配置自动创建
+
+        Pages:
+            in: Campaign end (just raised CampaignEnd)
+            out: campaign menu or stage selection
+        """
+        # 检查是否需要截图
+        method = self.config.DropRecord_CombatRecord
+        if 'save' not in method:
+            logger.info('Drop record is disabled, skip auto search campaign end drop')
+            return
+
+        logger.info('Auto search campaign end drop record')
+
+        # 创建 DropImage 对象
+        with self.stat.new(
+                genre=self.config.campaign_name, method=method
+        ) as drop:
+            self.device.sleep(5)  # 等待总结算界面完全加载
+            self.device.screenshot()
+            drop.add(self.device.image)
+
+        logger.info('Auto search campaign end drop record saved')
