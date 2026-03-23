@@ -366,7 +366,18 @@ class OpsiMeowfficerFarming(OSMap):
             # ===== 塞壬探测装置搜索模式 =====
             # 优先检查塞壬探测装置搜索模式，即使设置了 TargetZone 也会先执行搜索
             siren_search_enabled = self.config.OpsiMeowfficerFarming_SirenDetectorSearch_Enable
-            logger.info(f'塞壬探测装置搜索模式检查：SirenDetectorSearch_Enable={siren_search_enabled}')
+            # 判断条件：已记录的海域数量未达到设定数量时强制开启
+            stop_after_found = self.config.OpsiMeowfficerFarming_SirenDetectorSearch_StopAfterFound
+            found_zones_str = self.config.OpsiMeowfficerFarming_SirenDetectorSearch_FoundZones
+            found_count = 0
+            if found_zones_str:
+                found_count = len(str(found_zones_str).split(','))
+            # 当已记录海域数量达到设定数量时，停止搜索模式
+            # 不再依赖 OpsiMeowfficerFarming_SirenDetectorSearch_Enable，只以已记录数量是否达到设定数量作为判断
+            siren_search_enable = stop_after_found <= 0 or found_count < stop_after_found
+            logger.info(f'塞壬探测装置搜索模式检查：已找到={found_count}, 目标={stop_after_found}, 是否强制激活={siren_search_enable}')
+            # 如果开启了自动寻找塞壬探测装置功能，使用配置的侵蚀等级来选择海域
+            self.config.OpsiMeowfficerFarming_SirenDetectorSearch_Enable = siren_search_enable
 
             # (1252, 1012) is the coordinate of zone 134 (the center zone) in os_globe_map.png
             # 只有在塞壬探测装置搜索模式未开启时才执行 TargetZone 分支
@@ -410,8 +421,6 @@ class OpsiMeowfficerFarming(OSMap):
                     continue
 
             # ===== 塞壬探测装置搜索 =====
-            # 如果开启了自动寻找塞壬探测装置功能，使用配置的侵蚀等级来选择海域
-            siren_search_enabled = self.config.OpsiMeowfficerFarming_SirenDetectorSearch_Enable
             if siren_search_enabled:
                 # 使用塞壬探测装置搜索的侵蚀等级（只在中心海域中选择）
                 hazard_level = self.config.OpsiMeowfficerFarming_SirenDetectorSearch_HazardLevel
@@ -449,6 +458,45 @@ class OpsiMeowfficerFarming(OSMap):
                     .delete(SelectedGrids([self.zone])) \
                     .delete(SelectedGrids(self.zones.select(is_port=True))) \
                     .sort_by_clock_degree(center=(1252, 1012), start=self.zone.location)
+
+            # 如果 zones 为空但已记录数量仍小于设定数量，说明该侵蚀等级的海域已全部遍历
+            # 此时执行一次常规自律，再回来继续搜索
+            if siren_search_enabled and not zones:
+                logger.info(f'塞壬探测装置搜索模式：当前侵蚀等级 ({hazard_level}) 的可探索海域已全部遍历，但已记录数量 ({found_count}) 仍小于目标 ({stop_after_found})')
+                logger.info('执行一次常规自律后，再回来继续搜索')
+                # 执行一次常规自律
+                hazard_level_normal = self.config.OpsiMeowfficerFarming_HazardLevel
+                zones_normal = self.zone_select(hazard_level=hazard_level_normal) \
+                    .delete(SelectedGrids([self.zone])) \
+                    .delete(SelectedGrids(self.zones.select(is_port=True))) \
+                    .sort_by_clock_degree(center=(1252, 1012), start=self.zone.location)
+
+                logger.hr(f'常规自律，zone_id={zones_normal[0].zone_id}', level=1)
+                self.globe_goto(zones_normal[0])
+                self.fleet_set(self.config.OpsiFleet_Fleet)
+                self.os_order_execute(
+                    recon_scan=False,
+                    submarine_call=self.config.OpsiFleet_Submarine)
+                self.run_auto_search()
+                self.handle_after_auto_search()
+
+                # 自律结束后重新计算可探索海域
+                zones = self.zones.select(region=5, hazard_level=hazard_level) \
+                    .delete(SelectedGrids([self.zone])) \
+                    .delete(SelectedGrids(self.zones.select(is_port=True))) \
+                    .delete(SelectedGrids(excluded_zones)) \
+                    .sort_by_clock_degree(center=(1252, 1012), start=self.zone.location)
+
+                # 如果仍然为空，理论不应该，查bug
+                if not zones:
+                    logger.info(f'塞壬探测装置搜索模式：自律结束后重新计算可探索海域仍为空，理论不应该，检查是否有bug')
+                    self.config.OpsiMeowfficerFarming_SirenDetectorSearch_Enable = False
+
+            # 检查 zones 是否为空
+            if not zones:
+                logger.warning('可选海域列表为空，任务停止')
+                self.config.task_delay(server_update=True)
+                self.config.task_stop()
 
             logger.hr(f'OS meowfficer farming, zone_id={zones[0].zone_id}', level=1)
             current_zone_id = zones[0].zone_id
