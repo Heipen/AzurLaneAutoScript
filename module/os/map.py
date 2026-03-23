@@ -1157,7 +1157,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             int: Number of finished combat
         """
         if rescan is None:
-            rescan = self.config.OpsiGeneral_DoRandomMapEvent
+            rescan = self.config.cross_get(keys="OpsiGeneral.OpsiGeneral.DoRandomMapEvent")
         if rescan is True:
             rescan = 'full'
         self.handle_ash_beacon_attack()
