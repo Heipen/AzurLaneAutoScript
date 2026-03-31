@@ -7,7 +7,7 @@ from .campaign_16_base_aircraft import Config as ConfigBase
 
 MAP = CampaignMap('16-4')
 MAP.shape = 'K8'
-MAP.camera_data = ['C2', 'C6', 'F2', 'F6', 'H2', 'H6']
+MAP.camera_data = ['C2', 'F5', 'F2', 'H2', 'H5']
 MAP.camera_data_spawn_point = ['C6']
 MAP.camera_sight = (-2, -1, 3, 2)
 MAP.map_data = """
@@ -35,6 +35,17 @@ MAP.spawn_data = [
     {'battle': 1, 'enemy': 3},
     {'battle': 2, 'enemy': 5},
     {'battle': 3},
+    {'battle': 4},
+    {'battle': 5},
+    {'battle': 6},
+    {'battle': 7},
+    {'battle': 8, 'boss': 1},
+]
+MAP.spawn_data_loop = [
+    {'battle': 0, 'enemy': 5},
+    {'battle': 1, 'enemy': 3},
+    {'battle': 2, 'enemy': 5},
+    {'battle': 3},
     {'battle': 4, 'boss': 1},
 ]
 A1, B1, C1, D1, E1, F1, G1, H1, I1, J1, K1, \
@@ -54,64 +65,101 @@ class Config(ConfigBase):
     MAP_HAS_FLEET_STEP = False
     MAP_HAS_AMBUSH = True
 
+    MAP_ENSURE_EDGE_INSIGHT_CORNER = 'bottom-left'
+    MAP_SWIPE_MULTIPLY = (1.003, 1.022)
+    MAP_SWIPE_MULTIPLY_MINITOUCH = (0.970, 0.988)
+    MAP_SWIPE_MULTIPLY_MAATOUCH = (0.942, 0.959)
+
 
 class Campaign(CampaignBase):
     MAP = MAP
+    F5_is_moved = False
+    use_single_fleet = False
 
     def map_init(self, map_):
         super().map_init(map_)
-        if self.use_support_fleet and self.map_is_clear_mode:
-            self.map_has_mob_move = True
-            if self.fleet_boss_index == 2:
-                self.FUNCTION_NAME_BASE = 'loop_battle_'
-        else:
-            self.map_has_mob_move = False
-
-    def loop_battle_0(self):
-        if not self.mob_move(D7, D8):
-            self.FUNCTION_NAME_BASE = 'battle_'
-            return self.battle_0()
-        self.fleet_boss.goto(J1)
-        self.fleet_ensure(index=3 - self.fleet_boss_index)
-        if self.clear_filter_enemy(self.ENEMY_FILTER, preserve=0):
-            return True
-        return self.battle_default()
-
-    def loop_battle_1(self):
-        if self.clear_filter_enemy(self.ENEMY_FILTER, preserve=0):
-            return True
-        return self.battle_default()
-
-    def loop_battle_4(self):
-        return self.fleet_boss.clear_boss()
+        self.F5_is_moved = False
+        self.map_has_mob_move = self.use_support_fleet and self.map_is_clear_mode
+        self.use_single_fleet = 'standby' in self.config.Fleet_FleetOrder
 
     def battle_0(self):
-        if self.battle_count == 2:
-            if self.use_support_fleet and not self.map_is_clear_mode:
-                self.goto(B3)
-                self.air_strike(B1)
-        if self.clear_roadblocks([road_main]):
-            return True
-        if self.clear_potential_roadblocks([road_main]):
-            return True
+        if self.map_has_mob_move and not self.use_single_fleet:
+            if self.mob_move(D7, D8):
+                self.fleet_boss.goto(J1)
+                self.fleet_ensure(index=3 - self.fleet_boss_index)
+                if self.clear_filter_enemy(self.ENEMY_FILTER, preserve=0):
+                    return True
+                return self.battle_default()
+
+            self.map_has_mob_move = False
+
+        return self.clear_chosen_enemy(D5)
+
+    def battle_1(self):
+        if not self.map_has_mob_move:
+            return self.clear_chosen_enemy(F5)
+
+        if not self.use_single_fleet:
+            if self.clear_filter_enemy(self.ENEMY_FILTER, preserve=0):
+                return True
+            return self.battle_default()
+
+        grids = SelectedGrids([H6, I5])
+        grid = grids.delete(grids.select(enemy_genre='Main')).first_or_none()
+        if grid is not None and self.mob_move(F5, F6):
+            self.F5_is_moved = True
+            return self.clear_chosen_enemy(grid)
+
+        self.F5_is_moved = False
+        return self.clear_chosen_enemy(F5)
+
+    def battle_2(self):
+        if not self.map_has_mob_move or self.use_single_fleet:
+            return self.clear_chosen_enemy(G4)
+
         if self.clear_filter_enemy(self.ENEMY_FILTER, preserve=0):
             return True
         return self.battle_default()
 
+    def battle_3(self):
+        if not self.map_has_mob_move:
+            return self.clear_chosen_enemy(H3)
+
+        if not self.use_single_fleet:
+            if self.clear_filter_enemy(self.ENEMY_FILTER, preserve=0):
+                return True
+            return self.battle_default()
+
+        if self.F5_is_moved:
+            if I6.enemy_genre == "Main" and self.mob_move(I6, I7):
+                return self.clear_any_enemy(genre=("Light",), strongest=True)
+            return self.clear_chosen_enemy(I6)
+
+        self.mob_move(H3, I3)
+        self.mob_move(I3, I2)
+        return self.clear_any_enemy(genre=("Light",), strongest=True)
+
     def battle_4(self):
+        if self.map_is_clear_mode:
+            return self.fleet_boss.clear_boss()
+
         boss = self.map.select(is_boss=True)
         if boss:
             if not self.check_accessibility(boss[0], fleet='boss'):
                 return self.clear_roadblocks([road_main])
-            if self.use_support_fleet and not self.map_is_clear_mode:
+
+            if self.use_support_fleet:
                 # at this stage the most right zone should be accessible
                 self.goto(J6)
                 self.air_strike(I8)
+
             return self.fleet_boss.clear_boss()
+
         if self.clear_roadblocks([road_main]):
             return True
         if self.clear_potential_roadblocks([road_main]):
             return True
         if self.clear_filter_enemy(self.ENEMY_FILTER, preserve=0):
             return True
+
         return self.battle_default()
