@@ -353,6 +353,7 @@ class Camera(MapOperation):
         logger.info(f'Ensure edge in sight.')
         record = []
         x_swipe, y_swipe = np.multiply(swipe_limit, random_direction(self.config.MAP_ENSURE_EDGE_INSIGHT_CORNER))
+        stagnant_count = 0
 
         while 1:
             if len(record) == 0:
@@ -367,7 +368,17 @@ class Camera(MapOperation):
 
             if len(record) > 0:
                 # Swipe even if two edges insight, this will avoid some embarrassing camera position.
+                prev_center = tuple(self.view.center_loca)
                 self.map_swipe((x, y))
+                new_center = tuple(self.view.center_loca)
+
+                if prev_center == new_center:
+                    stagnant_count += 1
+                    if stagnant_count >= 3:
+                        logger.warning('Ensure edge insight: center_loca stuck at %s, treating as edge reached', new_center)
+                        break
+                else:
+                    stagnant_count = 0
 
             record.append((x, y))
 
