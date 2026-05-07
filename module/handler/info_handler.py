@@ -340,8 +340,8 @@ class InfoHandler(ModuleBase):
             list[Button]: List of story options, from upper to bottom. If no option found, return an empty list.
         """
         # Area to detect the options, should include at least 3 options.
-        story_option_area = (330, 200, 980, 465)
-        story_detect_area = (330, 200, 355, 465)
+        story_option_area = (277, 130, 1003, 545)
+        story_detect_area = (330, 130, 355, 545)
         story_option_color = (247, 247, 247)
 
         image = color_similarity_2d(self.image_crop(story_detect_area, copy=False), color=story_option_color)
@@ -415,8 +415,8 @@ class InfoHandler(ModuleBase):
                 if self._story_option_confirm.reached():
                     # 检查是否是塞壬研究装置(3个选项时才检查)
                     is_siren_device = False
-                    if options_count == 3:
-                        logger.info('[Story] 检测到3个选项,检查是否为塞壬研究装置')
+                    if options_count == 5:
+                        logger.info('[Story] 检测到5个选项,检查是否为塞壬研究装置')
                         try:
                             try:
                                 # 模板匹配失效，改用OCR识别
@@ -457,12 +457,12 @@ class InfoHandler(ModuleBase):
                     # 根据检测结果选择点击哪个选项
                     if is_siren_device:
                         if hasattr(self.config, '_disable_siren_research') and self.config._disable_siren_research:
-                            select = options[2]
-                            logger.info(f'[Story] 塞壬研究装置处理被禁用，点击第3个选项: {select.name}')
+                            select = options[4]
+                            logger.info(f'[Story] 塞壬研究装置处理被禁用，点击第5个选项: {select.name}')
                         else:
                             # 塞壬研究装置:点击第2个选项(索引1)
-                            select = options[1]
-                            logger.info(f'[Story] 点击塞壬研究装置第2个选项: {select.name}')
+                            select = options[3]
+                            logger.info(f'[Story] 点击塞壬研究装置第4个选项: {select.name}')
                     else:
                         # 普通剧情:按配置的索引点击
                         try:
