@@ -4332,18 +4332,6 @@
       "name": "OpsiExplore.ForceRun.name",
       "help": "OpsiExplore.ForceRun.help"
     },
-    "IfSkipSirenResearch": {
-      "name": "OpsiExplore.IfSkipSirenResearch.name",
-      "help": "OpsiExplore.IfSkipSirenResearch.help",
-      "0": "0",
-      "6": "6",
-      "65": "65",
-      "654": "654"
-    },
-    "SkipedSirenResearch": {
-      "name": "OpsiExplore.SkipedSirenResearch.name",
-      "help": "OpsiExplore.SkipedSirenResearch.help"
-    },
     "LastZone": {
       "name": "OpsiExplore.LastZone.name",
       "help": "OpsiExplore.LastZone.help"
@@ -4496,32 +4484,6 @@
     "APPreserveUntilReset": {
       "name": "OpsiMeowfficerFarming.APPreserveUntilReset.name",
       "help": "OpsiMeowfficerFarming.APPreserveUntilReset.help"
-    },
-    "SirenDetectorSearch_Enable": {
-      "name": "OpsiMeowfficerFarming.SirenDetectorSearch_Enable.name",
-      "help": "OpsiMeowfficerFarming.SirenDetectorSearch_Enable.help"
-    },
-    "SirenDetectorSearch_HazardLevel": {
-      "name": "OpsiMeowfficerFarming.SirenDetectorSearch_HazardLevel.name",
-      "help": "OpsiMeowfficerFarming.SirenDetectorSearch_HazardLevel.help",
-      "5": "5",
-      "6": "6"
-    },
-    "SirenDetectorSearch_FleetForBlock": {
-      "name": "OpsiMeowfficerFarming.SirenDetectorSearch_FleetForBlock.name",
-      "help": "OpsiMeowfficerFarming.SirenDetectorSearch_FleetForBlock.help",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4"
-    },
-    "SirenDetectorSearch_StopAfterFound": {
-      "name": "OpsiMeowfficerFarming.SirenDetectorSearch_StopAfterFound.name",
-      "help": "OpsiMeowfficerFarming.SirenDetectorSearch_StopAfterFound.help"
-    },
-    "SirenDetectorSearch_FoundZones": {
-      "name": "OpsiMeowfficerFarming.SirenDetectorSearch_FoundZones.name",
-      "help": "OpsiMeowfficerFarming.SirenDetectorSearch_FoundZones.help"
     }
   },
   "OpsiHazard1Leveling": {
@@ -4551,56 +4513,6 @@
     "RecordNonCL1AP": {
       "name": "OpsiHazard1Leveling.RecordNonCL1AP.name",
       "help": "OpsiHazard1Leveling.RecordNonCL1AP.help"
-    }
-  },
-  "OpsiSirenBug": {
-    "_info": {
-      "name": "OpsiSirenBug._info.name",
-      "help": "OpsiSirenBug._info.help"
-    },
-    "SirenResearch_Enable": {
-      "name": "OpsiSirenBug.SirenResearch_Enable.name",
-      "help": "OpsiSirenBug.SirenResearch_Enable.help"
-    },
-    "SirenBug_Enable": {
-      "name": "OpsiSirenBug.SirenBug_Enable.name",
-      "help": "OpsiSirenBug.SirenBug_Enable.help"
-    },
-    "SirenBug_Type": {
-      "name": "OpsiSirenBug.SirenBug_Type.name",
-      "help": "OpsiSirenBug.SirenBug_Type.help",
-      "dangerous": "dangerous",
-      "safe": "safe"
-    },
-    "SirenBug_Zone": {
-      "name": "OpsiSirenBug.SirenBug_Zone.name",
-      "help": "OpsiSirenBug.SirenBug_Zone.help"
-    },
-    "DisableTaskSwitchDuringBug": {
-      "name": "OpsiSirenBug.DisableTaskSwitchDuringBug.name",
-      "help": "OpsiSirenBug.DisableTaskSwitchDuringBug.help",
-      "True": "True",
-      "False": "False"
-    },
-    "SirenBug_DailyCount": {
-      "name": "OpsiSirenBug.SirenBug_DailyCount.name",
-      "help": "OpsiSirenBug.SirenBug_DailyCount.help"
-    },
-    "SirenBug_DailyCountRecord": {
-      "name": "OpsiSirenBug.SirenBug_DailyCountRecord.name",
-      "help": "OpsiSirenBug.SirenBug_DailyCountRecord.help"
-    },
-    "SirenBug_CountLimit": {
-      "name": "OpsiSirenBug.SirenBug_CountLimit.name",
-      "help": "OpsiSirenBug.SirenBug_CountLimit.help"
-    },
-    "SirenBug_CrossDay": {
-      "name": "OpsiSirenBug.SirenBug_CrossDay.name",
-      "help": "OpsiSirenBug.SirenBug_CrossDay.help"
-    },
-    "SirenBug_AutoDisable": {
-      "name": "OpsiSirenBug.SirenBug_AutoDisable.name",
-      "help": "OpsiSirenBug.SirenBug_AutoDisable.help"
     }
   },
   "OpsiCheckLeveling": {

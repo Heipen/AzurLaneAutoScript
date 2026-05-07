@@ -616,8 +616,6 @@ class GeneratedConfig:
     # Group `OpsiExplore`
     OpsiExplore_SpecialRadar = False
     OpsiExplore_ForceRun = False
-    OpsiExplore_IfSkipSirenResearch = 0  # 0, 6, 65, 654
-    OpsiExplore_SkipedSirenResearch = None
     OpsiExplore_LastZone = 0
 
     # Group `OpsiShop`
@@ -657,11 +655,6 @@ class GeneratedConfig:
     OpsiMeowfficerFarming_HazardLevel = 5  # 2, 3, 4, 5, 6, 10
     OpsiMeowfficerFarming_TargetZone = 0
     OpsiMeowfficerFarming_APPreserveUntilReset = False
-    OpsiMeowfficerFarming_SirenDetectorSearch_Enable = False
-    OpsiMeowfficerFarming_SirenDetectorSearch_HazardLevel = 5  # 5, 6
-    OpsiMeowfficerFarming_SirenDetectorSearch_FleetForBlock = 2  # 1, 2, 3, 4
-    OpsiMeowfficerFarming_SirenDetectorSearch_StopAfterFound = 0
-    OpsiMeowfficerFarming_SirenDetectorSearch_FoundZones = None
 
     # Group `OpsiHazard1Leveling`
     OpsiHazard1Leveling_TargetZone = 0  # 0, 44, 22
@@ -669,18 +662,6 @@ class GeneratedConfig:
     OpsiHazard1Leveling_MinimumActionPointReserve = 200
     OpsiHazard1Leveling_ExecuteFixedPatrolScan = False
     OpsiHazard1Leveling_RecordNonCL1AP = False
-
-    # Group `OpsiSirenBug`
-    OpsiSirenBug_SirenResearch_Enable = False
-    OpsiSirenBug_SirenBug_Enable = False
-    OpsiSirenBug_SirenBug_Type = 'dangerous'  # dangerous, safe
-    OpsiSirenBug_SirenBug_Zone = 0
-    OpsiSirenBug_DisableTaskSwitchDuringBug = False  # True, False
-    OpsiSirenBug_SirenBug_DailyCount = 0
-    OpsiSirenBug_SirenBug_DailyCountRecord = datetime.datetime(2020, 1, 1, 0, 0)
-    OpsiSirenBug_SirenBug_CountLimit = 0
-    OpsiSirenBug_SirenBug_CrossDay = False
-    OpsiSirenBug_SirenBug_AutoDisable = False
 
     # Group `OpsiCheckLeveling`
     OpsiCheckLeveling_TargetLevel = 0

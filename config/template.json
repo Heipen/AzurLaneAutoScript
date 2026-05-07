@@ -1976,8 +1976,6 @@
     "OpsiExplore": {
       "SpecialRadar": false,
       "ForceRun": false,
-      "IfSkipSirenResearch": 0,
-      "SkipedSirenResearch": null,
       "LastZone": 0
     },
     "OpsiFleet": {
@@ -2158,12 +2156,7 @@
       "ActionPointPreserve": 1000,
       "HazardLevel": 5,
       "TargetZone": 0,
-      "APPreserveUntilReset": false,
-      "SirenDetectorSearch_Enable": false,
-      "SirenDetectorSearch_HazardLevel": 5,
-      "SirenDetectorSearch_FleetForBlock": 2,
-      "SirenDetectorSearch_StopAfterFound": 0,
-      "SirenDetectorSearch_FoundZones": null
+      "APPreserveUntilReset": false
     },
     "OpsiFleet": {
       "Fleet": 1,
@@ -2188,18 +2181,6 @@
       "MinimumActionPointReserve": 200,
       "ExecuteFixedPatrolScan": false,
       "RecordNonCL1AP": false
-    },
-    "OpsiSirenBug": {
-      "SirenResearch_Enable": false,
-      "SirenBug_Enable": false,
-      "SirenBug_Type": "dangerous",
-      "SirenBug_Zone": 0,
-      "DisableTaskSwitchDuringBug": false,
-      "SirenBug_DailyCount": 0,
-      "SirenBug_DailyCountRecord": "2020-01-01 00:00:00",
-      "SirenBug_CountLimit": 0,
-      "SirenBug_CrossDay": false,
-      "SirenBug_AutoDisable": false
     },
     "OpsiFleet": {
       "Fleet": 1,

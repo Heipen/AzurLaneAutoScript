@@ -674,21 +674,6 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                     logger.attr('CL1 time cost', f'{cost}s/round')
                 self._auto_search_round_timer = time.time()
 
-    def get_current_cl1_battle_count(self):
-        return int(getattr(self, '_cl1_auto_search_battle_count', 0))
-
-    def get_monthly_cl1_battle_count(self, year: int = None, month: int = None):
-        from module.statistics.cl1_database import db as cl1_db
-        instance_name = getattr(self.config, 'config_name', 'default')
-        if year is None or month is None:
-            from datetime import datetime
-            month_key = datetime.now().strftime('%Y-%m')
-        else:
-            month_key = f"{year:04d}-{month:02d}"
-        
-        data = cl1_db.get_stats(instance_name, month_key)
-        return int(data.get('battle_count', 0))
-    
     def os_auto_search_daemon(self, drop=None, strategic=False, interrupt=None, skip_first_screenshot=True):
         """
         Args:
@@ -784,96 +769,6 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                         success = False
                         logger.warning('Fleet died, stop auto search')
                         continue
-            if self.handle_map_event():
-                # Auto search can not handle siren searching device.
-                continue
-
-        return finished_combat
-    # 自动寻敌，遇到第一次战斗就返回
-    def os_auto_search_daemon_until_combat(self, drop=None, strategic=False, interrupt=None):
-        """
-        Args:
-            drop (DropRecord):
-            strategic (bool): True if running in strategic search
-            interrupt (callable):
-
-        Returns:
-            int: Number of finished battle
-
-        Raises:
-            CampaignEnd: If auto search ended
-            RequestHumanTakeover: If there's no auto search option.
-
-        Pages:
-            in: AUTO_SEARCH_OS_MAP_OPTION_OFF
-            out: AUTO_SEARCH_OS_MAP_OPTION_OFF and info_bar_count() >= 2, if no more objects to clear on this map.
-                 AUTO_SEARCH_REWARD if get auto search reward.
-        """
-        logger.hr('OS auto search until combat', level=2)
-        self.on_auto_search_battle_count_reset()
-        unlock_checked = False
-        unlock_check_timer = Timer(5, count=10).start()
-        self.ash_popup_canceled = False
-
-        def false_func(*args, **kwargs):
-            return False
-
-        success = True
-        interrupt_confirm = False
-        if callable(interrupt):
-            is_interrupt, not_interrupt = interrupt, false_func
-        elif isinstance(interrupt, list) and len(interrupt) == 2:
-            is_interrupt = interrupt[0] if callable(interrupt[0]) else false_func
-            not_interrupt = interrupt[1] if callable(interrupt[1]) else false_func
-        else:
-            is_interrupt, not_interrupt = false_func, false_func
-        finished_combat = 0
-        died_timer = Timer(1.5, count=3)
-        self.hp_reset()
-        for _ in self.loop():
-            # End
-            if not unlock_checked and unlock_check_timer.reached():
-                logger.critical('Unable to use auto search in current zone')
-                logger.critical('Please finish the story mode of OpSi to unlock auto search '
-                                'before using any OpSi functions')
-                raise RequestHumanTakeover
-            if self.is_in_map():
-                self.device.stuck_record_clear()
-                if not success:
-                    if died_timer.reached():
-                        logger.warning('Fleet died confirm')
-                        break
-                else:
-                    if not interrupt_confirm and is_interrupt():
-                        interrupt_confirm = True
-                    if interrupt_confirm and not_interrupt():
-                        interrupt_confirm = False
-                    died_timer.reset()
-            else:
-                died_timer.reset()
-
-            if not unlock_checked:
-                if self.appear(AUTO_SEARCH_OS_MAP_OPTION_OFF, offset=(5, 120)):
-                    unlock_checked = True
-                elif self.appear(AUTO_SEARCH_OS_MAP_OPTION_OFF_DISABLED, offset=(5, 120)):
-                    unlock_checked = True
-                elif self.appear(AUTO_SEARCH_OS_MAP_OPTION_ON, offset=(5, 120)):
-                    unlock_checked = True
-
-            if self.handle_os_auto_search_map_option(
-                    drop=drop,
-                    enable=success
-            ):
-                unlock_checked = True
-                continue
-            if self.handle_retirement():
-                # Retire will interrupt auto search, need a retry
-                self.ash_popup_canceled = True
-                continue
-            if self.combat_appear():
-                self.on_auto_search_battle_count_add()
-                self.interrupt_auto_search(goto_main=False, end_task=False)
-                return finished_combat
             if self.handle_map_event():
                 # Auto search can not handle siren searching device.
                 continue
@@ -1006,57 +901,6 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
         return finished_combat
 
     @property
-    def _is_siren_research_enabled(self):
-        """
-        Check if siren research feature is enabled in config.
-        
-        Returns:
-            bool: True if enabled, False otherwise
-        """
-        return self.config.cross_get(keys="OpsiHazard1Leveling.OpsiSirenBug.SirenResearch_Enable")
-
-    def _should_skip_siren_research(self, grid):
-        """
-        Check if siren research device should be skipped based on config.
-        
-        Args:
-            grid: The grid to check
-            
-        Returns:
-            bool: True if should skip (feature disabled), False otherwise
-        """
-        if hasattr(grid, 'is_scanning_device') and grid.is_scanning_device:
-            if not self._is_siren_research_enabled:
-                logger.info(f'[预检查] 格子 {grid} 是塞壬研究装置,但功能未开启,跳过')
-                return True
-            else:
-                logger.info(f'[预检查] 格子 {grid} 是塞壬研究装置,功能已开启,继续处理')
-        return False
-
-    def _should_skip_siren_research_for_explore(self):
-
-        # 检查是否由月度开荒调用
-        is_explore = getattr(self, 'is_in_task_explore', False)
-        if not is_explore:
-            return False
-
-        # 检查月度开荒是否配置跳过塞壬研究装置
-        skip_level = self.config.cross_get(keys="OpsiExplore.OpsiExplore.IfSkipSirenResearch")
-        if skip_level == 0:
-            return False
-        
-        # 根据海域难度决定是否跳过
-        hazard_level = self.zone.hazard_level
-        if skip_level == 6 and hazard_level == 6:
-            logger.info(f'[月度开荒] 海域危险度 {hazard_level} = 6, 跳过塞壬研究装置')
-            return True
-        if skip_level == 65 and hazard_level >= 5:
-            logger.info(f'[月度开荒] 海域危险度 {hazard_level} >= 5, 跳过塞壬研究装置')
-            return True
-        if skip_level == 654 and hazard_level >= 4:
-            logger.info(f'[月度开荒] 海域危险度 {hazard_level} >= 4, 跳过塞壬研究装置')
-            return True
-        return False
 
     def clear_question(self, drop=None):
         """
@@ -1084,13 +928,11 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             self.view.show()
 
             grid = self.convert_radar_to_local(grid)
-            
-            # ========== 移动前检查：是否为塞壬研究装置且功能未开启 ==========
-            if self._should_skip_siren_research(grid):
-                self._solved_map_event.add('is_scanning_device')
-                return True
-            
-            self.is_siren_device_confirmed = False
+            if 'is_scanning_device' not in self._solved_map_event and grid and grid.is_scanning_device:
+                if self.is_in_task_cl1_leveling:
+                    logger.info('In CL1 leveling, mark scanning device as solved')
+                    self._solved_map_event.add('is_scanning_device')
+                    return True
             self.device.click(grid)
             with self.config.temporary(STORY_ALLOW_SKIP=False):
                 result = self.wait_until_walk_stable(
@@ -1101,34 +943,12 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             elif 'event' in result and grid.is_logging_tower:
                 self._solved_map_event.add('is_logging_tower')
                 return True
-            elif 'event' in result and (grid.is_scanning_device or self.is_siren_device_confirmed):
-                # ========== 地图检测:检测到扫描装置 ==========
-                logger.hr('检测到扫描装置,开始处理', level=2)
-                logger.info(f'[地图检测] 格子 {grid} 被识别为扫描装置 (grid.is_scanning_device=True)')
-                logger.info(f'[地图检测] 移动结果: {result}')
-
-                # ========== 配置检查 ==========
-                siren_research_enabled = self.config.cross_get(keys="OpsiHazard1Leveling.OpsiSirenBug.SirenResearch_Enable")
-                if not siren_research_enabled:
-                    logger.warning('[配置检查] 塞壬研究装置功能已禁用,标记但不处理')
-                    self._solved_map_event.add('is_scanning_device')
-                    return True
-
-                # ========== 装置处理 ==========
-                # 选项点击已由 wait_until_walk_stable -> info_handler.story_skip 处理
-                
-                # 执行自律寻敌
-                logger.info('[装置处理] 步骤1: 执行自律寻敌')
-                self.os_auto_search_run(drop=drop)
-                
-                # 标记处理
+            elif 'event' in result and grid.is_scanning_device:
                 self._solved_map_event.add('is_scanning_device')
-                
-                # Bug利用
-                logger.info('[装置处理] 步骤2: 检查是否需要执行Bug利用')
-                self._handle_siren_bug_reinteract(drop=drop)
-                
-                return True
+                self.os_auto_search_run(drop=drop)
+            else:
+                logger.warning(f'Arrive question with unexpected result: {result}, expected: {grid.str}')
+                continue
 
         logger.warning('Failed to goto question mark after 5 trail, '
                        'this might be 2 adjacent fleet mechanism, stopped')
@@ -1268,64 +1088,21 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
         grids = self.view.select(is_scanning_device=True)
         if 'is_scanning_device' not in self._solved_map_event and grids and grids[0].is_scanning_device:
             grid = grids[0]
-            
-            # ========== 地图选择:发现研究装置 ==========
-            logger.hr('发现研究装置,开始处理', level=2)
-            logger.info(f'[地图选择] 在 {grid} 位置发现研究装置')
-            
-            if not self._is_siren_research_enabled:
-                logger.warning('[配置检查] 塞壬研究装置功能已禁用,跳过处理')
+            if self.is_in_task_cl1_leveling:
+                logger.info('In CL1 leveling, mark scanning device as solved')
                 self._solved_map_event.add('is_scanning_device')
                 return True
             
-            if self._should_skip_siren_research_for_explore():
-                # 记录已跳过的海域
-                zone_str = f'{self.zone};\n'
-                current_str = self.config.OpsiExplore_SkipedSirenResearch
-                if current_str is None:
-                    self.config.OpsiExplore_SkipedSirenResearch = zone_str
-                else:
-                    self.config.OpsiExplore_SkipedSirenResearch = str(current_str) + zone_str
-                logger.info(f'[月度开荒] 已记录跳过塞壬研究装置的海域: {self.config.OpsiExplore_SkipedSirenResearch}')
-                self._solved_map_event.add('is_scanning_device')
-                return True
-            
-            # ========== 移动并处理 ==========
-            logger.info(f'[移动装置] 开始移动到装置位置: {grid}')
             self.device.click(grid)
-            
-            # 重置标志位
-            self.is_siren_device_confirmed = False
-            
-            # wait_until_walk_stable 会调用 handle_story_skip 处理选项
-            logger.info('[移动装置] 等待移动稳定...')
-            result = self.wait_until_walk_stable(
-                drop=drop, walk_out_of_step=False, confirm_timer=Timer(1.5, count=4))
-            logger.info(f'[移动装置] 移动完成,结果: {result}')
-            
-            if getattr(self, 'is_siren_device_confirmed', False):
-                # 保存标志状态，因为二次重扫可能会重置它
-                siren_confirmed = True
-                
-                # 执行自律寻敌
-                logger.info('[装置处理] 执行自律寻敌')
-                self.os_auto_search_run(drop=drop)
-
-                # 先标记为已处理，防止二次重扫时再次处理塞壬装置
+            with self.config.temporary(STORY_ALLOW_SKIP=False):
+                result = self.wait_until_walk_stable(
+                    drop=drop, walk_out_of_step=False, confirm_timer=Timer(1.5, count=4))
+            self.os_auto_search_run(drop=drop)
+            if 'event' in result:
                 self._solved_map_event.add('is_scanning_device')
-
-                # 二次重扫，防止出现意外情况导致装置处理失败
-                logger.info('[装置处理] 执行二次重扫')
-                self.map_rescan_current(drop=drop)
-                
-                # 使用保存的标志状态，而不是重新检查（因为二次重扫可能会重置它）
-                if siren_confirmed:
-                    logger.info('[装置处理] 已确认为塞壬研究装置，检查是否需要执行Bug利用')
-                    self._handle_siren_bug_reinteract(drop=drop)
-                else:
-                    logger.info('[装置处理] 未确认为塞壬研究装置，跳过Bug利用')
-            
-            return True
+                return True
+            else:
+                return False
 
         grids = self.view.select(is_logging_tower=True)
         if 'is_logging_tower' not in self._solved_map_event and grids and grids[0].is_logging_tower:
@@ -1613,318 +1390,3 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             self.run_auto_search(question=True, rescan=None, after_auto_search=True)
         except Exception as e:
             logger.warning(f'自律寻敌过程出现异常: {e}')
-
-    def _select_story_option_by_index(self, target_index, options_count=3):
-        # 手动选择剧情选项
-        option_confirm_timer = Timer(1.5, count=3).start()
-        while option_confirm_timer.reached() is False:
-            self.device.screenshot()
-            # 识别所有选项
-            options = self._story_option_buttons_2()
-            if len(options) == options_count:
-                try:
-                    select = options[target_index]
-                    self.device.click(select)
-                    time.sleep(0.5)
-                    return True
-                except IndexError:
-                    select = options[0]
-                    self.device.click(select)
-                    time.sleep(0.5)
-                    return False
-            time.sleep(0.3)
-        return False
-
-    def _click_story_confirm_button(self):
-        # 点击剧情确认按钮POPUP_CONFIRM
-        confirm_timer = Timer(3, count=6).start()
-        while confirm_timer.reached() is False:
-            self.device.screenshot()
-            if self.appear(POPUP_CONFIRM, offset=(20, 20), interval=0):
-                self.device.click(POPUP_CONFIRM)
-                time.sleep(0.5)
-                return True
-            time.sleep(0.3)
-        return False
-
-
-
-    def _handle_siren_bug_reinteract(self, drop=None):
-        # 23:55 - 00:05 跳过处理
-        if getattr(self.config, 'OpsiSirenBug_SirenBug_CrossDay', False):
-            from datetime import datetime, time as dt_time
-            now = datetime.now()
-            if now.time() >= dt_time(23, 55) or now.time() <= dt_time(0, 5):
-                logger.info(f'当前时间: {now.strftime("%H:%M")}, 跳过塞壬研究装置BUG利用')
-                return
-        
-        # 侵蚀一塞壬研究装置处理后，跳转指定高侵蚀区域触发塞壬研究装置消耗两次紫币，最后返回侵蚀一自律   
-        try:
-            siren_research_enable = self.config.cross_get(keys="OpsiHazard1Leveling.OpsiSirenBug.SirenResearch_Enable")
-            siren_bug_enable = getattr(self.config, 'OpsiSirenBug_SirenBug_Enable', False)
-            siren_bug_zone = getattr(self.config, 'OpsiSirenBug_SirenBug_Zone', 0)
-            siren_bug_type = getattr(self.config, 'OpsiSirenBug_SirenBug_Type', 'dangerous')
-            disable_task_switch = getattr(self.config, 'OpsiSirenBug_DisableTaskSwitchDuringBug', False)
-        except Exception as e:
-            logger.warning(f'读取SirenBug配置失败: {e}，跳过塞壬研究装置BUG利用')
-            return
-
-        # SirenBug_Zone 预处理：嘗試轉换為 int
-        try:
-            siren_bug_zone = int(siren_bug_zone)
-        except (ValueError, TypeError):
-            pass  # 保持原值，如果是字符串（海域名称）则后续处理
-
-        # 前置条件校验
-        if not siren_research_enable or not siren_bug_enable:
-            logger.info('SirenBug功能前置条件不满足（SirenResearch_Enable 或 SirenBug_Enable 为 False），跳过塞壬研究装置BUG利用')
-            return
-
-        # 如果启用了禁用任务切换选项，设置标志
-        if disable_task_switch:
-            self.config._disable_task_switch = True
-            logger.info('【塞壬Bug利用】禁用任务切换')
-
-        if not siren_bug_zone:
-            logger.info('SirenBug功能前置条件不满足（SirenBug_Zone 未设置），跳过塞壬研究装置BUG利用')
-            # Ensure the flag is cleared if we return early
-            if disable_task_switch:
-                self.config._disable_task_switch = False
-            return
-
-        current_zone_id = self.zone.zone_id
-        if current_zone_id not in (22, 44):
-            logger.warning(f'当前区域{current_zone_id}非侵蚀一，跳过塞壬研究装置BUG利用')
-            # Ensure the flag is cleared if we return early
-            if disable_task_switch:
-                self.config._disable_task_switch = False
-            return
-        
-        erosion_one_zone = self.name_to_zone(current_zone_id)
-
-        force_reward = False
-        
-        logger.hr(f'RUN SIREN BUG EXPLOITATION')
-        
-        try:
-            # 解析目标区域
-            try:
-                target_zone = self.name_to_zone(siren_bug_zone)
-            except Exception:
-                logger.warning(f'无法解析SirenBug目标区域: {siren_bug_zone}，跳过塞壬研究装置BUG利用')
-                # Ensure the flag is cleared if we return early
-                if disable_task_switch:
-                    self.config._disable_task_switch = False
-                return
-            
-            logger.info(f'当前区域: {erosion_one_zone}, 目标区域: {target_zone}')
-            
-            # 跳转至指定高侵蚀区域
-            with self.config.temporary(STORY_ALLOW_SKIP=False):
-                self.os_map_goto_globe(unpin=False)
-                self.globe_goto(target_zone, types=(siren_bug_type.upper(),), refresh=True)
-                self.zone_init()
-
-                # Siren bug count sleep
-                SirenBug_DailyCount = self.config.OpsiSirenBug_SirenBug_DailyCount
-                if SirenBug_DailyCount > 0:
-                    logger.info(f'Siren bug usage count: {SirenBug_DailyCount}, sleep {SirenBug_DailyCount}s before auto search')
-                    time.sleep(SirenBug_DailyCount)
-
-                self.map_init(map_=None)
-                camera_queue = self.map.camera_data
-
-                find_device_timer = Timer(30, count=1).start()
-                self._solved_map_event = set()
-                device_found = False
-                device_handled = False
-
-                while find_device_timer.reached() is False and not device_handled:
-                    # 遍历相机视角，滑动地图
-                    if len(camera_queue) == 0:
-                        camera_queue = self.map.camera_data
-                    camera_queue = camera_queue.sort_by_camera_distance(self.camera)
-                    target_camera = camera_queue[0]
-                    camera_queue = camera_queue[1:]
-
-                    # 滑动到目标视角
-                    self.focus_to(target_camera, swipe_limit=(6, 5))
-                    self.focus_to_grid_center(0.3)
-                    self.device.screenshot()
-                    self.update()
-
-                    # 寻找塞壬研究装置
-                    grids = self.view.select(is_scanning_device=True)
-                    if grids and grids[0].is_scanning_device and 'is_scanning_device' not in self._solved_map_event:
-                        grid = grids[0]
-                        logger.info(f'找到塞壬研究装置: {grid}')
-                        device_found = True
-
-                        # 移动舰队至塞壬研究装置，触发剧情
-                        self.device.click(grid)
-                        
-                        # 等待剧情选项出现（表示舰队已到达装置并触发剧情）
-                        option_wait_timer = Timer(10, count=20).start()
-                        options_found = False
-                        while not option_wait_timer.reached():
-                            self.device.screenshot()
-                            options = self._story_option_buttons_2()
-                            if len(options) >= 3:
-                                logger.info(f'检测到剧情选项，开始处理Bug利用')
-                                options_found = True
-                                break
-                            time.sleep(0.5)
-                        
-                        if not options_found:
-                            logger.warning(f'等待剧情选项超时，跳过后续操作')
-                            continue
-                        
-                        # 找到选项，处理剧情
-                        with self.config.temporary(STORY_ALLOW_SKIP=False):
-                            self._solved_map_event.add('is_scanning_device')
-
-                            # 首先检测是否遇到的是柱子
-                            if self.appear_then_click(REWARD_BOX_THIRD_OPTION, offset=(20, 20), interval=3):
-                                logger.warning('[Bug利用] 检测到宝箱选项，重新开始寻找装置')
-                                find_device_timer.reset()
-                                camera_queue = self.map.camera_data
-                                self._solved_map_event.remove('is_scanning_device')
-                                time.sleep(1.0)
-                                continue  
-
-                            # 第1次：选择第2个选项
-                            logger.info('[Bug利用] 等待第1组选项（选择第2个）')
-                            time.sleep(1.5)
-                            if self._select_story_option_by_index(target_index=1, options_count=3):
-                                logger.info('[Bug利用] 第1组选项点击成功')
-                                time.sleep(0.5)
-                                if self._click_story_confirm_button():
-                                    logger.info('[Bug利用] 第1组确认成功')
-                            else:
-                                logger.warning('[Bug利用] 第1组选项点击失败')
-                                raise RuntimeError('第1组选项点击失败，跳过后续操作')
-                            
-                            # 第2次：选择第2个选项
-                            logger.info('[Bug利用] 等待第2组选项（选择第2个）')
-                            time.sleep(2.0)
-                            if self._select_story_option_by_index(target_index=1, options_count=3):
-                                logger.info('[Bug利用] 第2组选项点击成功')
-                                time.sleep(0.5)
-                                if self._click_story_confirm_button():
-                                    logger.info('[Bug利用] 第2组确认成功')
-                            else:
-                                logger.warning('[Bug利用] 第2组选项点击失败')
-                                raise RuntimeError('第2组选项点击失败，跳过后续操作')
-                            
-                            # 第3次：选择第3个选项
-                            logger.info('[Bug利用] 等待第3组选项（选择第3个）')
-                            time.sleep(2.0)
-                            if self._select_story_option_by_index(target_index=2, options_count=3):
-                                logger.info('[Bug利用] 第3组选项点击成功')
-                                time.sleep(0.5)
-                                if self._click_story_confirm_button():
-                                    logger.info('[Bug利用] 第3组确认成功')
-                            else:
-                                logger.warning('[Bug利用] 第3组选项点击失败')
-                                raise RuntimeError('第3组选项点击失败，跳过后续操作')
-
-                            device_handled = True
-                            logger.info('[Bug利用] 所有选项处理完成')
-                    time.sleep(0.5)
-
-                if not device_handled:
-                    if not device_found:
-                        logger.warning(f'区域{siren_bug_zone}未找到塞壬研究装置，跳过后续操作')
-                        # 没找到吊机自动关闭bug利用
-                        if getattr(self.config, 'OpsiSirenBug_SirenBug_AutoDisable', False):
-                            self.config.OpsiSirenBug_SirenBug_Enable = False
-
-                        raise RuntimeError('未找到塞壬研究装置')
-                    else:
-                        logger.warning(f'找到塞壬研究装置但无法进入剧情，执行自动收菜（如果配置了自动收菜）')
-                        force_reward = True
-                    
-
-            # Increase bug count
-            self.config.OpsiSirenBug_SirenBug_DailyCount += 1
-            self.config.OpsiSirenBug_SirenBug_DailyCountRecord = datetime.now()
-            count = self.config.OpsiSirenBug_SirenBug_DailyCount
-            logger.info(f'Siren bug exploitation successful, daily count: {count}')
-
-            # 发送成功通知
-            # try:
-            #     if hasattr(self, 'notify_push'):
-            #         zone_type_text = "安全海域" if siren_bug_type == 'safe' else "普通海域"
-            #         self.notify_push(
-            #             title="[Alas] 塞壬Bug利用 - 完成",
-            #             content=f"已完成塞壬研究装置Bug利用\\n目标区域: {target_zone} ({zone_type_text})\\n已返回侵蚀一区域"
-            #         )
-            # except Exception as notify_err:
-            #     logger.debug(f'发送成功通知失败: {notify_err}')
-            
-            count_limit = self.config.OpsiSirenBug_SirenBug_CountLimit
-            if count_limit > 0 and (count >= count_limit or force_reward):
-                logger.info(f'已达到塞壬Bug自动处理阈值 ({count_limit}次)，开始自动收菜')
-                # 禁用塞壬研究装置的处理
-                self.config._disable_siren_research = True
-                if siren_bug_type == 'safe':
-                    self.os_auto_search_daemon_until_combat()
-                    logger.info('遇到敌舰，卡位完成')
-                    self.fleet_set(1 if self.config.OpsiFleet_Fleet != 1 else 2)
-                self.os_auto_search_run()
-                self.fleet_set(self.config.OpsiFleet_Fleet)
-                self.config.OpsiSirenBug_SirenBug_DailyCount = 0
-                # 恢复塞壬研究装置的处理
-                self.config._disable_siren_research = False
-                logger.info('自动收菜完成，返回正常任务流程')
-                try:
-                    if hasattr(self, 'notify_push'):
-                        self.notify_push(
-                            title="[Alas] 塞壬Bug利用 - 自动收菜完成",
-                            content=f"已达到塞壬研究装置Bug利用阈值，自动收菜完成"
-                        )
-                except Exception as notify_err:
-                    logger.debug(f'发送自动收菜完成通知失败: {notify_err}')
-
-            # Bug利用核心操作完成，清除禁用任务切换标志
-            if disable_task_switch and hasattr(self.config, '_disable_task_switch'):
-                self.config._disable_task_switch = False
-                logger.info('【塞壬Bug利用】核心操作完成，恢复任务切换')
-
-            # 返回侵蚀一区域
-            logger.info('【塞壬Bug利用】返回侵蚀一区域')
-            self.os_map_goto_globe(unpin=False)
-            self.globe_goto(erosion_one_zone, types=('SAFE', 'DANGEROUS'), refresh=True)
-            logger.info('【塞壬Bug利用】返回侵蚀一区域完成')
-
-        except (RuntimeError) as e:
-            logger.error(f'塞壬研究装置BUG利用失败: {e}')
-            
-            # 异常时清除标志
-            if disable_task_switch and hasattr(self.config, '_disable_task_switch'):
-                self.config._disable_task_switch = False
-                logger.info('【塞壬Bug利用】异常退出，恢复任务切换')
-            
-            # 发送失败通知
-            try:
-                if hasattr(self, 'notify_push'):
-                    self.notify_push(
-                        title="[Alas] 塞壬Bug利用 - 失败",
-                        content=f"塞壬研究装置BUG利用失败\\n错误: {str(e)}\\n请检查日志"
-                    )
-            except Exception as notify_err:
-                logger.debug(f'发送失败通知失败: {notify_err}')
-            
-            # 为避免卡在选项中，尝试选择最后一个选项退出
-            if self._select_story_option_by_index(target_index=2, options_count=3):
-                logger.info('异常处理：已尝试选择最后一个选项退出剧情')
-
-            # 尝试返回侵蚀一
-            try:
-                self.os_map_goto_globe(unpin=False)
-                self.globe_goto(erosion_one_zone, types=('SAFE', 'DANGEROUS'), refresh=True)
-                logger.info('异常处理：返回侵蚀一区域')
-            except Exception as return_err:
-                logger.error(f'返回侵蚀一失败: {return_err}')
-        finally:
-            pass

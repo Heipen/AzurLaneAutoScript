@@ -10830,21 +10830,6 @@
         "type": "checkbox",
         "value": false
       },
-      "IfSkipSirenResearch": {
-        "type": "select",
-        "value": 0,
-        "option": [
-          0,
-          6,
-          65,
-          654
-        ]
-      },
-      "SkipedSirenResearch": {
-        "type": "textarea",
-        "value": "",
-        "display": "disabled"
-      },
       "LastZone": {
         "type": "input",
         "value": 0
@@ -11460,36 +11445,6 @@
       "APPreserveUntilReset": {
         "type": "checkbox",
         "value": false
-      },
-      "SirenDetectorSearch_Enable": {
-        "type": "checkbox",
-        "value": false
-      },
-      "SirenDetectorSearch_HazardLevel": {
-        "type": "select",
-        "value": 5,
-        "option": [
-          5,
-          6
-        ]
-      },
-      "SirenDetectorSearch_FleetForBlock": {
-        "type": "select",
-        "value": 2,
-        "option": [
-          1,
-          2,
-          3,
-          4
-        ]
-      },
-      "SirenDetectorSearch_StopAfterFound": {
-        "type": "input",
-        "value": 0
-      },
-      "SirenDetectorSearch_FoundZones": {
-        "type": "textarea",
-        "value": ""
       }
     },
     "OpsiFleet": {
@@ -11576,57 +11531,6 @@
         "value": false
       },
       "RecordNonCL1AP": {
-        "type": "checkbox",
-        "value": false
-      }
-    },
-    "OpsiSirenBug": {
-      "SirenResearch_Enable": {
-        "type": "checkbox",
-        "value": false
-      },
-      "SirenBug_Enable": {
-        "type": "checkbox",
-        "value": false
-      },
-      "SirenBug_Type": {
-        "type": "select",
-        "value": "dangerous",
-        "option": [
-          "dangerous",
-          "safe"
-        ]
-      },
-      "SirenBug_Zone": {
-        "type": "input",
-        "value": 0
-      },
-      "DisableTaskSwitchDuringBug": {
-        "type": "checkbox",
-        "value": false,
-        "option": [
-          true,
-          false
-        ]
-      },
-      "SirenBug_DailyCount": {
-        "type": "input",
-        "value": 0
-      },
-      "SirenBug_DailyCountRecord": {
-        "type": "datetime",
-        "value": "2020-01-01 00:00:00",
-        "validate": "datetime"
-      },
-      "SirenBug_CountLimit": {
-        "type": "input",
-        "value": 0
-      },
-      "SirenBug_CrossDay": {
-        "type": "checkbox",
-        "value": false
-      },
-      "SirenBug_AutoDisable": {
         "type": "checkbox",
         "value": false
       }
