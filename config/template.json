@@ -105,9 +105,7 @@
       "OpsiRecord": "do_not",
       "AkashiRecord": "do_not",
       "MeowfficerBuy": "do_not",
-      "MeowfficerTalent": "do_not",
-      "TelemetryReport": true,
-      "BugReport": true
+      "MeowfficerTalent": "do_not"
     },
     "Storage": {
       "Storage": {}

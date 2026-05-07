@@ -92,13 +92,6 @@ class OpsiHazard1Leveling(OSMap):
         except Exception:
             logger.exception('Failed to save AP snapshot')
         
-        # 上报体力到大盘（异步，不阻塞主流程）
-        try:
-            from module.base.api_client import ApiClient
-            ApiClient.report_stamina(current_ap)
-        except Exception:
-            logger.exception('Failed to report stamina')
-        
         # 解析配置的阈值列表
         try:
             levels_str = getattr(self.config, 'OpsiScheduling_ActionPointNotifyLevels', '500, 1000, 2000, 3000')
@@ -327,26 +320,6 @@ class OpsiHazard1Leveling(OSMap):
                     logger.info('Successfully incremented CL1 akashi encounter in DB')
                 except Exception:
                     logger.exception('Failed to persist CL1 akashi encounter to DB')
-
-
-            # 每次循环结束后提交CL1数据
-            try:
-                # 检查遥测上报开关
-                if not getattr(self.config, 'DropRecord_TelemetryReport', True):
-                    logger.info('Telemetry report disabled by config')
-                else:
-                    from module.statistics.cl1_data_submitter import get_cl1_submitter
-                    # 获取当前实例名称，确保使用正确的数据文件路径
-                    instance_name = self.config.config_name if hasattr(self.config, 'config_name') else None
-                    submitter = get_cl1_submitter(instance_name=instance_name)
-                    # 不检查时间间隔,每次循环都提交
-                    raw_data = submitter.collect_data()
-                    if raw_data.get('battle_count', 0) > 0:
-                        metrics = submitter.calculate_metrics(raw_data)
-                        submitter.submit_data(metrics)
-                        logger.info(f'CL1 data submission queued for instance: {instance_name}')
-            except Exception as e:
-                logger.debug(f'CL1 data submission failed: {e}')
 
             self.config.check_task_switch()
 
