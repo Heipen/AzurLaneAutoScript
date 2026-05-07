@@ -900,8 +900,6 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
 
         return finished_combat
 
-    @property
-
     def clear_question(self, drop=None):
         """
         Clear nearly (and 3 grids from above) question marks on radar.
