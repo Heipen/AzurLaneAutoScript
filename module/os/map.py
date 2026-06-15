@@ -878,6 +878,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                 combat = self.os_auto_search_daemon(drop=drop, strategic=strategic, interrupt=interrupt)
                 finished_combat += combat
             except CampaignEnd:
+                finished_combat += self._auto_search_battle_count
                 logger.info('OS auto search finished')
             finally:
                 backup.recover()
