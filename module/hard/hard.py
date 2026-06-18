@@ -50,5 +50,5 @@ class CampaignHard(CampaignRun):
         # self.campaign.equipment_take_off_when_finished()
 
         # Scheduler
-        self.config.task_delay(server_update=True)
+        self.config.task_delay(server_update='12:00')
         self.config.task_call('Reward')
