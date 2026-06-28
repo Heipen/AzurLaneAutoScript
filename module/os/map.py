@@ -127,7 +127,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
         self.zone_init(fallback_init=False)
         return self.zone
 
-    def globe_goto(self, zone, types=('SAFE', 'DANGEROUS'), refresh=False, stop_if_safe=False):
+    def globe_goto(self, zone, types=('SAFE', 'DANGEROUS'), refresh=False, stop_if_safe=False, skip_ap=False):
         """
         Goto another zone in OS.
 
@@ -140,9 +140,11 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                 set false to skip zone switching,
                 set true to re-enter current zone to refresh.
             stop_if_safe (bool): Return false if zone is SAFE.
+            skip_ap (bool): If True, abort entry if AP would be consumed.
+                Used to check if a zone still has active missions.
 
         Returns:
-            bool: If zone switched.
+            bool: If zone switched (False if already at target zone, or AP skipped when skip_ap=True).
 
         Pages:
             in: IN_MAP or IN_GLOBE
@@ -176,7 +178,10 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                 self.ensure_no_zone_pinned()
                 return False
         self.zone_type_select(types=types)
-        self.globe_enter(zone)
+        if self.globe_enter(zone, skip_ap=skip_ap):
+            # AP was required and entry was aborted
+            self.ensure_no_zone_pinned()
+            return False
         # IN_MAP
         if hasattr(self, 'zone'):
             del self.zone

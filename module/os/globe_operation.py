@@ -340,10 +340,16 @@ class GlobeOperation(ActionPointHandler):
                 if self.is_zone_pinned():
                     break
 
-    def globe_enter(self, zone):
+    def globe_enter(self, zone, skip_ap=False):
         """
         Args:
             zone (Zone): Zone to enter.
+            skip_ap (bool): If True, abort entry if AP would be consumed.
+                Used to check if a zone still has active missions.
+
+        Returns:
+            bool: True if AP was required and entry was aborted (only when skip_ap=True).
+                  False if entered without AP (skip_ap=True) or normal entry completed.
 
         Raises:
             OSExploreError: If zone locked.
@@ -375,6 +381,13 @@ class GlobeOperation(ActionPointHandler):
                     click_count += 1
                     click_timer.reset()
                     continue
+            # Check if AP dialog appears before consuming AP
+            if self._is_in_action_point():
+                if skip_ap:
+                    logger.info(f'Zone [{zone}] requires AP to enter, '
+                                 'mission may have been cleared by another task, skip')
+                    self.action_point_quit()
+                    return True
             if self.handle_action_point(zone=zone, pinned=pinned):
                 click_timer.clear()
                 continue
@@ -385,3 +398,5 @@ class GlobeOperation(ActionPointHandler):
             # A game bug that AUTO_SEARCH_REWARD from the last cleared zone popups
             if self.appear_then_click(AUTO_SEARCH_REWARD, offset=(50, 50), interval=3):
                 continue
+
+        return False

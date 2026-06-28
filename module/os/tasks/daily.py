@@ -7,7 +7,7 @@ from module.exception import ScriptError
 from module.logger import logger
 from module.map.map_grids import SelectedGrids
 from module.os.map import OSMap
-from module.os_handler.action_point import ActionPointLimit
+
 from module.os_handler.assets import MISSION_COMPLETE_POPUP
 from module.ui.assets import OS_CHECK
 from module.ui.page import page_os
@@ -79,9 +79,12 @@ class OpsiDaily(OSMap):
 
         for zone in clear_zones:
             logger.hr(f'OS clear mission zones, zone_id={zone.zone_id}', level=1)
-            try:
-                self.globe_goto(zone, types='SAFE', refresh=True)
-            except ActionPointLimit:
+            if not self.globe_goto(zone, types='SAFE', refresh=True, skip_ap=True):
+                # AP was required to enter, zone has been cleared by another task
+                logger.info(f'Zone {zone.zone_id} requires AP to enter, mission already cleared, skip')
+                if str(zone.zone_id) in zones:
+                    zones.remove(str(zone.zone_id))
+                    self.config.cross_set('OpsiDaily.OpsiDaily.MissionZones', ' '.join(zones))
                 continue
             self.fleet_set(self.config.OpsiFleet_Fleet)
             self.os_order_execute(recon_scan=False, submarine_call=False)
