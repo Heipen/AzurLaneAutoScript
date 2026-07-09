@@ -1884,20 +1884,7 @@
           "DDG"
         ]
       },
-      "CommonDDFilter": {
-        "type": "textarea",
-        "value": "z20 > z21 > aulick > foote > cassin > downes"
-      },
-      "EquipmentCode": {
-        "type": "textarea",
-        "value": "DD: null\nbogue: null\nhermes: null\nlangley: null\nranger: null",
-        "mode": "yaml"
-      },
       "ALLowHighFlagshipLevel": {
-        "type": "checkbox",
-        "value": false
-      },
-      "ALLowLowVanguardLevel": {
         "type": "checkbox",
         "value": false
       },
@@ -1906,12 +1893,6 @@
         "value": false
       },
       "CommissionLimit": {
-        "type": "checkbox",
-        "value": false
-      }
-    },
-    "EquipmentCode": {
-      "ExportToConfig": {
         "type": "checkbox",
         "value": true
       }
@@ -2211,6 +2192,10 @@
         "value": false,
         "display": "hide"
       },
+      "Fleet1Onsen": {
+        "type": "checkbox",
+        "value": false
+      },
       "Fleet2Value": {
         "type": "input",
         "value": 119,
@@ -2247,6 +2232,10 @@
         "type": "checkbox",
         "value": false,
         "display": "hide"
+      },
+      "Fleet2Onsen": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Storage": {

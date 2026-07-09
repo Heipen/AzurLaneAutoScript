@@ -334,11 +334,13 @@ GemsFarming:
   CommonCVFilter: |-
     bogue > ranger > langley > hermes
   ChangeVanguard:
-    value: ship
+    value: ship_equip
     option: [ disabled, ship, ship_equip ]
   CommonDD:
     value: any
-    option: [ any, favourite, aulick_or_foote , cassin_or_downes, z20_or_z21 ]
+    option: [ custom, any, favourite, aulick_or_foote , cassin_or_downes, z20_or_z21, DDG ]
+  ALLowHighFlagshipLevel: false
+  DelayTaskIFNoFlagship: false
   CommissionLimit: true
 EquipmentCode:
   ExportToConfig: true

@@ -216,9 +216,12 @@ class GeneratedConfig:
 
     # Group `GemsFarming`
     GemsFarming_ChangeFlagship = 'ship'  # ship, ship_equip
-    GemsFarming_CommonCV = 'any'  # any, langley, bogue, ranger, hermes
-    GemsFarming_ChangeVanguard = 'ship'  # disabled, ship, ship_equip
-    GemsFarming_CommonDD = 'any'  # any, favourite, aulick_or_foote, cassin_or_downes, z20_or_z21
+    GemsFarming_CommonCV = 'any'  # custom, any, eagle, langley, bogue, ranger, hermes
+    GemsFarming_CommonCVFilter = 'bogue > ranger > langley > hermes'
+    GemsFarming_ChangeVanguard = 'ship_equip'  # disabled, ship, ship_equip
+    GemsFarming_CommonDD = 'any'  # custom, any, favourite, aulick_or_foote, cassin_or_downes, z20_or_z21, DDG
+    GemsFarming_ALLowHighFlagshipLevel = False
+    GemsFarming_DelayTaskIFNoFlagship = False
     GemsFarming_CommissionLimit = True
 
     # Group `EquipmentCode`

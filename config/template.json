@@ -390,6 +390,8 @@
       "CommonCVFilter": "bogue > ranger > langley > hermes",
       "ChangeVanguard": "ship_equip",
       "CommonDD": "any",
+      "ALLowHighFlagshipLevel": false,
+      "DelayTaskIFNoFlagship": false,
       "CommissionLimit": true
     },
     "EquipmentCode": {
@@ -438,11 +440,13 @@
       "Fleet1Control": "prevent_red_face",
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
+      "Fleet1Onsen": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_red_face",
       "Fleet2Recover": "not_in_dormitory",
-      "Fleet2Oath": false
+      "Fleet2Oath": false,
+      "Fleet2Onsen": false
     },
     "Storage": {
       "Storage": {}
