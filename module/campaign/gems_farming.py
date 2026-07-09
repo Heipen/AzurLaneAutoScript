@@ -1,27 +1,25 @@
-from module.base.decorator import cached_property
+from datetime import datetime
+
+from module.base.decorator import Config, cached_property
+from module.base.timer import Timer
 from module.campaign.campaign_base import CampaignBase
 from module.campaign.run import CampaignRun
 from module.combat.assets import BATTLE_PREPARATION
 from module.combat.emotion import Emotion
 from module.equipment.assets import *
-from module.equipment.equipment_code import EquipmentCodeHandler
-from module.equipment.fleet_equipment import OCR_FLEET_INDEX
-from module.exception import CampaignEnd, ScriptError, RequestHumanTakeover
+from module.exception import CampaignEnd, HardNotSatisfied
 from module.handler.assets import AUTO_SEARCH_MAP_OPTION_OFF
 from module.logger import logger
 from module.map.assets import FLEET_PREPARATION, MAP_PREPARATION
-from module.retire.assets import (
-    DOCK_CHECK, DOCK_SHIP_DOWN,
-    TEMPLATE_BOGUE, TEMPLATE_HERMES, TEMPLATE_LANGLEY, TEMPLATE_RANGER,
-    TEMPLATE_CASSIN_1, TEMPLATE_CASSIN_2, TEMPLATE_DOWNES_1, TEMPLATE_DOWNES_2,
-    TEMPLATE_AULICK, TEMPLATE_FOOTE
-)
-# TEMPLATE_COMMON_CV and TEMPLATE_COMMON_DD are both used in function find_custom_candidates
-from module.retire.retirement import Retirement, TEMPLATE_COMMON_CV, TEMPLATE_COMMON_DD
+from module.ocr.ocr import Digit
+from module.retire.assets import *
+from module.retire.dock import Dock
 from module.retire.scanner import ShipScanner
 from module.ui.assets import BACK_ARROW, FLEET_CHECK
 from module.ui.page import page_fleet
 
+
+FLEET_INDEX = Digit(OCR_FLEET_INDEX, letter=(90, 154, 255), threshold=128, alphabet='123456')
 SIM_VALUE = 0.92
 
 
@@ -51,7 +49,6 @@ class GemsEmotion(Emotion):
 
 
 class GemsCampaignOverride(CampaignBase):
-
     def handle_combat_low_emotion(self):
         """
         Overwrite info_handler.handle_combat_low_emotion()
@@ -95,95 +92,103 @@ class GemsCampaignOverride(CampaignBase):
             raise CampaignEnd('Emotion withdraw')
 
 
-class GemsEquipmentHandler(EquipmentCodeHandler):
-
-    def __init__(self, config, device=None, task=None):
-        super().__init__(config=config,
-                         device=device,
-                         task=task,
-                         key="GemsFarming.GemsFarming.EquipmentCode",
-                         ships=['DD', 'bogue', 'hermes', 'langley', 'ranger'])
-
-    def current_ship(self, skip_first_screenshot=True):
+class GemsEmotion(Emotion):
+    @property
+    def fleet(self):
         """
-        Reuse templates in module.retire.assets,
-        which needs different rescaling to match each current flagship.
-
-        Pages:
-            in: gear_code
+        GemsFarming only tracks the attacking fleet. Support fleet emotion is ignored.
         """
-        while 1:
-            if skip_first_screenshot:
-                skip_first_screenshot = False
-            else:
-                self.device.screenshot()
-            
-            # End
-            if not self.appear(EMPTY_SHIP_R):
-                break
-            else:
-                logger.info('Waiting ship icon loading.')
+        return self.fleet_1
 
-        if TEMPLATE_BOGUE.match(self.device.image, scaling=1.46):  # image has rotation
-            return 'bogue'
-        if TEMPLATE_HERMES.match(self.device.image, scaling=124/89):
-            return 'hermes'
-        if TEMPLATE_RANGER.match(self.device.image, scaling=4/3):
-            return 'ranger'
-        if TEMPLATE_LANGLEY.match(self.device.image, scaling=25/21):
-            return 'langley'
-        return 'DD'
+    def update(self):
+        """
+        Update attacking fleet emotion only.
+        """
+        self.fleet.update()
+
+    def record(self):
+        """
+        Save current emotion value to config.
+        """
+        self.config.set_record(**{self.fleet.value_name: self.fleet.current})
+
+    def show(self):
+        logger.attr('Emotion fleet_attack', self.fleet.value)
+
+    def check_reduce(self, battle):
+        """
+        Override Emotion.check_reduce to trigger stop condition when emotion is too low before battle.
+        """
+        if not self.is_calculate:
+            return
+
+        expected_reduce = battle * self.reduce_per_battle_before_entering
+        logger.info(f'Expect emotion reduce: {expected_reduce}')
+
+        self.update()
+        self.record()
+        self.show()
+        recovered = self.fleet.get_recovered(expected_reduce)
+        if recovered > datetime.now():
+            self.config.GEMS_EMOTION_TRIGGERED = True
+            raise CampaignEnd('Emotion control')
+
+    def wait(self, fleet_index):
+        """
+        Override Emotion.wait to trigger stop condition when emotion is too low after battle.
+        """
+        self.update()
+        self.record()
+        self.show()
+        recovered = self.fleet.get_recovered(expected_reduce=self.reduce_per_battle)
+        if recovered > datetime.now():
+            self.config.GEMS_EMOTION_TRIGGERED = True
+
+    def reduce(self, fleet_index):
+        """
+        Override Emotion.reduce to always reduce attacking fleet emotion.
+        """
+        logger.hr('Emotion reduce')
+        self.update()
+        self.fleet.current -= self.reduce_per_battle
+        self.total_reduced += self.reduce_per_battle
+        self.record()
+        self.show()
 
 
-class GemsFarming(CampaignRun, GemsEquipmentHandler, Retirement):
-    def hard_mode_override(self):
-        if self.campaign.config.Campaign_Mode == 'hard':
-            logger.info('Is in hard mode, switch ship changing method.')
-            self.hard_mode = True
-            self._ship_detail_enter = self._ship_detail_enter_hard
-            self._fleet_detail_enter = self._fleet_detail_enter_hard
-            self._fleet_back = self._fleet_back_hard
-            self.page_fleet_check_button = FLEET_PREPARATION
-            if self.config.Fleet_FleetOrder == 'fleet1_standby_fleet2_all':
-                self.fleet_detail_enter_flagship = FLEET_DETAIL_ENTER_FLAGSHIP_HARD_2
-                self.fleet_enter_flagship = FLEET_ENTER_FLAGSHIP_HARD_2
-                self.fleet_detail_enter = FLEET_DETAIL_ENTER_HARD_2
-                self.fleet_enter = FLEET_ENTER_HARD_2
-            else:
-                self.fleet_detail_enter_flagship = FLEET_DETAIL_ENTER_FLAGSHIP_HARD_1
-                self.fleet_enter_flagship = FLEET_ENTER_FLAGSHIP_HARD_1
-                self.fleet_detail_enter = FLEET_DETAIL_ENTER_HARD_1
-                self.fleet_enter = FLEET_ENTER_HARD_1
-        else:
-            self.hard_mode = False
-            self.page_fleet_check_button = page_fleet.check_button
-            self.fleet_detail_enter_flagship = FLEET_DETAIL_ENTER_FLAGSHIP
-            self.fleet_detail_enter = FLEET_DETAIL_ENTER
-            self.fleet_enter_flagship = FLEET_ENTER_FLAGSHIP
-            self.fleet_enter = FLEET_ENTER
-
+class GemsFarming(CampaignRun, Dock):
     def load_campaign(self, name, folder='campaign_main'):
         super().load_campaign(name, folder)
+        gems = self
 
         class GemsCampaign(GemsCampaignOverride, self.module.Campaign):
-
             @cached_property
-            def emotion(self) -> GemsEmotion:
+            def emotion(self):
                 return GemsEmotion(config=self.config)
 
+            def fleet_preparation(self):
+                try:
+                    return super().fleet_preparation()
+                except HardNotSatisfied:
+                    pass
+
+                prepared = gems.hard_fleet_prepare()
+
+                if prepared:
+                    try:
+                        return super().fleet_preparation()
+                    except HardNotSatisfied:
+                        logger.warning('Hard fleet still not satisfied after preparation, delay GemsFarming')
+                else:
+                    logger.warning('No ship available for hard fleet preparation, delay GemsFarming')
+                gems.config.task_delay(minute=30)
+                gems.config.task_stop()
+                return False
+
         self.campaign = GemsCampaign(device=self.campaign.device, config=self.campaign.config)
-        # if self.change_vanguard:
-        #     self.campaign.config.override(Emotion_Mode='ignore_calculate')
-        # else:
-        #     self.campaign.config.override(Emotion_Mode='ignore')
-
-    @property
-    def emotion_lower_bound(self):
-        return 4 + self.campaign._map_battle * 2
-
-    @property
-    def change_flagship(self):
-        return 'ship' in self.config.GemsFarming_ChangeFlagship
+        if not self.change_vanguard:
+            self.campaign.config.override(Emotion_Mode='ignore')
+        self.campaign.config.override(EnemyPriority_EnemyScaleBalanceWeight='S1_enemy_first')
 
     @property
     def change_flagship_equip(self):
@@ -198,192 +203,287 @@ class GemsFarming(CampaignRun, GemsEquipmentHandler, Retirement):
         return 'equip' in self.config.GemsFarming_ChangeVanguard
 
     @property
+    def max_level(self):
+        if self.config.SERVER == 'cn':
+            return 100
+        else:
+            return 70
+
+    @property
+    def min_emotion(self):
+        return (2 + self.campaign._map_battle) * self.campaign.emotion.reduce_per_battle
+
+    _new_fleet_emotion = 0
+
+    @property
     def fleet_to_attack(self):
+        if self.config.Fleet_FleetOrder == 'fleet1_standby_fleet2_all':
+            return 2
+        else:
+            return 1
+
+    @property
+    def fleet_to_attack_index(self):
         if self.config.Fleet_FleetOrder == 'fleet1_standby_fleet2_all':
             return self.config.Fleet_Fleet2
         else:
             return self.config.Fleet_Fleet1
 
-    def _fleet_detail_enter(self, fleet):
+    @Config.when(Campaign_Mode='normal')
+    def ui_goto_fleet(self):
         self.ui_ensure(page_fleet)
-        self.ui_ensure_index(fleet, letter=OCR_FLEET_INDEX,
-                             next_button=FLEET_NEXT, prev_button=FLEET_PREV, skip_first_screenshot=True)
+        
+        # ui_ensure_index, set fleet
+        letter = FLEET_INDEX
+        next_button = FLEET_NEXT
+        prev_button = FLEET_PREV
+        interval = (0.2, 0.3)
 
-    def _ship_detail_enter(self, button):
-        self.ui_click(FLEET_DETAIL, appear_button=page_fleet.check_button,
-                      check_button=FLEET_DETAIL_CHECK, skip_first_screenshot=True)
-        self.ship_info_enter(button, long_click=False)
+        retry = Timer(1, count=2)
+        for _ in self.loop():
+            current = letter.ocr(self.device.image)
+            logger.attr("Index", current)
 
-    def _fleet_detail_enter_hard(self, fleet):
-        if self.appear(FLEET_PREPARATION, offset=(20, 50)):
-            return
-        self.campaign.ensure_campaign_ui(self.stage)
-        self.ui_click(click_button=self.campaign.ENTRANCE, appear_button=BACK_ARROW, check_button=MAP_PREPARATION)
-        while 1:
-            self.device.screenshot()
-
-            if self.appear_then_click(MAP_PREPARATION, interval=1):
+            # ui_ensure_index but ignore default value 0
+            # otherwise we would have 1 extra click switching from 1 to 4
+            if current == 0:
                 continue
 
-            if self.handle_retirement():
-                continue
-
-            if self.appear(FLEET_PREPARATION, offset=(20, 50)):
+            diff = self.fleet_to_attack_index - current
+            if diff == 0:
                 break
 
-    def _ship_detail_enter_hard(self, button):
-        self.ship_info_enter(button)
+            if retry.reached():
+                button = next_button if diff > 0 else prev_button
+                self.device.multi_click(button, n=abs(diff), interval=interval)
+                retry.reset()
 
-    def _fleet_back(self):
-        self.ui_back(FLEET_DETAIL_CHECK)
-        self.ui_back(FLEET_CHECK)
+    @Config.when(Campaign_Mode='hard')
+    def ui_goto_fleet(self):
+        if self.appear(FLEET_PREPARATION, offset=(20, 50)):
+            return
+        self.campaign.ensure_campaign_ui(self.stage, 'hard')
+        self.campaign.ENTRANCE.area = self.campaign.ENTRANCE.button
+        campaign_timer = Timer(5)
+        map_timer = Timer(5)
+        for _ in self.loop():
+            if self.appear(FLEET_PREPARATION, offset=(20, 50)):
+                break
+            if map_timer.reached() \
+                    and self.campaign.handle_map_mode_switch('hard') \
+                    and self.campaign.handle_map_preparation():
+                self.device.click(MAP_PREPARATION)
+                map_timer.reset()
+                campaign_timer.reset()
+            # Retire
+            if self.campaign.handle_retirement():
+                continue
+            if campaign_timer.reached() and self.appear_then_click(self.campaign.ENTRANCE):
+                campaign_timer.reset()
+                continue
 
-    def _fleet_back_hard(self):
-        self.ui_back(self.page_fleet_check_button)
+    @property
+    def fleet_check_button(self):
+        if self.config.Campaign_Mode == 'hard':
+            return FLEET_PREPARATION
+        return page_fleet.check_button
+
+    @property
+    def fleet_backline_1_button(self):
+        if self.config.Campaign_Mode == 'hard':
+            return globals()[f'FLEET_{self.fleet_to_attack}_BACKLINE_1']
+        return FLEET_ENTER_FLAGSHIP
+
+    @property
+    def fleet_vanguard_1_button(self):
+        if self.config.Campaign_Mode == 'hard':
+            return globals()[f'FLEET_{self.fleet_to_attack}_VANGUARD_1']
+        return FLEET_ENTER
+
+    def ui_enter_ship(self, click_button, long_click=True):
+        if long_click:
+            enter_button_map = {
+                FLEET_ENTER_FLAGSHIP: FLEET_DETAIL_ENTER_FLAGSHIP,
+                FLEET_ENTER: FLEET_DETAIL_ENTER,
+            }
+            enter_button = enter_button_map.get(click_button)
+            if enter_button is None:
+                self.ship_info_enter(click_button=click_button, long_click=True, skip_first_screenshot=False)
+                return
+
+            self.ui_click(FLEET_DETAIL, appear_button=self.fleet_check_button,
+                          check_button=FLEET_DETAIL_CHECK, skip_first_screenshot=True)
+            self.ship_info_enter(enter_button, long_click=False)
+        else:
+            self.ship_info_enter(click_button=click_button, check_button=DOCK_CHECK, 
+                                 long_click=False, skip_first_screenshot=False)
+
+    def ui_leave_ship(self, check_button=None):
+        if check_button is None:
+            check_button = self.fleet_check_button
+        if check_button == page_fleet.check_button:
+            self.ui_back(check_button=[FLEET_DETAIL_CHECK, page_fleet.check_button])
+            self.ui_back(check_button=page_fleet.check_button)
+        else:
+            self.ui_back(check_button=check_button)
+
+    def find_candidates(self, templates, scanner: ShipScanner, output=False):
+        """
+        Find candidates based on template matching using a scanner.
+        """
+        ships = scanner.scan(self.device.image, output=output)
+        if not templates:
+            return ships
+        candidates = []
+        for ship in ships:
+            for template in templates:
+                if template.match(self.image_crop(ship.button, copy=False), similarity=SIM_VALUE):
+                    candidates.append(ship)
+                    break
+        return candidates
+
+    def get_cv_templates(self):
+        """
+        Get CV templates based on config.GemsFarming_CommonCV
+
+        Returns:
+            list[Template]: CV templates
+        """
+        if self.config.GemsFarming_CommonCV == 'any':
+            return []
+        else:
+            templates = {
+                'bogue': TEMPLATE_BOGUE,
+                'hermes': TEMPLATE_HERMES,
+                'langley': TEMPLATE_LANGLEY,
+                'ranger': TEMPLATE_RANGER,
+            }
+            return [templates[self.config.GemsFarming_CommonCV]]
+
+    def get_common_rarity_cv(self, max_level=31, min_emotion=0):
+        """
+        Get a common rarity cv by config.GemsFarming_CommonCV
+        If config.GemsFarming_CommonCV == 'any', return a common lv1 ~ lv31 cv by default.
+
+        Returns:
+            list[Ship]: Common rarity CVs that meet the level, emotion and fleet requirements.
+        """
+        faction = 'eagle' if self.config.GemsFarming_CommonCV == 'eagle' else 'all'
+        extra = 'can_limit_break' if self.config.GemsFarming_ALLowHighFlagshipLevel else 'enhanceable'
+        self.dock_favourite_set(False, wait_loading=False)
+        self.dock_sort_method_dsc_set(True, wait_loading=False)
+        self.dock_filter_set(index='cv', rarity='common', extra='enhanceable', sort='total')
+
+        logger.hr('FINDING FLAGSHIP')
+        templates = self.get_cv_templates()
+        scanner = ShipScanner(level=(1, max_level), emotion=(min_emotion, 150), fleet=self.fleet_to_attack_index, status='free')
+        scanner.disable('rarity')
+
+        candidates = self.find_candidates(templates, scanner, output=True)
+        if candidates:
+            return candidates
+
+        scanner.set_limitation(fleet=0)
+        candidates = self.find_candidates(templates, scanner, output=False)
+        if candidates or templates == []:
+            return candidates
+
+        logger.info('No specific CV was found, try reversed order.')
+        self.dock_sort_method_dsc_set(False)
+        candidates = self.find_candidates(templates, scanner, output=True)
+        return candidates
+
+    @Config.when(Campaign_Mode='normal')
+    def flagship_change_execute(self):
+        self.ui_enter_ship(FLEET_ENTER_FLAGSHIP, long_click=False)
+        candidate = self.get_common_rarity_cv(min_emotion=self.min_emotion)
+        if candidate:
+            ship = max(candidate, key=lambda s: (s.level, s.emotion))
+            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion) if self._new_fleet_emotion else ship.emotion
+            self.dock_select_one(ship.button)
+            self.dock_reset()
+            self.dock_select_confirm(check_button=page_fleet.check_button)
+            logger.info('Change flagship success')
+            return True
+
+        logger.info('Change flagship failed, no CV in common rarity.')
+        self._new_fleet_emotion = 0
+        self.dock_reset()
+        self.ui_leave_ship()
+        return False
+
+    @Config.when(Campaign_Mode='hard')
+    def flagship_change_execute(self):
+        unmount_button = globals()[f'FLEET_{self.fleet_to_attack}_BACKLINE_1']
+        mount_button = globals()[f'FLEET_{self.fleet_to_attack}_BACKLINE_3']
+
+        if self.appear(unmount_button, offset=(20, 20)):
+            logger.info('No flagship to unmount, skip unmounting.')
+        else:
+            self.ui_enter_ship(unmount_button, long_click=False)
+            self.ui_click(DOCK_UNMOUNT, check_button=FLEET_PREPARATION, appear_button=DOCK_CHECK, 
+                          additional=self.ensure_no_info_bar, confirm_wait=1, retry_wait=5)
+
+        self.ui_enter_ship(mount_button, long_click=False)
+        candidate = self.get_common_rarity_cv(max_level=31, min_emotion=self.min_emotion)
+        if candidate:
+            ship = max(candidate, key=lambda s: (s.level, s.emotion))
+            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion) if self._new_fleet_emotion else ship.emotion
+            self.dock_select_one(ship.button)
+            self.dock_reset()
+            self.dock_select_confirm(check_button=FLEET_PREPARATION)
+            logger.info('Change flagship success')
+            return True
+
+        logger.info('Change flagship failed, try using leveled and exhausted CVs.')
+        candidate = self.get_common_rarity_cv(max_level=self.max_level, min_emotion=0)
+        if candidate:
+            ship = min(candidate, key=lambda s: (s.level, -s.emotion))
+            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion) if self._new_fleet_emotion else ship.emotion
+            self.dock_select_one(ship.button)
+            self.dock_reset()
+            self.dock_select_confirm(check_button=FLEET_PREPARATION)
+            return False
+
+        logger.info('Change flagship failed, no CV was found.')
+        self._new_fleet_emotion = 0
+        self.dock_reset()
+        self.ui_leave_ship()
+        return False
 
     def flagship_change(self):
         """
-        Change flagship and flagship's equipment using gear code
+        Change flagship and flagship's equipment
 
+        Args:
+            emotion (int): min emotion of common dd
         Returns:
             bool: True if flagship changed.
         """
         logger.hr('Change flagship', level=1)
         logger.attr('ChangeFlagship', self.config.GemsFarming_ChangeFlagship)
-        self._fleet_detail_enter(self.fleet_to_attack)
-        if self.change_flagship_equip:
+        self.ui_goto_fleet()
+        button = self.fleet_backline_1_button
+
+        if self.change_flagship_equip and not self.appear(button, offset=(20, 20)):
             logger.hr('Unmount flagship equipments', level=2)
-            self._ship_detail_enter(self.fleet_detail_enter_flagship)
-            self.clear_all_equip()
-            self._fleet_back() 
+            self.ui_enter_ship(button, long_click=True)
+            self.ship_equipment_take_off()
+            self.ui_leave_ship()
 
         logger.hr('Change flagship', level=2)
         success = self.flagship_change_execute()
 
-        if self.change_flagship_equip:
+        if self.change_flagship_equip and not self.appear(button, offset=(20, 20)):
             logger.hr('Mount flagship equipments', level=2)
-            self._ship_detail_enter(self.fleet_detail_enter_flagship)
-            self.apply_equip_code()
-            self._fleet_back()
+            self.ui_enter_ship(button, long_click=True)
+            self.ship_equipment_take_on()
+            self.ui_leave_ship()
 
         return success
 
-    def vanguard_change(self):
-        """
-        Change vanguard and vanguard's equipment using gear code
-
-        Returns:
-            bool: True if vanguard changed
-        """
-        logger.hr('Change vanguard', level=1)
-        logger.attr('ChangeVanguard', self.config.GemsFarming_ChangeVanguard)
-        self._fleet_detail_enter(self.fleet_to_attack)
-        if self.change_vanguard_equip:
-            logger.hr('Unmount vanguard equipments', level=2)
-            self._ship_detail_enter(self.fleet_detail_enter)
-            self.clear_all_equip()
-            self._fleet_back()
-
-        logger.hr('Change vanguard', level=2)
-        success = self.vanguard_change_execute()
-
-        if self.change_vanguard_equip:
-            logger.hr('Mount vanguard equipments', level=2)
-            self._ship_detail_enter(self.fleet_detail_enter)
-            self.apply_equip_code()
-            self._fleet_back()
-
-        return success
-
-    def _dock_reset(self):
-        self.dock_favourite_set(False, wait_loading=False)
-        self.dock_sort_method_dsc_set(wait_loading=False)
-        self.dock_filter_set()
-
-    def _ship_change_confirm(self, button):
-        self.dock_select_one(button)
-        self._dock_reset()
-        self.dock_select_confirm(check_button=self.page_fleet_check_button)
-
-    def get_common_rarity_cv(self, lv=31, emotion=16):
-        """
-        Get a common rarity cv by config.GemsFarming_CommonCV
-        If config.GemsFarming_CommonCV == 'any', return a common lv1 ~ lv33 cv
-
-        _dock_reset() needs to be called later.
-
-        Args:
-            lv (int): max level of common cv
-            emotion (int): min emotion of common cv
-        Returns:
-            Ship:
-        """
-        faction = 'eagle' if self.config.GemsFarming_CommonCV == 'eagle' else 'all'
-        extra = 'can_limit_break' if self.config.GemsFarming_ALLowHighFlagshipLevel else 'enhanceable'
-        self.dock_favourite_set(False, wait_loading=False)
-        self.dock_sort_method_dsc_set(False, wait_loading=False)
-        self.dock_filter_set(
-            index='cv', rarity='common', faction=faction, extra=extra, sort='total')
-
-        logger.hr('FINDING FLAGSHIP')
-
-        if self.config.GemsFarming_ALLowHighFlagshipLevel:
-            if self.config.SERVER in ['cn']:
-                max_level = 100
-            else:
-                max_level = 70
-            min_level = max_level
-        else:
-            max_level = lv
-            min_level = 1
-        emotion_lower_bound = 0 if emotion == 0 else self.emotion_lower_bound
-        fleet = [0, self.fleet_to_attack] if self.config.GemsFarming_ALLowHighFlagshipLevel else 0
-        scanner = ShipScanner(
-            level=(min_level, max_level), emotion=(emotion_lower_bound, 150), fleet=fleet, status='free')
-        scanner.disable('rarity')
-
-        if self.config.GemsFarming_CommonCV in ['custom', 'any', 'eagle']:
-            candidates = self.find_custom_candidates(scanner, ship_type='cv')
-
-            if candidates:
-                # Change to specific ship
-                return candidates
-
-            return scanner.scan(self.device.image, output=False)
-
-        else:
-            template = TEMPLATE_COMMON_CV[f'{self.config.GemsFarming_CommonCV.upper()}']
-
-            candidates = [ship for ship in scanner.scan(self.device.image, output=False)
-                          if template.match(self.image_crop(ship.button, copy=False), similarity=SIM_VALUE)]
-
-            if candidates:
-                # Change to specific ship
-                return candidates
-
-            logger.info('No specific CV was found, try reversed order.')
-            self.dock_sort_method_dsc_set(True)
-
-            candidates = [ship for ship in scanner.scan(self.device.image)
-                          if template.match(self.image_crop(ship.button, copy=False), similarity=SIM_VALUE)]
-
-            return candidates
-
-    def get_common_rarity_dd(self, emotion=110):
-        """
-        Get a common rarity dd with level is 100 (70 for servers except CN) 
-        and emotion >= self.emotion_lower_bound
-
-        _dock_reset() needs to be called later.
-
-        Args:
-            emotion (int): min emotion of common dd
-        Returns:
-            Ship:
-        """
-        rarity = 'common'
-        extra = 'can_limit_break'
-        if self.config.GemsFarming_CommonDD in ['any', 'custom']:
+    def get_dd_faction(self):
+        if self.config.GemsFarming_CommonDD == 'any':
             faction = ['eagle', 'iron']
         elif self.config.GemsFarming_CommonDD == 'favourite':
             faction = 'all'
@@ -397,273 +497,164 @@ class GemsFarming(CampaignRun, GemsEquipmentHandler, Retirement):
             faction = 'eagle'
         else:
             logger.error(f'Invalid CommonDD setting: {self.config.GemsFarming_CommonDD}')
-            raise ScriptError('Invalid GemsFarming_CommonDD')
-        favourite = self.config.GemsFarming_CommonDD == 'favourite'
-        self.dock_favourite_set(favourite, wait_loading=False)
-        self.dock_sort_method_dsc_set(True, wait_loading=False)
-        self.dock_filter_set(
-            index='dd', rarity=rarity, faction=faction, extra=extra)
+            logger.error("Default to 'eagle' and 'iron' faction.")
+            faction = ['eagle', 'iron']
+        return faction
 
-        logger.hr('FINDING VANGUARD')
-
-        if self.config.SERVER in ['cn']:
-            max_level = 100
-        else:
-            max_level = 70
-        if self.config.GemsFarming_CommonDD == 'DDG':
-            max_level = 125
-        if self.config.GemsFarming_ALLowLowVanguardLevel:
-            min_level = 30
-        else:
-            min_level = max_level
-        if self.hard_mode:
-            min_level = max(min_level, 70)
-        emotion_lower_bound = max(emotion, self.emotion_lower_bound)
-        scanner = ShipScanner(level=(min_level, max_level), emotion=(emotion_lower_bound, 150),
-                              fleet=[0, self.fleet_to_attack], status='free')
-        scanner.disable('rarity')
-
-        if self.config.GemsFarming_CommonDD in ['any', 'favourite', 'z20_or_z21', 'DDG']:
-            # Change to any ship
-            return scanner.scan(self.device.image)
-
-        elif self.config.GemsFarming_CommonDD == 'custom':
-            candidates = self.find_custom_candidates(scanner, ship_type='dd')
-
-            if candidates:
-                # Change to specific ship
-                return candidates
-
-            return scanner.scan(self.device.image, output=False)
-
-        else:
-            candidates = self.find_candidates(self.get_templates(self.config.GemsFarming_CommonDD), scanner)
-
-            if candidates:
-                # Change to specific ship
-                return candidates
-
-            logger.info('No specific DD was found, try reversed order.')
-            self.dock_sort_method_dsc_set(False)
-
-            # Change specific ship
-            candidates = self.find_candidates(self.get_templates(self.config.GemsFarming_CommonDD), scanner)
-            return candidates
-
-    def find_custom_candidates(self, scanner, ship_type='cv'):
+    def get_dd_templates(self):
         """
-        Get the candidates of common rarity cv/dd,
-        only for 'custom' GemsFarming_CommonCV/DD settings
+        Get DD templates based on config.GemsFarming_CommonDD
 
-        Args:
-            scanner (ShipScanner):
-            ship_type (str): 'cv' or 'dd' 
+        Returns:
+            list[Template]: DD templates
         """
-        if ship_type.lower() not in ['cv', 'dd']:
-            logger.warning(f'Invalid ship_type: {ship_type}')
-            return []
-
-        ship_type = ship_type.upper()
-        logger.info(f'Search for Common {ship_type}.')
-        if ship_type.lower() == 'cv' and self.config.GemsFarming_CommonCV != 'custom':
-            filter_string = self.config.COMMON_CV_FILTER
-            common_ship = self.get_common_ship_filter(filter_string, ship_type=ship_type)
-            templates = globals()[f'TEMPLATE_COMMON_{ship_type}']
-            candidates = []
-            for name in common_ship:
-                template = templates[name.upper()]
-                candidates = candidates + self.find_candidates(template, scanner)
-            return candidates
-        else:
-            filter_string =  self.config.__getattribute__(f'GemsFarming_Common{ship_type}Filter')
-        sort_dsc_first = ship_type.lower() == 'dd'
-    
-        common_ship = self.get_common_ship_filter(filter_string, ship_type=ship_type)
-        templates = globals()[f'TEMPLATE_COMMON_{ship_type}']
-        find_first = True
-        common_ship_candidates = {}
-        for name in common_ship:
-            template = templates[name.upper()]
-            candidates = self.find_candidates(template, scanner)
-
-            if find_first:
-                find_first = False
-                if candidates:
-                    logger.info(f'Find Common {ship_type} {name}.')
-                    return candidates
-
-            common_ship_candidates[name] = candidates
-
-        logger.info(f'No suitable {ship_type} was found, try reversed order.')
-        self.dock_sort_method_dsc_set(not sort_dsc_first)
-
-        for name in common_ship:
-            template = templates[name.upper()]
-            candidates = self.find_candidates(template, scanner)
-
-            if candidates:
-                logger.info(f'Find Common DD {name}.')
-                return candidates
-            elif common_ship_candidates[name]:
-                logger.info(f'Find Common DD {name}.')
-                self.dock_sort_method_dsc_set(sort_dsc_first, wait_loading=False)
-                return common_ship_candidates[name]
-
-        return []
-
-    def find_candidates(self, template, scanner):
-        """
-        Find candidates based on template matching using a scanner.
-
-        """
-        candidates = []
-        if isinstance(template, list):
-            for item in template:
-                candidates = [ship for ship in scanner.scan(self.device.image, output=False)
-                            if item.match(self.image_crop(ship.button, copy=False), similarity=SIM_VALUE)]
-                if candidates:
-                    break
-        else:
-            candidates = [ship for ship in scanner.scan(self.device.image, output=False)
-                          if template.match(self.image_crop(ship.button, copy=False), similarity=SIM_VALUE)]
-        return candidates
-
-    @staticmethod
-    def get_templates(common_dd):
-        """
-        Returns the corresponding template list based on CommonDD
-        """
-        if common_dd == 'aulick_or_foote':
+        if self.config.GemsFarming_CommonDD == 'aulick_or_foote':
             return [
                 TEMPLATE_AULICK,
                 TEMPLATE_FOOTE
             ]
-        elif common_dd == 'cassin_or_downes':
+        elif self.config.GemsFarming_CommonDD == 'cassin_or_downes':
             return [
                 TEMPLATE_CASSIN_1, TEMPLATE_CASSIN_2,
                 TEMPLATE_DOWNES_1, TEMPLATE_DOWNES_2
             ]
         else:
-            logger.error(f'Invalid CommonDD setting: {common_dd}')
-            raise ScriptError(f'Invalid CommonDD setting: {common_dd}')
+            return []
 
-    def ship_down_hard(self):
+    def get_common_rarity_dd(self, min_emotion=0):
         """
-        In hard mode, let the ship leave the fleet first
-        """
-        if self.appear(DOCK_SHIP_DOWN):
-            self.ui_click(DOCK_SHIP_DOWN,
-                            appear_button=DOCK_CHECK, check_button=self.page_fleet_check_button, skip_first_screenshot=True)
-        else:
-            self.ui_back(check_button=FLEET_PREPARATION)
+        Get a common rarity dd by config.GemsFarming_CommonDD
+        If config.GemsFarming_CommonDD == 'any', return a common self.max_level dd by default.
 
-    def dock_enter(self, button):
-        for _ in self.loop():
-            if self.appear(DOCK_CHECK, offset=(20, 20)):
-                break
-            if self.appear(self.page_fleet_check_button, offset=(30, 30), interval=5):
-                self.device.click(button)
-                continue
-            # 2025.05.29 game tips that infos skin feature when you enter dock
-            if self.handle_game_tips():
-                return False
-        return True
-
-    def flagship_change_with_emotion(self, ship):
-        """
-        Change flagship and calculate emotion
-        """
-        target_ship = max(ship, key=lambda s: (s.emotion, -s.level))
-        logger.info(f'Selected flagship: Lv{target_ship.level}'f'Emotion:{target_ship.emotion}')
-        if self.config.GemsFarming_ALLowHighFlagshipLevel:
-            self.set_emotion(target_ship.emotion)
-        self._ship_change_confirm(target_ship.button)
-
-    def flagship_change_execute(self):
-        """
         Returns:
-            bool: If success.
-
-        Pages:
-            in: page_fleet
-            out: page_fleet
+            list[Ship]: Common rarity DDs that meet the emotion and fleet requirements.
         """
-        if self.hard_mode:
-            if not self.dock_enter(self.fleet_detail_enter_flagship):
-                return True
-            self.ship_down_hard()  
-        if not self.dock_enter(self.fleet_enter_flagship):
-            return True
+        faction = self.get_dd_faction()
+        self.dock_favourite_set(self.config.GemsFarming_CommonDD == 'favourite', wait_loading=False)
+        self.dock_sort_method_dsc_set(True, wait_loading=False)
+        self.dock_filter_set(index='dd', rarity='common', faction=faction, extra='can_limit_break')
 
-        ship = self.get_common_rarity_cv()
-        if ship:
-            self.flagship_change_with_emotion(ship)
-            logger.info('Change flagship success')
-            return True
-        else:
-            logger.info('Change flagship failed, no CV in common rarity.')
+        logger.hr('FINDING VANGUARD')
+        templates = self.get_dd_templates()
+        scanner = ShipScanner(level=(self.max_level, self.max_level), emotion=(min_emotion, 150), fleet=[0, self.fleet_to_attack_index], status='free')
+        scanner.disable('rarity')
 
-            if self.config.SERVER in ['cn']:
-                max_level = 100
-            else:
-                max_level = 70
-            ship = self.get_common_rarity_cv(lv=max_level, emotion=0)
-            if ship and self.hard_mode:
-                self.flagship_change_with_emotion(ship)
-            else:
-                if self.hard_mode:
-                    raise RequestHumanTakeover
-                self._dock_reset()
-                self.ui_back(check_button=self.page_fleet_check_button)
-            return False
+        candidates = self.find_candidates(templates, scanner, output=True)
+        if candidates or templates == []:
+            return candidates
 
-    def vanguard_change_with_emotion(self, ship):
-        """
-        Change vanguard and calculate emotion
-        """
-        target_ship = max(ship, key=lambda s: s.emotion)
-        if self.config.GemsFarming_ALLowHighFlagshipLevel:
-            self.set_emotion(min(self.get_emotion(), target_ship.emotion))
-        else:
-            self.set_emotion(target_ship.emotion)
-        self._ship_change_confirm(target_ship.button)
+        logger.info('No specific DD was found, try reversed order.')
+        self.dock_sort_method_dsc_set(False)
+        candidates = self.find_candidates(templates, scanner, output=True)
+        return candidates
 
+    @Config.when(Campaign_Mode='normal')
     def vanguard_change_execute(self):
-        """
-        Returns:
-            bool: If success.
-
-        Pages:
-            in: page_fleet
-            out: page_fleet
-        """
-        if self.hard_mode:
-            if not self.dock_enter(self.fleet_detail_enter):
-                return True
-            self.ship_down_hard()  
-        if not self.dock_enter(self.fleet_enter):
+        self.ui_enter_ship(FLEET_ENTER, long_click=False)
+        candidate = self.get_common_rarity_dd(min_emotion=self.min_emotion)
+        if candidate:
+            ship = max(candidate, key=lambda s: s.emotion)
+            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion) if self._new_fleet_emotion else ship.emotion
+            self.dock_select_one(ship.button)
+            self.dock_reset()
+            self.dock_select_confirm(check_button=page_fleet.check_button)
+            logger.info('Change vanguard success')
             return True
 
-        ship = self.get_common_rarity_dd()
-        if ship:
-            self.vanguard_change_with_emotion(ship)
-            logger.info('Change vanguard ship success')
-            return True
+        logger.info('Change vanguard failed, no DD in common rarity.')
+        self._new_fleet_emotion = 0
+        self.dock_reset()
+        self.ui_leave_ship()
+        return False
+
+    @Config.when(Campaign_Mode='hard')
+    def vanguard_change_execute(self):
+        unmount_button = globals()[f'FLEET_{self.fleet_to_attack}_VANGUARD_1']
+        mount_button = globals()[f'FLEET_{self.fleet_to_attack}_VANGUARD_3']
+
+        if self.appear(unmount_button, offset=(20, 20)):
+            logger.info('No flagship to unmount, skip unmounting.')
         else:
-            logger.info('Change vanguard ship failed, no DD in common rarity.')
+            self.ui_enter_ship(unmount_button, long_click=False)
+            self.ui_click(DOCK_UNMOUNT, check_button=FLEET_PREPARATION, appear_button=DOCK_CHECK, 
+                          additional=self.ensure_no_info_bar, confirm_wait=1, retry_wait=5)
 
-            ship = self.get_common_rarity_dd(emotion=0)
-            if ship and self.hard_mode:
-                self.vanguard_change_with_emotion(ship)
-            else:
-                if self.hard_mode:
-                    raise RequestHumanTakeover
-                self._dock_reset()
-                self.ui_back(check_button=self.page_fleet_check_button)
+        self.ui_enter_ship(mount_button, long_click=False)
+        candidate = self.get_common_rarity_dd(min_emotion=self.min_emotion)
+        if candidate:
+            ship = max(candidate, key=lambda s: s.emotion)
+            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion) if self._new_fleet_emotion else ship.emotion
+            self.dock_select_one(ship.button)
+            self.dock_reset()
+            self.dock_select_confirm(check_button=FLEET_PREPARATION)
+            logger.info('Change vanguard success')
+            return True
+
+        logger.info('Change vanguard failed, try using exhausted DDs.')
+        candidate = self.get_common_rarity_dd(min_emotion=0)
+        if candidate:
+            ship = max(candidate, key=lambda s: s.emotion)
+            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion) if self._new_fleet_emotion else ship.emotion
+            self.dock_select_one(ship.button)
+            self.dock_reset()
+            self.dock_select_confirm(check_button=FLEET_PREPARATION)
             return False
 
-    _trigger_lv32 = False
-    _trigger_emotion = False
+        logger.info('Change vanguard failed, no DD was found.')
+        self._new_fleet_emotion = 0
+        self.dock_reset()
+        self.ui_leave_ship()
+        return False
+
+    def vanguard_change(self):
+        """
+        Change vanguard and vanguard's equipment
+
+        Returns:
+            bool: True if vanguard changed.
+        """
+        logger.hr('Change vanguard', level=1)
+        logger.attr('ChangeVanguard', self.config.GemsFarming_ChangeVanguard)
+        self.ui_goto_fleet()
+        button = self.fleet_vanguard_1_button
+
+        if self.change_vanguard_equip and not self.appear(button, offset=(20, 20)):
+            logger.hr('Unmount vanguard equipments', level=2)
+            self.ui_enter_ship(button, long_click=True)
+            self.ship_equipment_take_off()
+            self.ui_leave_ship()
+
+        logger.hr('Change vanguard', level=2)
+        success = self.vanguard_change_execute()
+
+        if self.change_vanguard_equip and not self.appear(button, offset=(20, 20)):
+            logger.hr('Mount vanguard equipments', level=2)
+            self.ui_enter_ship(button, long_click=True)
+            self.ship_equipment_take_on()
+            self.ui_leave_ship()
+
+        return success
+
+    def hard_fleet_prepare(self):
+        """
+        Fill empty hard-mode fleet slots after ships used for hard requirements were retired.
+
+        Returns:
+            bool: True if any slot has been filled.
+        """
+        prepared = False
+        if self.appear(self.fleet_backline_1_button, offset=(20, 20)):
+            logger.info('Backline is empty, change flagship')
+            self.flagship_change()
+            prepared = True
+        if self.appear(self.fleet_vanguard_1_button, offset=(20, 20)):
+            logger.info('Vanguard is empty, change vanguard')
+            self.vanguard_change()
+            prepared = True
+        return prepared
+
+    _trigger_lv32: bool = False
+    _trigger_emotion: bool = False
 
     def triggered_stop_condition(self, oil_check=True):
         # Lv32 limit
@@ -713,38 +704,20 @@ class GemsFarming(CampaignRun, GemsEquipmentHandler, Retirement):
             try:
                 super().run(name=name, folder=folder, total=total)
             except CampaignEnd as e:
-                if e.args[0] == 'Emotion control':
-                    self._trigger_emotion = True
-                elif e.args[0] == 'Emotion withdraw':
+                if "Emotion" in e.args[0]:
                     self._trigger_emotion = True
                     self.set_emotion(0)
                 else:
-                    raise e
-            except RequestHumanTakeover as e:
-                try:
-                    if e.args[0] == 'Hard not satisfied' and self.change_flagship and self.change_vanguard:
-                        self.hard_mode_override()
-                        self.flagship_change()
-                        self.vanguard_change()
-                    else:
-                        raise RequestHumanTakeover
-                except RequestHumanTakeover as e:
-                    raise RequestHumanTakeover
-                except Exception as e:
-                    from module.exception import GameStuckError
-                    raise GameStuckError
+                    raise
 
             # End
             if self._trigger_lv32 or self._trigger_emotion:
-                success = True
-                self.hard_mode_override()
-                emotion = self.get_emotion()
-                if self.change_flagship:
-                    success = self.flagship_change()
-                if self.change_vanguard and success:
-                    success = self.vanguard_change()
-                    if not success and self.config.GemsFarming_ALLowHighFlagshipLevel:
-                        self.set_emotion(emotion)
+                self._new_fleet_emotion = 150
+                success = self.flagship_change()
+                if self.change_vanguard:
+                    success = success and self.vanguard_change()
+
+                self.campaign.config.set_record(Emotion_Fleet1Value=self._new_fleet_emotion)
 
                 if is_limit and self.config.StopCondition_RunCount <= 0:
                     logger.hr('Triggered stop condition: Run count')

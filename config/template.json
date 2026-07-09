@@ -385,17 +385,16 @@
       "ServerUpdate": "00:00"
     },
     "GemsFarming": {
-      "ChangeFlagship": "ship_equip",
+      "ChangeFlagship": "ship",
       "CommonCV": "any",
       "CommonCVFilter": "bogue > ranger > langley > hermes",
       "ChangeVanguard": "ship_equip",
       "CommonDD": "any",
-      "CommonDDFilter": "z20 > z21 > aulick > foote > cassin > downes",
-      "EquipmentCode": "DD: null\nbogue: null\nhermes: null\nlangley: null\nranger: null",
-      "ALLowHighFlagshipLevel": false,
-      "ALLowLowVanguardLevel": false,
-      "DelayTaskIFNoFlagship": false,
-      "CommissionLimit": false
+      "CommissionLimit": true
+    },
+    "EquipmentCode": {
+      "ExportToConfig": true,
+      "Config": "DD: null\nbogue: null\nhermes: null\nlangley: null\nranger: null"
     },
     "Campaign": {
       "Name": "12-4",
@@ -433,19 +432,17 @@
       "DistanceToBoss": "use_open_ocean_support"
     },
     "Emotion": {
-      "Mode": "calculate",
+      "Mode": "calculate_ignore",
       "Fleet1Value": 119,
       "Fleet1Record": "2020-01-01 00:00:00",
-      "Fleet1Control": "prevent_green_face",
+      "Fleet1Control": "prevent_red_face",
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
-      "Fleet1Onsen": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
-      "Fleet2Control": "prevent_green_face",
+      "Fleet2Control": "prevent_red_face",
       "Fleet2Recover": "not_in_dormitory",
-      "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Oath": false
     },
     "Storage": {
       "Storage": {}

@@ -1839,7 +1839,7 @@
     "GemsFarming": {
       "ChangeFlagship": {
         "type": "select",
-        "value": "ship_equip",
+        "value": "ship",
         "option": [
           "ship",
           "ship_equip"
@@ -1908,6 +1908,23 @@
       "CommissionLimit": {
         "type": "checkbox",
         "value": false
+      }
+    },
+    "EquipmentCode": {
+      "ExportToConfig": {
+        "type": "checkbox",
+        "value": true
+      }
+    },
+    "EquipmentCode": {
+      "ExportToConfig": {
+        "type": "checkbox",
+        "value": true
+      },
+      "Config": {
+        "type": "textarea",
+        "value": "DD: null\nbogue: null\nhermes: null\nlangley: null\nranger: null",
+        "mode": "yaml"
       }
     },
     "Campaign": {
@@ -2150,12 +2167,13 @@
     "Emotion": {
       "Mode": {
         "type": "select",
-        "value": "calculate",
+        "value": "calculate_ignore",
         "option": [
           "calculate",
           "ignore",
           "calculate_ignore"
-        ]
+        ],
+        "display": "hide"
       },
       "Fleet1Value": {
         "type": "input",
@@ -2169,13 +2187,14 @@
       },
       "Fleet1Control": {
         "type": "select",
-        "value": "prevent_green_face",
+        "value": "prevent_red_face",
         "option": [
           "keep_exp_bonus",
           "prevent_green_face",
           "prevent_yellow_face",
           "prevent_red_face"
-        ]
+        ],
+        "display": "hide"
       },
       "Fleet1Recover": {
         "type": "select",
@@ -2184,35 +2203,35 @@
           "not_in_dormitory",
           "dormitory_floor_1",
           "dormitory_floor_2"
-        ]
+        ],
+        "display": "hide"
       },
       "Fleet1Oath": {
         "type": "checkbox",
-        "value": false
-      },
-      "Fleet1Onsen": {
-        "type": "checkbox",
-        "value": false
+        "value": false,
+        "display": "hide"
       },
       "Fleet2Value": {
         "type": "input",
-        "value": 119
+        "value": 119,
+        "display": "hide"
       },
       "Fleet2Record": {
         "type": "datetime",
         "value": "2020-01-01 00:00:00",
         "validate": "datetime",
-        "display": "disabled"
+        "display": "hide"
       },
       "Fleet2Control": {
         "type": "select",
-        "value": "prevent_green_face",
+        "value": "prevent_red_face",
         "option": [
           "keep_exp_bonus",
           "prevent_green_face",
           "prevent_yellow_face",
           "prevent_red_face"
-        ]
+        ],
+        "display": "hide"
       },
       "Fleet2Recover": {
         "type": "select",
@@ -2221,15 +2240,13 @@
           "not_in_dormitory",
           "dormitory_floor_1",
           "dormitory_floor_2"
-        ]
+        ],
+        "display": "hide"
       },
       "Fleet2Oath": {
         "type": "checkbox",
-        "value": false
-      },
-      "Fleet2Onsen": {
-        "type": "checkbox",
-        "value": false
+        "value": false,
+        "display": "hide"
       }
     },
     "Storage": {
