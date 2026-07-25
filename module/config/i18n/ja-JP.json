@@ -1305,6 +1305,10 @@
       "name": "Emotion.Fleet1Onsen.name",
       "help": "Emotion.Fleet1Onsen.help"
     },
+    "Fleet1SinkShip": {
+      "name": "Emotion.Fleet1SinkShip.name",
+      "help": "Emotion.Fleet1SinkShip.help"
+    },
     "Fleet2Value": {
       "name": "Emotion.Fleet2Value.name",
       "help": "Emotion.Fleet2Value.help"
@@ -1335,6 +1339,10 @@
     "Fleet2Onsen": {
       "name": "Emotion.Fleet2Onsen.name",
       "help": "Emotion.Fleet2Onsen.help"
+    },
+    "Fleet2SinkShip": {
+      "name": "Emotion.Fleet2SinkShip.name",
+      "help": "Emotion.Fleet2SinkShip.help"
     }
   },
   "HpControl": {

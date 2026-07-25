@@ -97,6 +97,10 @@ class FleetEmotion:
         return getattr(self.config, f'Emotion_Fleet{self.fleet}Onsen')
 
     @property
+    def sink_ship_reduce(self):
+        return 10 if getattr(self.config, f'Emotion_Fleet{self.fleet}SinkShip') else 0
+
+    @property
     def speed(self):
         """
         Returns:
@@ -234,7 +238,12 @@ class Emotion:
         else:
             raise ScriptError(f'Unknown fleet order: {method}')
 
-        battle = tuple(np.array(battle) * self.reduce_per_battle_before_entering)
+        base = self.reduce_per_battle_before_entering
+        mult = base // 2
+        battle = tuple(
+            b * base + b * f.sink_ship_reduce * mult
+            for f, b in zip(self.fleets, battle)
+        )
         logger.info(f'Expect emotion reduce: {battle}')
 
         self.update()
@@ -275,7 +284,9 @@ class Emotion:
         self.record()
         self.show()
         fleet = self.fleets[fleet_index - 1]
-        recovered = fleet.get_recovered(expected_reduce=self.reduce_per_battle)
+        base = self.reduce_per_battle
+        mult = base // 2
+        recovered = fleet.get_recovered(expected_reduce=base + fleet.sink_ship_reduce * mult)
         if recovered > datetime.now():
             logger.hr('Emotion wait')
             logger.info(f'Emotion of fleet {fleet_index} will recover to {fleet.limit} at {recovered}')
@@ -300,8 +311,11 @@ class Emotion:
         self.update()
 
         fleet = self.fleets[fleet_index - 1]
-        fleet.current -= self.reduce_per_battle
-        self.total_reduced += self.reduce_per_battle
+        base = self.reduce_per_battle
+        mult = base // 2
+        reduce_amount = base + fleet.sink_ship_reduce * mult
+        fleet.current -= reduce_amount
+        self.total_reduced += reduce_amount
         self.record()
         self.show()
 

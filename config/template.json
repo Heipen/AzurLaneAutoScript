@@ -199,12 +199,14 @@
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
       "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_green_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "HpControl": {
       "UseHpBalance": false,
@@ -275,12 +277,14 @@
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
       "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_green_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "HpControl": {
       "UseHpBalance": false,
@@ -351,12 +355,14 @@
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
       "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_green_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "HpControl": {
       "UseHpBalance": false,
@@ -441,12 +447,14 @@
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
       "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_red_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "Storage": {
       "Storage": {}
@@ -504,11 +512,15 @@
       "Fleet1Control": "prevent_green_face",
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
+      "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_yellow_face",
       "Fleet2Recover": "not_in_dormitory",
-      "Fleet2Oath": false
+      "Fleet2Oath": false,
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "Storage": {
       "Storage": {}
@@ -566,12 +578,14 @@
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
       "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_green_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "HpControl": {
       "UseHpBalance": false,
@@ -642,12 +656,14 @@
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
       "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_green_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "HpControl": {
       "UseHpBalance": false,
@@ -705,12 +721,14 @@
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
       "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_yellow_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "Storage": {
       "Storage": {}
@@ -744,12 +762,14 @@
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
       "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_yellow_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "Storage": {
       "Storage": {}
@@ -823,12 +843,14 @@
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
       "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_green_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "HpControl": {
       "UseHpBalance": false,
@@ -885,11 +907,15 @@
       "Fleet1Control": "prevent_green_face",
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
+      "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_yellow_face",
       "Fleet2Recover": "not_in_dormitory",
-      "Fleet2Oath": false
+      "Fleet2Oath": false,
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "Storage": {
       "Storage": {}
@@ -951,12 +977,14 @@
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
       "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_green_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "HpControl": {
       "UseHpBalance": false,
@@ -1031,12 +1059,14 @@
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
       "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_green_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "HpControl": {
       "UseHpBalance": false,
@@ -1111,12 +1141,14 @@
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
       "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_green_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "HpControl": {
       "UseHpBalance": false,
@@ -1191,12 +1223,14 @@
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
       "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_green_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "HpControl": {
       "UseHpBalance": false,
@@ -1267,12 +1301,14 @@
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
       "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_green_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "HpControl": {
       "UseHpBalance": false,
@@ -1329,12 +1365,14 @@
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
       "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
       "Fleet2Value": 119,
       "Fleet2Record": "2020-01-01 00:00:00",
       "Fleet2Control": "prevent_yellow_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false,
-      "Fleet2Onsen": false
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
     },
     "Storage": {
       "Storage": {}

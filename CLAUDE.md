@@ -88,7 +88,7 @@ docker compose up
 - `python dev_tools/map_extractor.py` - Extract map data from screenshots
 - `python dev_tools/campaign_swipe.py` - Campaign swipe testing tool
 - `python dev_tools/item_statistics.py` - Item statistics extraction
-- `python -m module.config.config_updater` - Regenerate config from template.json
+- `python -m module.config.config_updater` - Regenerate config files from YAML definitions in `module/config/argument/`
 
 ## Architecture
 
@@ -103,10 +103,18 @@ docker compose up
 
 ### Config System
 
-- `config/template.json` defines all config schema and defaults
-- `module/config/config.py` (`AzurLaneConfig`) loads user config and merges with templates
-- `module/config/config_generated.py` is auto-generated from template.json
-- `module/config/config_updater.py` regenerates config_generated.py when template.json changes
+- `module/config/argument/` contains YAML files that define the config schema and GUI layout:
+  - `argument.yaml` - argument group definitions (types, defaults, options)
+  - `task.yaml` - task-to-argument-group mappings
+  - `override.yaml` - overrides/locks specific values per task (e.g. CoalitionSp hard-codes Mode='sp')
+  - `default.yaml` - default values
+  - `gui.yaml` - GUI-specific settings
+- `module/config/argument/args.json` - fully merged argument definitions (auto-generated, **DO NOT manually edit**)
+- `module/config/config_generated.py` - Python constants for argument groups (auto-generated, **DO NOT manually edit**)
+- `module/config/config.py` (`AzurLaneConfig`) loads user config and merges with args.json defaults
+- `module/config/config_updater.py` regenerates args.json, config_generated.py, and menu.json from the argument YAML files
+- To add/modify a config option: edit the YAML files in `module/config/argument/`, then run `python -m module.config.config_updater`. **Never manually edit args.json or config_generated.py.**
+- `config/template.json` is a legacy file, no longer the primary source of config schema
 - User configs stored in `config/{config_name}.json`
 
 ### Exception Hierarchy
@@ -132,7 +140,7 @@ Defined in `module/exception.py`:
 1. Create a new module directory under `module/`
 2. Create a handler class with a `run()` method
 3. Add the task method to `AzurLaneAutoScript` in `alas.py`
-4. Add config schema to `config/template.json`
+4. Add config schema to `module/config/argument/argument.yaml` and task mapping to `task.yaml`
 5. Run `python -m module.config.config_updater`
 6. Add UI template images to `assets/`
 

@@ -122,7 +122,9 @@ class GemsEmotion(Emotion):
         if not self.is_calculate:
             return
 
-        expected_reduce = battle * self.reduce_per_battle_before_entering
+        base = self.reduce_per_battle_before_entering
+        mult = base // 2
+        expected_reduce = battle * base + battle * self.fleet.sink_ship_reduce * mult
         logger.info(f'Expect emotion reduce: {expected_reduce}')
 
         self.update()
@@ -140,7 +142,9 @@ class GemsEmotion(Emotion):
         self.update()
         self.record()
         self.show()
-        recovered = self.fleet.get_recovered(expected_reduce=self.reduce_per_battle)
+        base = self.reduce_per_battle
+        mult = base // 2
+        recovered = self.fleet.get_recovered(expected_reduce=base + self.fleet.sink_ship_reduce * mult)
         if recovered > datetime.now():
             self.config.GEMS_EMOTION_TRIGGERED = True
 
@@ -150,8 +154,11 @@ class GemsEmotion(Emotion):
         """
         logger.hr('Emotion reduce')
         self.update()
-        self.fleet.current -= self.reduce_per_battle
-        self.total_reduced += self.reduce_per_battle
+        base = self.reduce_per_battle
+        mult = base // 2
+        reduce_amount = base + self.fleet.sink_ship_reduce * mult
+        self.fleet.current -= reduce_amount
+        self.total_reduced += reduce_amount
         self.record()
         self.show()
 

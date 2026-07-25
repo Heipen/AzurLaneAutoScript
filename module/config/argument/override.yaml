@@ -54,6 +54,7 @@ GemsFarming:
     Fleet2Control: prevent_red_face
     Fleet2Recover: not_in_dormitory
     Fleet2Oath: false
+    Fleet2SinkShip: false
   Submarine:
     Mode:
       display: display
@@ -175,6 +176,7 @@ Raid:
     Fleet2Recover: not_in_dormitory
     Fleet2Oath: false
     Fleet2Onsen: false
+    Fleet2SinkShip: false
 Hospital:
   StopCondition:
     RunCount: 0
@@ -193,6 +195,7 @@ Hospital:
     Fleet2Recover: not_in_dormitory
     Fleet2Oath: false
     Fleet2Onsen: false
+    Fleet2SinkShip: false
 RaidDaily:
   Scheduler:
     SuccessInterval: 30
@@ -219,6 +222,7 @@ RaidDaily:
     Fleet2Recover: not_in_dormitory
     Fleet2Oath: false
     Fleet2Onsen: False
+    Fleet2SinkShip: false
 MaritimeEscort:
   Scheduler:
     SuccessInterval: 30
@@ -252,6 +256,7 @@ Coalition:
     Fleet2Recover: not_in_dormitory
     Fleet2Oath: false
     Fleet2Onsen: False
+    Fleet2SinkShip: false
 CoalitionSp:
   Scheduler:
     SuccessInterval: 30
@@ -280,6 +285,7 @@ CoalitionSp:
     Fleet2Recover: not_in_dormitory
     Fleet2Oath: false
     Fleet2Onsen: false
+    Fleet2SinkShip: false
 
 # ==================== Reward ====================
 
