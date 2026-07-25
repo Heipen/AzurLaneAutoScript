@@ -1644,6 +1644,10 @@
       "help": "Coalition.Fleet.help",
       "single": "single",
       "multi": "multi"
+    },
+    "IgnoreFailure": {
+      "name": "Coalition.IgnoreFailure.name",
+      "help": "Coalition.IgnoreFailure.help"
     }
   },
   "Commission": {

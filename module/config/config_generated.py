@@ -259,6 +259,7 @@ class GeneratedConfig:
     # Group `Coalition`
     Coalition_Mode = 'hard'  # easy, normal, hard, sp
     Coalition_Fleet = 'single'  # single, multi
+    Coalition_IgnoreFailure = False
 
     # Group `Commission`
     Commission_PresetFilter = 'cube'  # cube, cube_24h, chip, chip_24h, oil, custom

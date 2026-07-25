@@ -495,7 +495,8 @@
     },
     "Coalition": {
       "Mode": "hard",
-      "Fleet": "single"
+      "Fleet": "single",
+      "IgnoreFailure": false
     },
     "StopCondition": {
       "OilLimit": 1000,
@@ -890,7 +891,8 @@
     },
     "Coalition": {
       "Mode": "sp",
-      "Fleet": "single"
+      "Fleet": "single",
+      "IgnoreFailure": false
     },
     "StopCondition": {
       "OilLimit": 1000,

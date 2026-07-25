@@ -294,6 +294,9 @@ class AutoSearchCombat(MapOperation, Combat, CampaignStatus):
                 raise CampaignEnd
             if self.is_combat_executing():
                 continue
+            if getattr(self.config, 'Coalition_IgnoreFailure', False):
+                if self.handle_battle_status():
+                    continue
             if self.handle_get_ship():
                 continue
             if self.appear(BATTLE_STATUS_S) or self.appear(BATTLE_STATUS_A) or self.appear(BATTLE_STATUS_B) \

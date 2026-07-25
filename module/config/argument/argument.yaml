@@ -385,6 +385,7 @@ Coalition:
   Fleet:
     value: single
     option: [ single, multi ]
+  IgnoreFailure: false
 
 
 # ==================== Reward ====================

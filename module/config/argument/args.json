@@ -2438,6 +2438,10 @@
           "single",
           "multi"
         ]
+      },
+      "IgnoreFailure": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "StopCondition": {
@@ -4673,6 +4677,10 @@
           "single",
           "multi"
         ]
+      },
+      "IgnoreFailure": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "StopCondition": {

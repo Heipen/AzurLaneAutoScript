@@ -1644,6 +1644,10 @@
       "help": "",
       "single": "單隊連戰",
       "multi": "多隊出擊"
+    },
+    "IgnoreFailure": {
+      "name": "Coalition.IgnoreFailure.name",
+      "help": "Coalition.IgnoreFailure.help"
     }
   },
   "Commission": {

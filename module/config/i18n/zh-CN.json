@@ -1644,6 +1644,10 @@
       "help": "",
       "single": "单队连战",
       "multi": "多队出击"
+    },
+    "IgnoreFailure": {
+      "name": "忽略失败",
+      "help": "打开时为沉船刷好感模式"
     }
   },
   "Commission": {
