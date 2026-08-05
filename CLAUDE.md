@@ -8,6 +8,8 @@ AzurLaneAutoScript (ALAS) is a Python automation bot for the mobile game Azur La
 
 This repo (Heipen/AzurLaneAutoScript) is a fork of [LmeSzinc/AzurLaneAutoScript](https://github.com/LmeSzinc/AzurLaneAutoScript) with additional features: screenshot display, dashboard, Operation Siren zone 1 statistics with XP detection, and island planning. It auto-syncs with the upstream via a GitHub Actions workflow.
 
+> **IMPORTANT**: This fork diverges significantly from upstream (custom config sections like `Dashboard`, fork-only buttons/templates such as `STORAGE_FLEET_*`, `STORAGE_REPAIR_*`, `MISSION_SIREN_RESEARCH`, etc. exist only in this fork). When resolving conflicts or making changes, **avoid wholesale `git checkout --theirs/--ours` or taking the entire upstream file** — this has previously dropped fork-only definitions and broken runtime. Always resolve per-hunk, preserving fork-only additions while applying the intended upstream changes.
+
 ## Tech Stack
 
 - **Python 3.7+** primary language
