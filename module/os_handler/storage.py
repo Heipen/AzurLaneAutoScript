@@ -97,6 +97,8 @@ class StorageHandler(GlobeOperation, ZoneManager):
                 self.device.click(CLICK_SAFE_AREA)
                 success = True
                 continue
+            if self.handle_story_skip():
+                continue
             # Use item
             if self.appear(STORAGE_CHECK, offset=(20, 20), interval=5):
                 self.device.click(button)
@@ -119,7 +121,7 @@ class StorageHandler(GlobeOperation, ZoneManager):
 
             image = rgb2gray(self.device.image)
             items = TEMPLATE_STORAGE_LOGGER.match_multi(image, similarity=0.5)
-            items.extend(TEMPLATE_STORAGE_LOGGER_UNLOCK.match_multi(image, similarity=0.75))
+            items.extend(TEMPLATE_STORAGE_LOGGER_UNLOCK.match_multi(image, similarity=0.5))
             logger.attr('Storage_logger', len(items))
 
             if len(items):
@@ -129,12 +131,11 @@ class StorageHandler(GlobeOperation, ZoneManager):
                 logger.info('All loggers in storage have been used')
                 break
 
-    def logger_use(self, quit=True):
+    def logger_use(self):
         logger.hr('Logger use')
         self.storage_enter()
         self.storage_logger_use_all()
-        if quit:
-            self.storage_quit()
+        self.storage_quit()
 
     def storage_sample_use_all(self):
         """
