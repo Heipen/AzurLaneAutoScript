@@ -1859,7 +1859,7 @@
       "Command": "Gacha",
       "SuccessInterval": 30,
       "FailureInterval": 30,
-      "ServerUpdate": "00:00"
+      "ServerUpdate": "12:00"
     },
     "Gacha": {
       "Pool": "light",
