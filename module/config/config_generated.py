@@ -334,143 +334,6 @@ class GeneratedConfig:
     Awaken_LevelCap = 'level120'  # level120, level125
     Awaken_Favourite = False
 
-    # Group `IslandTimeControl`
-    IslandTimeControl_TaskTimeDelay = 30
-
-    # Group `Island1`
-    Island1_Receive = False
-    Island1_Option1 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8
-    Island1_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island1_Option2 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8
-    Island1_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island1_Option3 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8
-    Island1_Character3 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island1_Option4 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8
-    Island1_Character4 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
-    # Group `Island2`
-    Island2_Receive = False
-    Island2_Option1 = 0  # 0, 1
-    Island2_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island2_Option2 = 0  # 0, 2
-    Island2_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island2_Option3 = 0  # 0, 3
-    Island2_Character3 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island2_Option4 = 0  # 0, 4
-    Island2_Character4 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
-    # Group `Island3`
-    Island3_Receive = False
-    Island3_Option1 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
-    Island3_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island3_Option2 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
-    Island3_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island3_Option3 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
-    Island3_Character3 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
-    # Group `Island4`
-    Island4_Receive = False
-    Island4_Option1 = 0  # 0, 1, 2, 3, 4, 5, 6
-    Island4_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island4_Option2 = 0  # 0, 1, 2, 3, 4, 5, 6
-    Island4_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island4_Option3 = 0  # 0, 1, 2, 3, 4, 5, 6
-    Island4_Character3 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island4_Option4 = 0  # 0, 1, 2, 3, 4, 5, 6
-    Island4_Character4 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
-    # Group `Island5`
-    Island5_Receive = False
-    Island5_Option1 = 0  # 0, 1, 2, 3, 4
-    Island5_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island5_Option2 = 0  # 0, 1, 2, 3, 4
-    Island5_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island5_Option3 = 0  # 0, 1, 2, 3, 4
-    Island5_Character3 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island5_Option4 = 0  # 0, 1, 2, 3, 4
-    Island5_Character4 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
-    # Group `Island6`
-    Island6_Receive = False
-    Island6_Option1 = 0  # 0, 1, 2, 3, 4, 5, 6, 7
-    Island6_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island6_Option2 = 0  # 0, 1, 2, 3, 4, 5, 6, 7
-    Island6_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island6_Option3 = 0  # 0, 1, 2, 3, 4, 5, 6, 7
-    Island6_Character3 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island6_Option4 = 0  # 0, 1, 2, 3, 4, 5, 6, 7
-    Island6_Character4 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
-    # Group `Island7`
-    Island7_Receive = False
-    Island7_Option1 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-    Island7_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island7_Option2 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-    Island7_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
-    # Group `Island8`
-    Island8_Receive = False
-    Island8_Option1 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
-    Island8_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island8_Option2 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
-    Island8_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
-    # Group `Island9`
-    Island9_Receive = False
-    Island9_Option1 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
-    Island9_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island9_Option2 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
-    Island9_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
-    # Group `Island10`
-    Island10_Receive = False
-    Island10_Option1 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-    Island10_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island10_Option2 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-    Island10_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
-    # Group `Island11`
-    Island11_Receive = False
-    Island11_Option1 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-    Island11_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island11_Option2 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-    Island11_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
-    # Group `Island12`
-    Island12_Receive = False
-    Island12_Option1 = 0  # 0, 1, 2, 3, 4, 5, 6
-    Island12_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island12_Option2 = 0  # 0, 1, 2, 3, 4, 5, 6
-    Island12_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
-    # Group `Island13`
-    Island13_Receive = False
-    Island13_Option1 = 0  # 0, 1, 2, 3, 4, 5, 6
-    Island13_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island13_Option2 = 0  # 0, 1, 2, 3, 4, 5, 6
-    Island13_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
-    # Group `Island14`
-    Island14_Receive = False
-    Island14_Option1 = 0  # 0, 1, 2, 3, 4
-    Island14_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island14_Option2 = 0  # 0, 1, 2, 3, 4
-    Island14_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
-    # Group `Island15`
-    Island15_Receive = False
-    Island15_Option1 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-    Island15_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island15_Option2 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-    Island15_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
-    # Group `Island16`
-    Island16_Receive = False
-    Island16_Option1 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-    Island16_Character1 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-    Island16_Option2 = 0  # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-    Island16_Character2 = 'manjuu'  # manjuu, saratoga, new_jersey, tashkent, lemalin, shimakaze, akashi, ying_swei, chao_ho, william_d_porter, chen_hai, unicorn, cheshire, amagi_chan, helena, atago, friedrich_der_grobe
-
     # Group `GeneralShop`
     GeneralShop_UseGems = False
     GeneralShop_Refresh = False
@@ -672,6 +535,43 @@ class GeneratedConfig:
     OpsiScheduling_EnableSmartScheduling = False
     OpsiScheduling_ActionPointNotifyLevels = '500,1000,2000,3000'
 
+    # Group `IslandProduction`
+    IslandProduction_HardFloorItems = '{}'
+    IslandProduction_ReserveItems = '{}'
+    IslandProduction_DailyBufferItems = '{}'
+    IslandProduction_IdleAccumulatingItems = '{}'
+
+    # Group `IslandOrder`
+    IslandOrder_StuckSeasonOrderId = 0
+
+    # Group `IslandFreebie`
+    IslandFreebie_Share = True
+
+    # Group `IslandRestaurant`
+    IslandRestaurant_KoiGrade = 'bronze'  # bronze, silver, gold, diamond
+    IslandRestaurant_KoiWaitress1 = 'any'  # none, any, Chao_Ho, Chang_Feng
+    IslandRestaurant_KoiWaitress2 = 'none'  # none, any, Chao_Ho, Chang_Feng
+    IslandRestaurant_KoiMenu = '{}'
+    IslandRestaurant_BearGrade = 'bronze'  # bronze, silver, gold, diamond
+    IslandRestaurant_BearWaitress1 = 'any'  # none, any, Cheshire, Chang_Feng
+    IslandRestaurant_BearWaitress2 = 'none'  # none, any, Cheshire, Chang_Feng
+    IslandRestaurant_BearMenu = '{}'
+    IslandRestaurant_EateryGrade = 'bronze'  # bronze, silver, gold, diamond
+    IslandRestaurant_EateryWaitress1 = 'any'  # none, any, Helena, Prinz_Eugen, Chang_Feng
+    IslandRestaurant_EateryWaitress2 = 'none'  # none, any, Helena, Prinz_Eugen, Chang_Feng
+    IslandRestaurant_EateryMenu = '{}'
+    IslandRestaurant_GrillGrade = 'bronze'  # bronze, silver, gold, diamond
+    IslandRestaurant_GrillWaitress1 = 'any'  # none, any, August_von_Parseval, Prinz_Eugen, Chang_Feng
+    IslandRestaurant_GrillWaitress2 = 'none'  # none, any, August_von_Parseval, Prinz_Eugen, Chang_Feng
+    IslandRestaurant_GrillMenu = '{}'
+    IslandRestaurant_CafeGrade = 'bronze'  # bronze, silver, gold, diamond
+    IslandRestaurant_CafeWaitress1 = 'any'  # none, any, Cheshire, Belfast, Chang_Feng
+    IslandRestaurant_CafeWaitress2 = 'none'  # none, any, Cheshire, Belfast, Chang_Feng
+    IslandRestaurant_CafeMenu = '{}'
+
+    # Group `IslandSeasonTask`
+    IslandSeasonTask_TaskTarget = '{}'
+
     # Group `Daemon`
     Daemon_EnterMap = True
 
@@ -689,6 +589,14 @@ class GeneratedConfig:
     BoxDisassemble_BlueBoxLimit = 1000
     BoxDisassemble_UseWhiteBox = True
     BoxDisassemble_WhiteBoxLimit = 2000
+
+    # Group `IslandProductionPlanner`
+    IslandProductionPlanner_RescanIslandTechnology = False
+    IslandProductionPlanner_DailyProfitLowerLimit = 50000
+    IslandProductionPlanner_DailyBufferSafetyMargin = 0
+    IslandProductionPlanner_FieldsEfficiency = 0  # 0, 0.04, 0.12
+    IslandProductionPlanner_OrchardEfficiency = 0  # 0, 0.04, 0.12
+    IslandProductionPlanner_NurseryEfficiency = 0  # 0, 0.04, 0.12
 
     # Group `Benchmark`
     Benchmark_DeviceType = 'emulator'  # emulator, plone_cloud_with_adb, phone_cloud_without_adb, android_phone, android_phone_vmos

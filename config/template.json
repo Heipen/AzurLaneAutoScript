@@ -474,59 +474,6 @@
       "Storage": {}
     }
   },
-  "Coalition": {
-    "Scheduler": {
-      "Enable": false,
-      "NextRun": "2020-01-01 00:00:00",
-      "Command": "Coalition",
-      "SuccessInterval": 30,
-      "FailureInterval": 30,
-      "ServerUpdate": "00:00"
-    },
-    "Campaign": {
-      "Name": "dynamic",
-      "Event": "campaign_main",
-      "Mode": "normal",
-      "UseClearMode": true,
-      "UseFleetLock": true,
-      "UseAutoSearch": false,
-      "Use2xBook": false,
-      "AmbushEvade": true
-    },
-    "Coalition": {
-      "Mode": "hard",
-      "Fleet": "single",
-      "IgnoreFailure": false
-    },
-    "StopCondition": {
-      "OilLimit": 1000,
-      "RunCount": 0,
-      "MapAchievement": "non_stop",
-      "StageIncrease": false,
-      "GetNewShip": false,
-      "ReachLevel": 0
-    },
-    "Emotion": {
-      "Mode": "calculate",
-      "Fleet1Value": 119,
-      "Fleet1Record": "2020-01-01 00:00:00",
-      "Fleet1Control": "prevent_green_face",
-      "Fleet1Recover": "not_in_dormitory",
-      "Fleet1Oath": false,
-      "Fleet1Onsen": false,
-      "Fleet1SinkShip": false,
-      "Fleet2Value": 119,
-      "Fleet2Record": "2020-01-01 00:00:00",
-      "Fleet2Control": "prevent_yellow_face",
-      "Fleet2Recover": "not_in_dormitory",
-      "Fleet2Oath": false,
-      "Fleet2Onsen": false,
-      "Fleet2SinkShip": false
-    },
-    "Storage": {
-      "Storage": {}
-    }
-  },
   "Event": {
     "Scheduler": {
       "Enable": false,
@@ -776,6 +723,59 @@
       "Storage": {}
     }
   },
+  "Coalition": {
+    "Scheduler": {
+      "Enable": false,
+      "NextRun": "2020-01-01 00:00:00",
+      "Command": "Coalition",
+      "SuccessInterval": 30,
+      "FailureInterval": 30,
+      "ServerUpdate": "00:00"
+    },
+    "Campaign": {
+      "Name": "dynamic",
+      "Event": "campaign_main",
+      "Mode": "normal",
+      "UseClearMode": true,
+      "UseFleetLock": true,
+      "UseAutoSearch": false,
+      "Use2xBook": false,
+      "AmbushEvade": true
+    },
+    "Coalition": {
+      "Mode": "hard",
+      "Fleet": "single",
+      "IgnoreFailure": false
+    },
+    "StopCondition": {
+      "OilLimit": 1000,
+      "RunCount": 0,
+      "MapAchievement": "non_stop",
+      "StageIncrease": false,
+      "GetNewShip": false,
+      "ReachLevel": 0
+    },
+    "Emotion": {
+      "Mode": "calculate",
+      "Fleet1Value": 119,
+      "Fleet1Record": "2020-01-01 00:00:00",
+      "Fleet1Control": "prevent_green_face",
+      "Fleet1Recover": "not_in_dormitory",
+      "Fleet1Oath": false,
+      "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
+      "Fleet2Value": 119,
+      "Fleet2Record": "2020-01-01 00:00:00",
+      "Fleet2Control": "prevent_yellow_face",
+      "Fleet2Recover": "not_in_dormitory",
+      "Fleet2Oath": false,
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
   "WarArchives": {
     "Scheduler": {
       "Enable": false,
@@ -849,59 +849,6 @@
     },
     "EnemyPriority": {
       "EnemyScaleBalanceWeight": "default_mode"
-    },
-    "Storage": {
-      "Storage": {}
-    }
-  },
-  "CoalitionSp": {
-    "Scheduler": {
-      "Enable": false,
-      "NextRun": "2020-01-01 00:00:00",
-      "Command": "CoalitionSp",
-      "SuccessInterval": 30,
-      "FailureInterval": 30,
-      "ServerUpdate": "00:00"
-    },
-    "Campaign": {
-      "Name": "sp",
-      "Event": "campaign_main",
-      "Mode": "normal",
-      "UseClearMode": true,
-      "UseFleetLock": true,
-      "UseAutoSearch": false,
-      "Use2xBook": false,
-      "AmbushEvade": true
-    },
-    "Coalition": {
-      "Mode": "sp",
-      "Fleet": "single",
-      "IgnoreFailure": false
-    },
-    "StopCondition": {
-      "OilLimit": 1000,
-      "RunCount": 0,
-      "MapAchievement": "non_stop",
-      "StageIncrease": false,
-      "GetNewShip": false,
-      "ReachLevel": 0
-    },
-    "Emotion": {
-      "Mode": "calculate",
-      "Fleet1Value": 119,
-      "Fleet1Record": "2020-01-01 00:00:00",
-      "Fleet1Control": "prevent_green_face",
-      "Fleet1Recover": "not_in_dormitory",
-      "Fleet1Oath": false,
-      "Fleet1Onsen": false,
-      "Fleet1SinkShip": false,
-      "Fleet2Value": 119,
-      "Fleet2Record": "2020-01-01 00:00:00",
-      "Fleet2Control": "prevent_yellow_face",
-      "Fleet2Recover": "not_in_dormitory",
-      "Fleet2Oath": false,
-      "Fleet2Onsen": false,
-      "Fleet2SinkShip": false
     },
     "Storage": {
       "Storage": {}
@@ -1364,6 +1311,59 @@
       "Storage": {}
     }
   },
+  "CoalitionSp": {
+    "Scheduler": {
+      "Enable": false,
+      "NextRun": "2020-01-01 00:00:00",
+      "Command": "CoalitionSp",
+      "SuccessInterval": 30,
+      "FailureInterval": 30,
+      "ServerUpdate": "00:00"
+    },
+    "Campaign": {
+      "Name": "sp",
+      "Event": "campaign_main",
+      "Mode": "normal",
+      "UseClearMode": true,
+      "UseFleetLock": true,
+      "UseAutoSearch": false,
+      "Use2xBook": false,
+      "AmbushEvade": true
+    },
+    "Coalition": {
+      "Mode": "sp",
+      "Fleet": "single",
+      "IgnoreFailure": false
+    },
+    "StopCondition": {
+      "OilLimit": 1000,
+      "RunCount": 0,
+      "MapAchievement": "non_stop",
+      "StageIncrease": false,
+      "GetNewShip": false,
+      "ReachLevel": 0
+    },
+    "Emotion": {
+      "Mode": "calculate",
+      "Fleet1Value": 119,
+      "Fleet1Record": "2020-01-01 00:00:00",
+      "Fleet1Control": "prevent_green_face",
+      "Fleet1Recover": "not_in_dormitory",
+      "Fleet1Oath": false,
+      "Fleet1Onsen": false,
+      "Fleet1SinkShip": false,
+      "Fleet2Value": 119,
+      "Fleet2Record": "2020-01-01 00:00:00",
+      "Fleet2Control": "prevent_yellow_face",
+      "Fleet2Recover": "not_in_dormitory",
+      "Fleet2Oath": false,
+      "Fleet2Onsen": false,
+      "Fleet2SinkShip": false
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
   "Commission": {
     "Scheduler": {
       "Enable": true,
@@ -1539,156 +1539,6 @@
     "Awaken": {
       "LevelCap": "level120",
       "Favourite": false
-    },
-    "Storage": {
-      "Storage": {}
-    }
-  },
-  "Island": {
-    "Scheduler": {
-      "Enable": false,
-      "NextRun": "2020-01-01 00:00:00",
-      "Command": "Island",
-      "SuccessInterval": 0,
-      "FailureInterval": 120,
-      "ServerUpdate": "00:00"
-    },
-    "IslandTimeControl": {
-      "TaskTimeDelay": 30
-    },
-    "Island1": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu",
-      "Option3": 0,
-      "Character3": "manjuu",
-      "Option4": 0,
-      "Character4": "manjuu"
-    },
-    "Island2": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu",
-      "Option3": 0,
-      "Character3": "manjuu",
-      "Option4": 0,
-      "Character4": "manjuu"
-    },
-    "Island3": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu",
-      "Option3": 0,
-      "Character3": "manjuu"
-    },
-    "Island4": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu",
-      "Option3": 0,
-      "Character3": "manjuu",
-      "Option4": 0,
-      "Character4": "manjuu"
-    },
-    "Island5": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu",
-      "Option3": 0,
-      "Character3": "manjuu",
-      "Option4": 0,
-      "Character4": "manjuu"
-    },
-    "Island6": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu",
-      "Option3": 0,
-      "Character3": "manjuu",
-      "Option4": 0,
-      "Character4": "manjuu"
-    },
-    "Island7": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu"
-    },
-    "Island8": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu"
-    },
-    "Island9": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu"
-    },
-    "Island10": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu"
-    },
-    "Island11": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu"
-    },
-    "Island12": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu"
-    },
-    "Island13": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu"
-    },
-    "Island14": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu"
-    },
-    "Island15": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu"
-    },
-    "Island16": {
-      "Receive": false,
-      "Option1": 0,
-      "Character1": "manjuu",
-      "Option2": 0,
-      "Character2": "manjuu"
     },
     "Storage": {
       "Storage": {}
@@ -2232,6 +2082,121 @@
       "Storage": {}
     }
   },
+  "IslandProduction": {
+    "Scheduler": {
+      "Enable": false,
+      "NextRun": "2020-01-01 00:00:00",
+      "Command": "IslandProduction",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "00:00"
+    },
+    "IslandProduction": {
+      "HardFloorItems": "{}",
+      "ReserveItems": "{}",
+      "DailyBufferItems": "{}",
+      "IdleAccumulatingItems": "{}"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "IslandOrder": {
+    "Scheduler": {
+      "Enable": false,
+      "NextRun": "2020-01-01 00:00:00",
+      "Command": "IslandOrder",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "00:00"
+    },
+    "IslandOrder": {
+      "StuckSeasonOrderId": 0
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "IslandFreebie": {
+    "Scheduler": {
+      "Enable": false,
+      "NextRun": "2020-01-01 00:00:00",
+      "Command": "IslandFreebie",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "00:00"
+    },
+    "IslandFreebie": {
+      "Share": true
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "IslandCollect": {
+    "Scheduler": {
+      "Enable": false,
+      "NextRun": "2020-01-01 00:00:00",
+      "Command": "IslandCollect",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "03:00, 18:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "IslandSeasonTask": {
+    "Scheduler": {
+      "Enable": false,
+      "NextRun": "2020-01-01 00:00:00",
+      "Command": "IslandSeasonTask",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "00:00"
+    },
+    "IslandSeasonTask": {
+      "TaskTarget": "{}"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "IslandBusiness": {
+    "Scheduler": {
+      "Enable": false,
+      "NextRun": "2020-01-01 00:00:00",
+      "Command": "IslandBusiness",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "00:00"
+    },
+    "IslandRestaurant": {
+      "KoiGrade": "bronze",
+      "KoiWaitress1": "any",
+      "KoiWaitress2": "none",
+      "KoiMenu": "{}",
+      "BearGrade": "bronze",
+      "BearWaitress1": "any",
+      "BearWaitress2": "none",
+      "BearMenu": "{}",
+      "EateryGrade": "bronze",
+      "EateryWaitress1": "any",
+      "EateryWaitress2": "none",
+      "EateryMenu": "{}",
+      "GrillGrade": "bronze",
+      "GrillWaitress1": "any",
+      "GrillWaitress2": "none",
+      "GrillMenu": "{}",
+      "CafeGrade": "bronze",
+      "CafeWaitress1": "any",
+      "CafeWaitress2": "none",
+      "CafeMenu": "{}"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
   "Daemon": {
     "Daemon": {
       "EnterMap": true
@@ -2265,6 +2230,19 @@
       "BlueBoxLimit": 1000,
       "UseWhiteBox": true,
       "WhiteBoxLimit": 2000
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "IslandProductionPlanner": {
+    "IslandProductionPlanner": {
+      "RescanIslandTechnology": false,
+      "DailyProfitLowerLimit": 50000,
+      "DailyBufferSafetyMargin": 0,
+      "FieldsEfficiency": 0,
+      "OrchardEfficiency": 0,
+      "NurseryEfficiency": 0
     },
     "Storage": {
       "Storage": {}

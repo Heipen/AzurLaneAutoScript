@@ -74,12 +74,6 @@ Event:
     EventGeneral:
       - EventGeneral
       - TaskBalancer
-    Coalition:
-      - Scheduler
-      - Campaign
-      - Coalition
-      - StopCondition
-      - Emotion
     Event:
       - Scheduler
       - Campaign
@@ -109,6 +103,12 @@ Event:
       - Hospital
       - StopCondition
       - Emotion
+    Coalition:
+      - Scheduler
+      - Campaign
+      - Coalition
+      - StopCondition
+      - Emotion
     WarArchives:
       - Scheduler
       - Campaign
@@ -126,12 +126,6 @@ EventDaily:
   menu: 'collapse'
   page: 'setting'
   tasks:
-    CoalitionSp:
-      - Scheduler
-      - Campaign
-      - Coalition
-      - StopCondition
-      - Emotion
     EventA:
       - Scheduler
       - EventDaily
@@ -187,6 +181,12 @@ EventDaily:
       - Campaign
       - StopCondition
       - Emotion
+    CoalitionSp:
+      - Scheduler
+      - Campaign
+      - Coalition
+      - StopCondition
+      - Emotion
 
 # ==================== Reward ====================
 
@@ -223,26 +223,6 @@ Reward:
     Awaken:
       - Scheduler
       - Awaken
-    Island:
-      - Scheduler
-      - IslandTimeControl
-      - IslandTransport
-      - Island1
-      - Island2
-      - Island3
-      - Island4
-      - Island5
-      - Island6
-      - Island7
-      - Island8
-      - Island9
-      - Island10
-      - Island11
-      - Island12
-      - Island13
-      - Island14
-      - Island15
-      - Island16
 
 # ==================== DailyMission ====================
 
@@ -348,6 +328,29 @@ Opsi:
     OpsiCrossMonth:
       - Scheduler
 
+# =================== Island ===================
+Island:
+  menu: 'collapse'
+  page: 'setting'
+  tasks:
+    IslandProduction:
+      - Scheduler
+      - IslandProduction
+    IslandOrder:
+      - Scheduler
+      - IslandOrder
+    IslandFreebie:
+      - Scheduler
+      - IslandFreebie
+    IslandCollect:
+      - Scheduler
+    IslandSeasonTask:
+      - Scheduler
+      - IslandSeasonTask
+    IslandBusiness:
+      - Scheduler
+      - IslandRestaurant
+
 # ==================== Tool ====================
 
 Tool:
@@ -362,6 +365,8 @@ Tool:
       - EventStory
     BoxDisassemble:
       - BoxDisassemble
+    IslandProductionPlanner:
+      - IslandProductionPlanner
     Benchmark:
       - Benchmark
     AzurLaneUncensored:

@@ -535,185 +535,6 @@ Awaken:
     option: [ level120, level125 ]
   Favourite:
     value: false
-IslandTimeControl:
-  TaskTimeDelay: 30
-_Island:
-  IslandOption4: &IslandOption4
-    value: 0
-    option: [ 0, 1, 2, 3, 4]
-  IslandOption5: &IslandOption5
-    value: 0
-    option: [ 0, 1, 2, 3, 4, 5]
-  IslandOption6: &IslandOption6
-    value: 0
-    option: [ 0, 1, 2, 3, 4, 5, 6]
-  IslandOption7: &IslandOption7
-    value: 0
-    option: [ 0, 1, 2, 3, 4, 5, 6, 7]
-  IslandOption8: &IslandOption8
-    value: 0
-    option: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
-  IslandOption9: &IslandOption9
-    value: 0
-    option: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
-  IslandOption10: &IslandOption10
-    value: 0
-    option: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
-  IslandOption11: &IslandOption11
-    value: 0
-    option: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
-  IslandOption12: &IslandOption12
-    value: 0
-    option: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]
-  IslandOption16: &IslandOption16
-    value: 0
-    option: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ]
-  IslandCharacter: &IslandCharacter
-    value: manjuu
-    option:
-      - manjuu
-      - saratoga
-      - new_jersey
-      - tashkent
-      - lemalin
-      - shimakaze
-      - akashi
-      - ying_swei
-      - chao_ho
-      - william_d_porter
-      - chen_hai
-      - unicorn
-      - cheshire
-      - amagi_chan
-      - helena
-      - atago
-      - friedrich_der_grobe
-Island1:
-  Receive: false
-  Option1: *IslandOption8
-  Character1: *IslandCharacter
-  Option2: *IslandOption8
-  Character2: *IslandCharacter
-  Option3: *IslandOption8
-  Character3: *IslandCharacter
-  Option4: *IslandOption8
-  Character4: *IslandCharacter
-Island2:
-  Receive: false
-  Option1:
-    value: 0
-    option: [ 0, 1 ]
-  Character1: *IslandCharacter
-  Option2:
-    value: 0
-    option: [ 0, 2 ]
-  Character2: *IslandCharacter
-  Option3:
-    value: 0
-    option: [ 0, 3 ]
-  Character3: *IslandCharacter
-  Option4:
-    value: 0
-    option: [ 0, 4 ]
-  Character4: *IslandCharacter
-Island3:
-  Receive: false
-  Option1: *IslandOption16
-  Character1: *IslandCharacter
-  Option2: *IslandOption16
-  Character2: *IslandCharacter
-  Option3: *IslandOption16
-  Character3: *IslandCharacter
-Island4:
-  Receive: false
-  Option1: *IslandOption6
-  Character1: *IslandCharacter
-  Option2: *IslandOption6
-  Character2: *IslandCharacter
-  Option3: *IslandOption6
-  Character3: *IslandCharacter
-  Option4: *IslandOption6
-  Character4: *IslandCharacter
-Island5:
-  Receive: false
-  Option1: *IslandOption4
-  Character1: *IslandCharacter
-  Option2: *IslandOption4
-  Character2: *IslandCharacter
-  Option3: *IslandOption4
-  Character3: *IslandCharacter
-  Option4: *IslandOption4
-  Character4: *IslandCharacter
-Island6:
-  Receive: false
-  Option1: *IslandOption7
-  Character1: *IslandCharacter
-  Option2: *IslandOption7
-  Character2: *IslandCharacter
-  Option3: *IslandOption7
-  Character3: *IslandCharacter
-  Option4: *IslandOption7
-  Character4: *IslandCharacter
-Island7:
-  Receive: false
-  Option1: *IslandOption9
-  Character1: *IslandCharacter
-  Option2: *IslandOption9
-  Character2: *IslandCharacter
-Island8:
-  Receive: false
-  Option1: *IslandOption12
-  Character1: *IslandCharacter
-  Option2: *IslandOption12
-  Character2: *IslandCharacter
-Island9:
-  Receive: false
-  Option1: *IslandOption11
-  Character1: *IslandCharacter
-  Option2: *IslandOption11
-  Character2: *IslandCharacter
-Island10:
-  Receive: false
-  Option1: *IslandOption10
-  Character1: *IslandCharacter
-  Option2: *IslandOption10
-  Character2: *IslandCharacter
-Island11:
-  Receive: false
-  Option1: *IslandOption9
-  Character1: *IslandCharacter
-  Option2: *IslandOption9
-  Character2: *IslandCharacter
-Island12:
-  Receive: false
-  Option1: *IslandOption6
-  Character1: *IslandCharacter
-  Option2: *IslandOption6
-  Character2: *IslandCharacter
-Island13:
-  Receive: false
-  Option1: *IslandOption6
-  Character1: *IslandCharacter
-  Option2: *IslandOption6
-  Character2: *IslandCharacter
-Island14:
-  Receive: false
-  Option1: *IslandOption4
-  Character1: *IslandCharacter
-  Option2: *IslandOption4
-  Character2: *IslandCharacter
-Island15:
-  Receive: false
-  Option1: *IslandOption9
-  Character1: *IslandCharacter
-  Option2: *IslandOption9
-  Character2: *IslandCharacter
-Island16:
-  Receive: false
-  Option1: *IslandOption9
-  Character1: *IslandCharacter
-  Option2: *IslandOption9
-  Character2: *IslandCharacter
 GeneralShop:
   UseGems: false
   Refresh: false
@@ -1019,6 +840,101 @@ OpsiScheduling:
     value: "500,1000,2000,3000"
     valuetype: str
 
+# =================== Island ====================
+
+IslandProduction:
+  HardFloorItems:
+    type: textarea
+    value: |-
+      {}
+  ReserveItems:
+    type: textarea
+    value: |-
+      {}
+  DailyBufferItems:
+    type: textarea
+    value: |-
+      {}
+  IdleAccumulatingItems:
+    type: textarea
+    value: |-
+      {}
+IslandOrder:
+  StuckSeasonOrderId: 0
+IslandFreebie:
+  Share: true
+IslandRestaurant:
+  KoiGrade:
+    value: bronze
+    option: [ bronze, silver, gold, diamond ]
+  KoiWaitress1: &KoiWaitressSlot
+    value: any
+    option: &KoiWaitressOptions [ none, any, Chao_Ho, Chang_Feng ]
+  KoiWaitress2:
+    <<: *KoiWaitressSlot
+    value: none
+  KoiMenu:
+    type: textarea
+    value: |-
+      {}
+  BearGrade:
+    value: bronze
+    option: [ bronze, silver, gold, diamond ]
+  BearWaitress1: &BearWaitressSlot
+    value: any
+    option: &BearWaitressOptions [ none, any, Cheshire, Chang_Feng ]
+  BearWaitress2:
+    <<: *BearWaitressSlot
+    value: none
+  BearMenu:
+    type: textarea
+    value: |-
+      {}
+  EateryGrade:  
+    value: bronze
+    option: [ bronze, silver, gold, diamond ]
+  EateryWaitress1: &EateryWaitressSlot
+    value: any
+    option: &EateryWaitressOptions [ none, any, Helena, Prinz_Eugen, Chang_Feng ]
+  EateryWaitress2:
+    <<: *EateryWaitressSlot
+    value: none
+  EateryMenu:
+    type: textarea
+    value: |-
+      {}
+  GrillGrade:
+    value: bronze
+    option: [ bronze, silver, gold, diamond ]
+  GrillWaitress1: &GrillWaitressSlot
+    value: any
+    option: &GrillWaitressOptions [ none, any, August_von_Parseval, Prinz_Eugen, Chang_Feng ]
+  GrillWaitress2:
+    <<: *GrillWaitressSlot
+    value: none
+  GrillMenu:
+    type: textarea
+    value: |-
+      {}
+  CafeGrade:
+    value: bronze
+    option: [ bronze, silver, gold, diamond ]
+  CafeWaitress1: &CafeWaitressSlot
+    value: any
+    option: &CafeWaitressOptions [ none, any, Cheshire, Belfast, Chang_Feng ]
+  CafeWaitress2:
+    <<: *CafeWaitressSlot
+    value: none
+  CafeMenu:
+    type: textarea
+    value: |-
+      {}
+IslandSeasonTask:
+  TaskTarget:
+    type: textarea
+    value: |-
+      {}
+
 # ==================== Tools ====================
 
 Daemon:
@@ -1038,6 +954,19 @@ BoxDisassemble:
   BlueBoxLimit: 1000
   UseWhiteBox: true
   WhiteBoxLimit: 2000
+IslandProductionPlanner:
+  RescanIslandTechnology: false
+  DailyProfitLowerLimit: 50000
+  DailyBufferSafetyMargin: 0
+  FieldsEfficiency:
+    value: 0
+    option: [ 0, 0.04, 0.12 ]
+  OrchardEfficiency:
+    value: 0
+    option: [ 0, 0.04, 0.12 ]
+  NurseryEfficiency:
+    value: 0
+    option: [ 0, 0.04, 0.12 ]
 Benchmark:
   DeviceType:
     value: emulator

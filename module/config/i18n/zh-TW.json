@@ -28,6 +28,10 @@
       "name": "大世界",
       "help": ""
     },
+    "Island": {
+      "name": "離島計劃",
+      "help": "Menu.Island.help"
+    },
     "Tool": {
       "name": "工具",
       "help": ""
@@ -66,10 +70,6 @@
       "name": "活動通用",
       "help": ""
     },
-    "Coalition": {
-      "name": "極地風暴",
-      "help": ""
-    },
     "Event": {
       "name": "活動圖",
       "help": ""
@@ -86,13 +86,13 @@
       "name": "深谷来信",
       "help": ""
     },
+    "Coalition": {
+      "name": "怪談紀實",
+      "help": ""
+    },
     "WarArchives": {
       "name": "作戰檔案",
       "help": "由於作戰檔案缺少維護，開荒功能不一定能正常使用，如果發現Alas運行異常，請手動完成開荒後使用自律尋敵功能"
-    },
-    "CoalitionSp": {
-      "name": "極地風暴SP",
-      "help": ""
     },
     "EventA": {
       "name": "活動每日A圖",
@@ -116,6 +116,10 @@
     },
     "RaidDaily": {
       "name": "共鬥活動每日",
+      "help": ""
+    },
+    "CoalitionSp": {
+      "name": "怪談紀實SP",
       "help": ""
     },
     "Commission": {
@@ -149,10 +153,6 @@
     "Awaken": {
       "name": "認知覺醒",
       "help": ""
-    },
-    "Island": {
-      "name": "Task.Island.name",
-      "help": "Task.Island.help"
     },
     "Daily": {
       "name": "每日任務",
@@ -254,6 +254,30 @@
       "name": "跨月每日",
       "help": "    Alas將在大世界跨月重置之前10分鐘進入大世界，等待大世界重置但不退出大世界，然後完成新一天的大世界每日、隱秘海域、深淵海域和短貓相接，以獲得額外的金菜。運行大世界每日時，按\"大世界每日\"任務設定運行，其餘同理。\n    重要：Alas等待跨月期間，請不要操作遊戲。"
     },
+    "IslandProduction": {
+      "name": "離島生產",
+      "help": ""
+    },
+    "IslandOrder": {
+      "name": "離島訂單",
+      "help": ""
+    },
+    "IslandFreebie": {
+      "name": "每日補給",
+      "help": ""
+    },
+    "IslandCollect": {
+      "name": "每日採集",
+      "help": "使用管理面板採集季節特產和煤炭/自然之木。\n將使用多個等級最低的角色直到滿足體力要求。"
+    },
+    "IslandSeasonTask": {
+      "name": "開發計劃",
+      "help": ""
+    },
+    "IslandBusiness": {
+      "name": "店鋪經營",
+      "help": ""
+    },
     "Daemon": {
       "name": "半自動點擊",
       "help": ""
@@ -269,6 +293,10 @@
     "BoxDisassemble": {
       "name": "Task.BoxDisassemble.name",
       "help": "Task.BoxDisassemble.help"
+    },
+    "IslandProductionPlanner": {
+      "name": "離島生產規劃器",
+      "help": "將根據用戶設定的參數使用線性規劃優化離島的生產計劃，並生成離島生產模組的配置"
     },
     "Benchmark": {
       "name": "性能測試",
@@ -1017,6 +1045,7 @@
       "event_20260417_cn": "假日航線閃耀海濱",
       "event_20260520_cn": "聖印前的同盟",
       "event_20260625_cn": "美夢巡演奇秒夜",
+      "event_20260813_cn": "Depths of the Astrarium",
       "raid_20200624": "特別演習埃塞克斯級(復刻)",
       "raid_20210708": "復刻穿越彼方的水線",
       "raid_20220127": "演習神秘事件調查",
@@ -1967,1616 +1996,6 @@
     "Favourite": {
       "name": "僅覺醒常用艦船",
       "help": ""
-    }
-  },
-  "IslandTimeControl": {
-    "_info": {
-      "name": "IslandTimeControl._info.name",
-      "help": "IslandTimeControl._info.help"
-    },
-    "TaskTimeDelay": {
-      "name": "IslandTimeControl.TaskTimeDelay.name",
-      "help": "IslandTimeControl.TaskTimeDelay.help"
-    }
-  },
-  "Island1": {
-    "_info": {
-      "name": "Island1._info.name",
-      "help": "Island1._info.help"
-    },
-    "Receive": {
-      "name": "Island1.Receive.name",
-      "help": "Island1.Receive.help"
-    },
-    "Option1": {
-      "name": "Island1.Option1.name",
-      "help": "Island1.Option1.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8"
-    },
-    "Character1": {
-      "name": "Island1.Character1.name",
-      "help": "Island1.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island1.Option2.name",
-      "help": "Island1.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8"
-    },
-    "Character2": {
-      "name": "Island1.Character2.name",
-      "help": "Island1.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option3": {
-      "name": "Island1.Option3.name",
-      "help": "Island1.Option3.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8"
-    },
-    "Character3": {
-      "name": "Island1.Character3.name",
-      "help": "Island1.Character3.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option4": {
-      "name": "Island1.Option4.name",
-      "help": "Island1.Option4.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8"
-    },
-    "Character4": {
-      "name": "Island1.Character4.name",
-      "help": "Island1.Character4.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    }
-  },
-  "Island2": {
-    "_info": {
-      "name": "Island2._info.name",
-      "help": "Island2._info.help"
-    },
-    "Receive": {
-      "name": "Island2.Receive.name",
-      "help": "Island2.Receive.help"
-    },
-    "Option1": {
-      "name": "Island2.Option1.name",
-      "help": "Island2.Option1.help",
-      "0": "0",
-      "1": "1"
-    },
-    "Character1": {
-      "name": "Island2.Character1.name",
-      "help": "Island2.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island2.Option2.name",
-      "help": "Island2.Option2.help",
-      "0": "0",
-      "2": "2"
-    },
-    "Character2": {
-      "name": "Island2.Character2.name",
-      "help": "Island2.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option3": {
-      "name": "Island2.Option3.name",
-      "help": "Island2.Option3.help",
-      "0": "0",
-      "3": "3"
-    },
-    "Character3": {
-      "name": "Island2.Character3.name",
-      "help": "Island2.Character3.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option4": {
-      "name": "Island2.Option4.name",
-      "help": "Island2.Option4.help",
-      "0": "0",
-      "4": "4"
-    },
-    "Character4": {
-      "name": "Island2.Character4.name",
-      "help": "Island2.Character4.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    }
-  },
-  "Island3": {
-    "_info": {
-      "name": "Island3._info.name",
-      "help": "Island3._info.help"
-    },
-    "Receive": {
-      "name": "Island3.Receive.name",
-      "help": "Island3.Receive.help"
-    },
-    "Option1": {
-      "name": "Island3.Option1.name",
-      "help": "Island3.Option1.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10": "10",
-      "11": "11",
-      "12": "12",
-      "13": "13",
-      "14": "14",
-      "15": "15",
-      "16": "16"
-    },
-    "Character1": {
-      "name": "Island3.Character1.name",
-      "help": "Island3.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island3.Option2.name",
-      "help": "Island3.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10": "10",
-      "11": "11",
-      "12": "12",
-      "13": "13",
-      "14": "14",
-      "15": "15",
-      "16": "16"
-    },
-    "Character2": {
-      "name": "Island3.Character2.name",
-      "help": "Island3.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option3": {
-      "name": "Island3.Option3.name",
-      "help": "Island3.Option3.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10": "10",
-      "11": "11",
-      "12": "12",
-      "13": "13",
-      "14": "14",
-      "15": "15",
-      "16": "16"
-    },
-    "Character3": {
-      "name": "Island3.Character3.name",
-      "help": "Island3.Character3.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    }
-  },
-  "Island4": {
-    "_info": {
-      "name": "Island4._info.name",
-      "help": "Island4._info.help"
-    },
-    "Receive": {
-      "name": "Island4.Receive.name",
-      "help": "Island4.Receive.help"
-    },
-    "Option1": {
-      "name": "Island4.Option1.name",
-      "help": "Island4.Option1.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6"
-    },
-    "Character1": {
-      "name": "Island4.Character1.name",
-      "help": "Island4.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island4.Option2.name",
-      "help": "Island4.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6"
-    },
-    "Character2": {
-      "name": "Island4.Character2.name",
-      "help": "Island4.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option3": {
-      "name": "Island4.Option3.name",
-      "help": "Island4.Option3.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6"
-    },
-    "Character3": {
-      "name": "Island4.Character3.name",
-      "help": "Island4.Character3.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option4": {
-      "name": "Island4.Option4.name",
-      "help": "Island4.Option4.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6"
-    },
-    "Character4": {
-      "name": "Island4.Character4.name",
-      "help": "Island4.Character4.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    }
-  },
-  "Island5": {
-    "_info": {
-      "name": "Island5._info.name",
-      "help": "Island5._info.help"
-    },
-    "Receive": {
-      "name": "Island5.Receive.name",
-      "help": "Island5.Receive.help"
-    },
-    "Option1": {
-      "name": "Island5.Option1.name",
-      "help": "Island5.Option1.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4"
-    },
-    "Character1": {
-      "name": "Island5.Character1.name",
-      "help": "Island5.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island5.Option2.name",
-      "help": "Island5.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4"
-    },
-    "Character2": {
-      "name": "Island5.Character2.name",
-      "help": "Island5.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option3": {
-      "name": "Island5.Option3.name",
-      "help": "Island5.Option3.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4"
-    },
-    "Character3": {
-      "name": "Island5.Character3.name",
-      "help": "Island5.Character3.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option4": {
-      "name": "Island5.Option4.name",
-      "help": "Island5.Option4.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4"
-    },
-    "Character4": {
-      "name": "Island5.Character4.name",
-      "help": "Island5.Character4.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    }
-  },
-  "Island6": {
-    "_info": {
-      "name": "Island6._info.name",
-      "help": "Island6._info.help"
-    },
-    "Receive": {
-      "name": "Island6.Receive.name",
-      "help": "Island6.Receive.help"
-    },
-    "Option1": {
-      "name": "Island6.Option1.name",
-      "help": "Island6.Option1.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7"
-    },
-    "Character1": {
-      "name": "Island6.Character1.name",
-      "help": "Island6.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island6.Option2.name",
-      "help": "Island6.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7"
-    },
-    "Character2": {
-      "name": "Island6.Character2.name",
-      "help": "Island6.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option3": {
-      "name": "Island6.Option3.name",
-      "help": "Island6.Option3.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7"
-    },
-    "Character3": {
-      "name": "Island6.Character3.name",
-      "help": "Island6.Character3.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option4": {
-      "name": "Island6.Option4.name",
-      "help": "Island6.Option4.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7"
-    },
-    "Character4": {
-      "name": "Island6.Character4.name",
-      "help": "Island6.Character4.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    }
-  },
-  "Island7": {
-    "_info": {
-      "name": "Island7._info.name",
-      "help": "Island7._info.help"
-    },
-    "Receive": {
-      "name": "Island7.Receive.name",
-      "help": "Island7.Receive.help"
-    },
-    "Option1": {
-      "name": "Island7.Option1.name",
-      "help": "Island7.Option1.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9"
-    },
-    "Character1": {
-      "name": "Island7.Character1.name",
-      "help": "Island7.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island7.Option2.name",
-      "help": "Island7.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9"
-    },
-    "Character2": {
-      "name": "Island7.Character2.name",
-      "help": "Island7.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    }
-  },
-  "Island8": {
-    "_info": {
-      "name": "Island8._info.name",
-      "help": "Island8._info.help"
-    },
-    "Receive": {
-      "name": "Island8.Receive.name",
-      "help": "Island8.Receive.help"
-    },
-    "Option1": {
-      "name": "Island8.Option1.name",
-      "help": "Island8.Option1.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10": "10",
-      "11": "11",
-      "12": "12"
-    },
-    "Character1": {
-      "name": "Island8.Character1.name",
-      "help": "Island8.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island8.Option2.name",
-      "help": "Island8.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10": "10",
-      "11": "11",
-      "12": "12"
-    },
-    "Character2": {
-      "name": "Island8.Character2.name",
-      "help": "Island8.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    }
-  },
-  "Island9": {
-    "_info": {
-      "name": "Island9._info.name",
-      "help": "Island9._info.help"
-    },
-    "Receive": {
-      "name": "Island9.Receive.name",
-      "help": "Island9.Receive.help"
-    },
-    "Option1": {
-      "name": "Island9.Option1.name",
-      "help": "Island9.Option1.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10": "10",
-      "11": "11"
-    },
-    "Character1": {
-      "name": "Island9.Character1.name",
-      "help": "Island9.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island9.Option2.name",
-      "help": "Island9.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10": "10",
-      "11": "11"
-    },
-    "Character2": {
-      "name": "Island9.Character2.name",
-      "help": "Island9.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    }
-  },
-  "Island10": {
-    "_info": {
-      "name": "Island10._info.name",
-      "help": "Island10._info.help"
-    },
-    "Receive": {
-      "name": "Island10.Receive.name",
-      "help": "Island10.Receive.help"
-    },
-    "Option1": {
-      "name": "Island10.Option1.name",
-      "help": "Island10.Option1.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10": "10"
-    },
-    "Character1": {
-      "name": "Island10.Character1.name",
-      "help": "Island10.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island10.Option2.name",
-      "help": "Island10.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10": "10"
-    },
-    "Character2": {
-      "name": "Island10.Character2.name",
-      "help": "Island10.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    }
-  },
-  "Island11": {
-    "_info": {
-      "name": "Island11._info.name",
-      "help": "Island11._info.help"
-    },
-    "Receive": {
-      "name": "Island11.Receive.name",
-      "help": "Island11.Receive.help"
-    },
-    "Option1": {
-      "name": "Island11.Option1.name",
-      "help": "Island11.Option1.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9"
-    },
-    "Character1": {
-      "name": "Island11.Character1.name",
-      "help": "Island11.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island11.Option2.name",
-      "help": "Island11.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9"
-    },
-    "Character2": {
-      "name": "Island11.Character2.name",
-      "help": "Island11.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    }
-  },
-  "Island12": {
-    "_info": {
-      "name": "Island12._info.name",
-      "help": "Island12._info.help"
-    },
-    "Receive": {
-      "name": "Island12.Receive.name",
-      "help": "Island12.Receive.help"
-    },
-    "Option1": {
-      "name": "Island12.Option1.name",
-      "help": "Island12.Option1.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6"
-    },
-    "Character1": {
-      "name": "Island12.Character1.name",
-      "help": "Island12.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island12.Option2.name",
-      "help": "Island12.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6"
-    },
-    "Character2": {
-      "name": "Island12.Character2.name",
-      "help": "Island12.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    }
-  },
-  "Island13": {
-    "_info": {
-      "name": "Island13._info.name",
-      "help": "Island13._info.help"
-    },
-    "Receive": {
-      "name": "Island13.Receive.name",
-      "help": "Island13.Receive.help"
-    },
-    "Option1": {
-      "name": "Island13.Option1.name",
-      "help": "Island13.Option1.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6"
-    },
-    "Character1": {
-      "name": "Island13.Character1.name",
-      "help": "Island13.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island13.Option2.name",
-      "help": "Island13.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6"
-    },
-    "Character2": {
-      "name": "Island13.Character2.name",
-      "help": "Island13.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    }
-  },
-  "Island14": {
-    "_info": {
-      "name": "Island14._info.name",
-      "help": "Island14._info.help"
-    },
-    "Receive": {
-      "name": "Island14.Receive.name",
-      "help": "Island14.Receive.help"
-    },
-    "Option1": {
-      "name": "Island14.Option1.name",
-      "help": "Island14.Option1.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4"
-    },
-    "Character1": {
-      "name": "Island14.Character1.name",
-      "help": "Island14.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island14.Option2.name",
-      "help": "Island14.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4"
-    },
-    "Character2": {
-      "name": "Island14.Character2.name",
-      "help": "Island14.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    }
-  },
-  "Island15": {
-    "_info": {
-      "name": "Island15._info.name",
-      "help": "Island15._info.help"
-    },
-    "Receive": {
-      "name": "Island15.Receive.name",
-      "help": "Island15.Receive.help"
-    },
-    "Option1": {
-      "name": "Island15.Option1.name",
-      "help": "Island15.Option1.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9"
-    },
-    "Character1": {
-      "name": "Island15.Character1.name",
-      "help": "Island15.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island15.Option2.name",
-      "help": "Island15.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9"
-    },
-    "Character2": {
-      "name": "Island15.Character2.name",
-      "help": "Island15.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    }
-  },
-  "Island16": {
-    "_info": {
-      "name": "Island16._info.name",
-      "help": "Island16._info.help"
-    },
-    "Receive": {
-      "name": "Island16.Receive.name",
-      "help": "Island16.Receive.help"
-    },
-    "Option1": {
-      "name": "Island16.Option1.name",
-      "help": "Island16.Option1.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9"
-    },
-    "Character1": {
-      "name": "Island16.Character1.name",
-      "help": "Island16.Character1.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
-    },
-    "Option2": {
-      "name": "Island16.Option2.name",
-      "help": "Island16.Option2.help",
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9"
-    },
-    "Character2": {
-      "name": "Island16.Character2.name",
-      "help": "Island16.Character2.help",
-      "manjuu": "manjuu",
-      "saratoga": "saratoga",
-      "new_jersey": "new_jersey",
-      "tashkent": "tashkent",
-      "lemalin": "lemalin",
-      "shimakaze": "shimakaze",
-      "akashi": "akashi",
-      "ying_swei": "ying_swei",
-      "chao_ho": "chao_ho",
-      "william_d_porter": "william_d_porter",
-      "chen_hai": "chen_hai",
-      "unicorn": "unicorn",
-      "cheshire": "cheshire",
-      "amagi_chan": "amagi_chan",
-      "helena": "helena",
-      "atago": "atago",
-      "friedrich_der_grobe": "friedrich_der_grobe"
     }
   },
   "GeneralShop": {
@@ -4556,6 +2975,210 @@
       "help": "OpsiScheduling.ActionPointNotifyLevels.help"
     }
   },
+  "IslandProduction": {
+    "_info": {
+      "name": "離島生產",
+      "help": "需要先配置店鋪經營的店面屬性、店員，然後配置工具-離島生產規劃器，最後執行離島生產規劃器，規劃器執行得到結果後方可執行離島生產。"
+    },
+    "HardFloorItems": {
+      "name": "硬性保底物品",
+      "help": "使用者為手動使用設定的不可動用庫存\n不會被生產配方、餐廳和普通訂單消耗\n不作為 LP 的生產約束\n格式示例：\n(物品在當前伺服器的名稱): (數量)"
+    },
+    "ReserveItems": {
+      "name": "軟性保底物品",
+      "help": "使用者為普通生產和訂單設定的最低庫存目標\n緊急訂單、季節訂單和餐廳可以消耗到低於此下限\n規劃器生成的餐廳菜單容量會合併到此下限\n格式示例：\n(物品在當前伺服器的名稱): (數量)"
+    },
+    "DailyBufferItems": {
+      "name": "每日緩衝物品",
+      "help": "生產規劃器生成的預期庫存區間寬度（最大值減軟性下限）\n配方生產目標為硬性保底、軟性保底和每日緩衝之和\n可以透過工具中的離島生產規劃器自動生成"
+    },
+    "IdleAccumulatingItems": {
+      "name": "閒置累積物品",
+      "help": "生產閒置且原料充足時可以繼續累積的物品\n數值為預期每日累積速度，用於閒置配方優先級\n可以透過工具中的離島生產規劃器自動生成"
+    }
+  },
+  "IslandOrder": {
+    "_info": {
+      "name": "離島訂單",
+      "help": "普通訂單會保留軟性保底和使用者設定的硬性保底。\n緊急訂單和季節訂單可以消耗軟性保底及硬性保底。\n季節訂單作為優先訂單，可以消耗全部庫存。"
+    },
+    "StuckSeasonOrderId": {
+      "name": "卡住的季節訂單ID",
+      "help": "0表示沒有卡住的訂單\n一般不需手動修改"
+    }
+  },
+  "IslandFreebie": {
+    "_info": {
+      "name": "每日補給",
+      "help": ""
+    },
+    "Share": {
+      "name": "將補給分享給好友",
+      "help": ""
+    }
+  },
+  "IslandRestaurant": {
+    "_info": {
+      "name": "餐廳管理",
+      "help": ""
+    },
+    "KoiGrade": {
+      "name": "有魚餐館等級",
+      "help": "",
+      "bronze": "青銅",
+      "silver": "白銀",
+      "gold": "黃金",
+      "diamond": "鑽石"
+    },
+    "KoiWaitress1": {
+      "name": "有魚餐館服務員1",
+      "help": "兩個服務員槽位沒有順序。無表示空槽位，兩個槽位都是無時停用餐廳；任意會選擇管理等級最高的空閒角色。命名角色優先選擇，重複的命名角色會被清除。",
+      "none": "無",
+      "any": "任意",
+      "Chao_Ho": "肇和",
+      "Chang_Feng": "長風"
+    },
+    "KoiWaitress2": {
+      "name": "有魚餐館服務員2",
+      "help": "兩個服務員槽位沒有順序。無表示空槽位，兩個槽位都是無時停用餐廳；任意會選擇管理等級最高的空閒角色。命名角色優先選擇，重複的命名角色會被清除。",
+      "none": "無",
+      "any": "任意",
+      "Chao_Ho": "肇和",
+      "Chang_Feng": "長風"
+    },
+    "KoiMenu": {
+      "name": "有魚餐館菜單",
+      "help": "只銷售菜單裡指定的菜品。\n通過工具中的離島生產規劃器自動生成"
+    },
+    "BearGrade": {
+      "name": "白熊飲品等級",
+      "help": "",
+      "bronze": "青銅",
+      "silver": "白銀",
+      "gold": "黃金",
+      "diamond": "鑽石"
+    },
+    "BearWaitress1": {
+      "name": "白熊飲品服務員1",
+      "help": "兩個服務員槽位沒有順序。無表示空槽位，兩個槽位都是無時停用餐廳；任意會選擇管理等級最高的空閒角色。命名角色優先選擇，重複的命名角色會被清除。",
+      "none": "無",
+      "any": "任意",
+      "Cheshire": "柴郡",
+      "Chang_Feng": "長風"
+    },
+    "BearWaitress2": {
+      "name": "白熊飲品服務員2",
+      "help": "兩個服務員槽位沒有順序。無表示空槽位，兩個槽位都是無時停用餐廳；任意會選擇管理等級最高的空閒角色。命名角色優先選擇，重複的命名角色會被清除。",
+      "none": "無",
+      "any": "任意",
+      "Cheshire": "柴郡",
+      "Chang_Feng": "長風"
+    },
+    "BearMenu": {
+      "name": "白熊飲品菜單",
+      "help": "只銷售菜單裡指定的饮品。\n通過工具中的離島生產規劃器自動生成"
+    },
+    "EateryGrade": {
+      "name": "啾啾簡餐等級",
+      "help": "",
+      "bronze": "青銅",
+      "silver": "白銀",
+      "gold": "黃金",
+      "diamond": "鑽石"
+    },
+    "EateryWaitress1": {
+      "name": "啾啾簡餐服務員1",
+      "help": "兩個服務員槽位沒有順序。無表示空槽位，兩個槽位都是無時停用餐廳；任意會選擇管理等級最高的空閒角色。命名角色優先選擇，重複的命名角色會被清除。",
+      "none": "無",
+      "any": "任意",
+      "Helena": "海倫娜",
+      "Prinz_Eugen": "歐根親王",
+      "Chang_Feng": "長風"
+    },
+    "EateryWaitress2": {
+      "name": "啾啾簡餐服務員2",
+      "help": "兩個服務員槽位沒有順序。無表示空槽位，兩個槽位都是無時停用餐廳；任意會選擇管理等級最高的空閒角色。命名角色優先選擇，重複的命名角色會被清除。",
+      "none": "無",
+      "any": "任意",
+      "Helena": "海倫娜",
+      "Prinz_Eugen": "歐根親王",
+      "Chang_Feng": "長風"
+    },
+    "EateryMenu": {
+      "name": "啾啾簡餐菜單",
+      "help": "只銷售菜單裡指定的菜品。\n通過工具中的離島生產規劃器自動生成"
+    },
+    "GrillGrade": {
+      "name": "烏魚烤肉等級",
+      "help": "",
+      "bronze": "青銅",
+      "silver": "白銀",
+      "gold": "黃金",
+      "diamond": "鑽石"
+    },
+    "GrillWaitress1": {
+      "name": "烏魚烤肉服務員1",
+      "help": "兩個服務員槽位沒有順序。無表示空槽位，兩個槽位都是無時停用餐廳；任意會選擇管理等級最高的空閒角色。命名角色優先選擇，重複的命名角色會被清除。",
+      "none": "無",
+      "any": "任意",
+      "August_von_Parseval": "奧古斯特·馮·帕塞瓦爾",
+      "Prinz_Eugen": "歐根親王",
+      "Chang_Feng": "長風"
+    },
+    "GrillWaitress2": {
+      "name": "烏魚烤肉服務員2",
+      "help": "兩個服務員槽位沒有順序。無表示空槽位，兩個槽位都是無時停用餐廳；任意會選擇管理等級最高的空閒角色。命名角色優先選擇，重複的命名角色會被清除。",
+      "none": "無",
+      "any": "任意",
+      "August_von_Parseval": "奧古斯特·馮·帕塞瓦爾",
+      "Prinz_Eugen": "歐根親王",
+      "Chang_Feng": "長風"
+    },
+    "GrillMenu": {
+      "name": "烏魚烤肉菜單",
+      "help": "只銷售菜單裡指定的菜品。\n通過工具中的離島生產規劃器自動生成"
+    },
+    "CafeGrade": {
+      "name": "啾咖啡等級",
+      "help": "",
+      "bronze": "青銅",
+      "silver": "白銀",
+      "gold": "黃金",
+      "diamond": "鑽石"
+    },
+    "CafeWaitress1": {
+      "name": "啾咖啡服務員1",
+      "help": "兩個服務員槽位沒有順序。無表示空槽位，兩個槽位都是無時停用餐廳；任意會選擇管理等級最高的空閒角色。命名角色優先選擇，重複的命名角色會被清除。",
+      "none": "無",
+      "any": "任意",
+      "Cheshire": "柴郡",
+      "Belfast": "貝爾法斯特",
+      "Chang_Feng": "長風"
+    },
+    "CafeWaitress2": {
+      "name": "啾咖啡服務員2",
+      "help": "兩個服務員槽位沒有順序。無表示空槽位，兩個槽位都是無時停用餐廳；任意會選擇管理等級最高的空閒角色。命名角色優先選擇，重複的命名角色會被清除。",
+      "none": "無",
+      "any": "任意",
+      "Cheshire": "柴郡",
+      "Belfast": "貝爾法斯特",
+      "Chang_Feng": "長風"
+    },
+    "CafeMenu": {
+      "name": "啾咖啡菜單",
+      "help": "只銷售菜單裡指定的菜品。\n通過工具中的離島生產規劃器自動生成"
+    }
+  },
+  "IslandSeasonTask": {
+    "_info": {
+      "name": "開發計劃",
+      "help": ""
+    },
+    "TaskTarget": {
+      "name": "需求物品",
+      "help": ""
+    }
+  },
   "Daemon": {
     "_info": {
       "name": "半自動點擊",
@@ -4620,6 +3243,45 @@
     "WhiteBoxLimit": {
       "name": "BoxDisassemble.WhiteBoxLimit.name",
       "help": "BoxDisassemble.WhiteBoxLimit.help"
+    }
+  },
+  "IslandProductionPlanner": {
+    "_info": {
+      "name": "離島生產規劃器",
+      "help": "將使用線性規劃根據用戶設定的參數優化離島生產計畫，並為離島生產模組生成配置。\n需要先配置離島餐廳管理的參數及離島生產的追加需求物品。\n清除任務狀態以重新掃描離島科技樹。"
+    },
+    "RescanIslandTechnology": {
+      "name": "重新掃描離島科技樹",
+      "help": "如果你的離島科技樹有變動，請勾選此項以重新掃描離島科技樹並生成新的生產計畫\n如果不勾選，Alas將使用上次掃描的結果，可能會導致生產計畫不合理"
+    },
+    "DailyProfitLowerLimit": {
+      "name": "每日利潤下限",
+      "help": "負值表示接受每日虧損，0表示收支平衡，正值表示利潤"
+    },
+    "DailyBufferSafetyMargin": {
+      "name": "每日緩衝安全餘量",
+      "help": "套用於生產規劃器生成的每日緩衝的倍率餘量。0.2 表示匯出計算每日需求的 120%。"
+    },
+    "FieldsEfficiency": {
+      "name": "豐壤農田效率",
+      "help": "參見角色收集獎勵中的數值",
+      "0": "0",
+      "0.04": "0.04",
+      "0.12": "0.12"
+    },
+    "OrchardEfficiency": {
+      "name": "墜香果園效率",
+      "help": "參見角色收集獎勵中的數值",
+      "0": "0",
+      "0.04": "0.04",
+      "0.12": "0.12"
+    },
+    "NurseryEfficiency": {
+      "name": "青芽苗圃效率",
+      "help": "參見角色收集獎勵中的數值",
+      "0": "0",
+      "0.04": "0.04",
+      "0.12": "0.12"
     }
   },
   "Benchmark": {
