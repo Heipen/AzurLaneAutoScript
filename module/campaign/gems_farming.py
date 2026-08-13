@@ -198,6 +198,10 @@ class GemsFarming(CampaignRun, Dock):
         self.campaign.config.override(EnemyPriority_EnemyScaleBalanceWeight='S1_enemy_first')
 
     @property
+    def change_flagship(self):
+        return 'ship' in self.config.GemsFarming_ChangeFlagship
+
+    @property
     def change_flagship_equip(self):
         return 'equip' in self.config.GemsFarming_ChangeFlagship
 
