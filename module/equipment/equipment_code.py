@@ -248,15 +248,14 @@ class EquipmentCodeHandler(StorageHandler):
 
     def _code_export(self):
         self.handle_info_bar()
-        d = self.device.u2
         for _ in self.loop(timeout=10):
             if self.info_bar_count():
                 break
             if self.appear_then_click(EQUIPMENT_CODE_EXPORT, offset=(5, 5), interval=3):
                 continue
-        # u2 service may restart on first clipboard access, retry until the code is read
+        # u2 service may restart on first access, retry until the code is read
         for _ in range(5):
-            code = d.clipboard
+            code = self.device.clipboard
             if code:
                 return code
             self.device.sleep(2)

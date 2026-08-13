@@ -1,3 +1,4 @@
+import re
 import time
 import typing as t
 from dataclasses import dataclass
@@ -502,7 +503,22 @@ class Uiautomator2(Connection):
 
     @property
     def clipboard(self):
-        return self.u2.clipboard
-    
+        # Android 10+ restricts jsonrpc.getClipboard, may return None or raise
+        try:
+            code = self.u2.clipboard
+            if code:
+                return code
+        except Exception as e:
+            logger.warning(f'Failed to read clipboard via u2: {e}')
+        # Fallback: parse clipboard content from dumpsys (works on Android 12 and below)
+        try:
+            output = self.adb_shell(['dumpsys', 'clipboard'])
+            m = re.search(r'text/plain\s*\{T:"([^"]*)"', output)
+            if m:
+                return m.group(1)
+        except Exception as e:
+            logger.warning(f'Failed to read clipboard via dumpsys: {e}')
+        return None
+
     def set_clipboard(self, text, label=None):
         return self.u2.set_clipboard(text=text, label=label)
