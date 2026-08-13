@@ -1,3 +1,4 @@
+import re
 import yaml
 
 from module.base.timer import Timer
@@ -8,6 +9,7 @@ from module.retire.assets import TEMPLATE_BOGUE, TEMPLATE_HERMES, TEMPLATE_RANGE
 from module.storage.assets import EQUIPMENT_FULL
 from module.storage.storage import StorageHandler
 
+BASE64_REGEX = re.compile('^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$')
 EMPTY_CODE = "MC8wLzAvMC8wXDA="
 U2_CONTROL_METHODS = {'uiautomator2', 'minitouch', 'MaaTouch'}
 EQUIPMENT_PREVIEW = list([
@@ -50,6 +52,9 @@ class EquipmentCodeHandler(StorageHandler):
             return None
 
     def set_code(self, name, code):
+        if code is None or not BASE64_REGEX.match(code):
+            logger.error(f'{code} is not a valid equipment code, skip setting {name}')
+            return
         config = {}
         try:
             for item in yaml.safe_load_all(self.config.EquipmentCode_Config):
@@ -249,8 +254,14 @@ class EquipmentCodeHandler(StorageHandler):
                 break
             if self.appear_then_click(EQUIPMENT_CODE_EXPORT, offset=(5, 5), interval=3):
                 continue
-        code = d.clipboard
-        return code
+        # u2 service may restart on first clipboard access, retry until the code is read
+        for _ in range(5):
+            code = d.clipboard
+            if code:
+                return code
+            self.device.sleep(2)
+        logger.warning("Failed to read equipment code from clipboard")
+        return None
 
     def code_clear(self, name=None):
         if not self.equipment_code_supported():
