@@ -216,8 +216,11 @@ class EquipmentCodeHandler(StorageHandler):
             logger.warning("Equipment code load failed")
             return False
 
-    def _code_confirm(self):
-        logger.info("Code apply")
+    def _code_confirm(self, code=None):
+        if code is None:
+            logger.info("Code clear")
+        else:
+            logger.info("Code apply")
         for _ in self.loop(timeout=10):
             if self.appear(EQUIPMENT_CODE_ENTRANCE, offset=(5, 5)):
                 return True
@@ -237,7 +240,7 @@ class EquipmentCodeHandler(StorageHandler):
                 success = self._code_input(code)
                 if not success:
                     continue
-            success = self._code_confirm()
+            success = self._code_confirm(code=code)
             if success:
                 logger.info("Equipment code apply complete.")
                 return True
@@ -248,17 +251,27 @@ class EquipmentCodeHandler(StorageHandler):
 
     def _code_export(self):
         self.handle_info_bar()
+        # Enable FastInputIME before exporting. On Android 10+, jsonrpc.getClipboard
+        # can only read the clipboard when com.github.uiautomator is the current IME
+        self.set_fastinput_ime()
         for _ in self.loop(timeout=10):
             if self.info_bar_count():
                 break
             if self.appear_then_click(EQUIPMENT_CODE_EXPORT, offset=(5, 5), interval=3):
                 continue
+        # Wait for the game to finish writing the code into clipboard
+        self.device.sleep(1)
         # u2 service may restart on first access, retry until the code is read
         for _ in range(5):
             code = self.device.clipboard
             if code:
                 return code
             self.device.sleep(2)
+        try:
+            output = self.device.adb_shell(['dumpsys', 'clipboard'])
+            logger.warning(f'Clipboard dumpsys output: {output[:300]}')
+        except Exception as e:
+            logger.warning(f'Failed to run dumpsys clipboard: {e}')
         logger.warning("Failed to read equipment code from clipboard")
         return None
 

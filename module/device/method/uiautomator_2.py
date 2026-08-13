@@ -516,6 +516,7 @@ class Uiautomator2(Connection):
             m = re.search(r'text/plain\s*\{T:"([^"]*)"', output)
             if m:
                 return m.group(1)
+            logger.debug(f'No clip text in dumpsys output: {output[:300]!r}')
         except Exception as e:
             logger.warning(f'Failed to read clipboard via dumpsys: {e}')
         return None
