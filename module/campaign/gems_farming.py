@@ -391,6 +391,8 @@ class GemsFarming(CampaignRun, Dock):
         scanner.disable('rarity')
 
         candidates = self.find_candidates(templates, scanner, output=True)
+        # The current flagship is still in the attack fleet, exclude ships in the attack fleet
+        candidates = [ship for ship in candidates if ship.fleet != self.fleet_to_attack_index]
         if candidates:
             return candidates
 
@@ -551,6 +553,8 @@ class GemsFarming(CampaignRun, Dock):
         scanner.disable('rarity')
 
         candidates = self.find_candidates(templates, scanner, output=True)
+        # The current vanguard is still in the attack fleet, exclude ships in the attack fleet
+        candidates = [ship for ship in candidates if ship.fleet != self.fleet_to_attack_index]
         if candidates or templates == []:
             return candidates
 
