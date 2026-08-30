@@ -522,7 +522,7 @@ class Combat(Level, HPBalancer, Retirement, SubmarineCall, CombatAuto, CombatMan
         Returns:
             bool:
         """
-        if not self.appear(GET_SHIP, interval=1):
+        if not self.appear(GET_SHIP, offset=(20, 20), interval=1):
             return False
 
         self.save_get_ship_screenshot()

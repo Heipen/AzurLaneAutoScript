@@ -119,7 +119,7 @@ class Reward(UI):
                 continue
             if self.appear_then_click(GET_ITEMS_2, offset=(30, 30), interval=1):
                 continue
-            if self.appear(GET_SHIP, interval=1):
+            if self.appear(GET_SHIP, offset=(20, 20), interval=1):
                 self.save_get_ship_screenshot()
                 self.device.click(GET_SHIP)
                 continue

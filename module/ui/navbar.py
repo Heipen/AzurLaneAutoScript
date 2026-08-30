@@ -128,7 +128,7 @@ class Navbar:
             return False
 
         # Handle shop obstructions
-        if main.appear(GET_SHIP, interval=1):
+        if main.appear(GET_SHIP, offset=(20, 20), interval=1):
             main.save_get_ship_screenshot()
             main.device.click(SHOP_CLICK_SAFE_AREA)
             return True
