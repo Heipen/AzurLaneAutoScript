@@ -1,3 +1,6 @@
+import os
+import time
+
 from module.base.button import Button
 from module.base.decorator import cached_property
 from module.base.timer import Timer
@@ -208,6 +211,19 @@ class ModuleBase:
                 self.device.screenshot()
                 self.device.dump_hierarchy()
             yield self.device.image, self.device.hierarchy
+
+    def save_get_ship_screenshot(self):
+        """
+        Save current screenshot when GET_SHIP is detected.
+        """
+        folder = './screenshots/get_ship'
+        try:
+            os.makedirs(folder, exist_ok=True)
+            file = os.path.join(folder, f'{int(time.time() * 1000)}.png')
+            save_image(self.device.image, file)
+            logger.info(f'Image save success, file: {file}')
+        except Exception as e:
+            logger.exception(e)
 
     def appear(self, button, offset=0, interval=0, similarity=0.85, threshold=10):
         """

@@ -522,13 +522,18 @@ class Combat(Level, HPBalancer, Retirement, SubmarineCall, CombatAuto, CombatMan
         Returns:
             bool:
         """
-        if self.appear_then_click(GET_SHIP, interval=1):
-            if self.appear(NEW_SHIP):
-                logger.info('Get a new SHIP')
-                if drop:
-                    drop.handle_add(self)
-                self.config.GET_SHIP_TRIGGERED = True
-            return True
+        if not self.appear(GET_SHIP, interval=1):
+            return False
+
+        self.save_get_ship_screenshot()
+
+        self.device.click(GET_SHIP)
+        if self.appear(NEW_SHIP):
+            logger.info('Get a new SHIP')
+            if drop:
+                drop.handle_add(self)
+            self.config.GET_SHIP_TRIGGERED = True
+        return True
 
         return False
 

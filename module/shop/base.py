@@ -219,6 +219,7 @@ class ShopBase(UI):
         """
         # Handle shop obstructions
         if self.appear(GET_SHIP, interval=1):
+            self.save_get_ship_screenshot()
             logger.info(f'Shop obstruct: {GET_SHIP} -> {SHOP_CLICK_SAFE_AREA}')
             self.device.click(SHOP_CLICK_SAFE_AREA)
             return True

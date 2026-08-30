@@ -181,6 +181,7 @@ class EventShopClerk(EventShopUI):
         if self.handle_get_meowfficer():
             return True
         if self.appear(GET_SHIP, offset=(20, 20), interval=2):
+            self.save_get_ship_screenshot()
             logger.info(f'Shop obstruct: {GET_SHIP} -> {SHOP_CLICK_SAFE_AREA}')
             self.device.click(SHOP_CLICK_SAFE_AREA)
             return True

@@ -235,6 +235,7 @@ class RewardGacha(GachaUI, Retirement, CampaignStatus):
                 continue
 
             if self.appear(GET_SHIP, interval=1):
+                self.save_get_ship_screenshot()
                 self.device.click(STORY_SKIP)  # Fast forward for multiple orders
                 confirm_timer.reset()
                 continue

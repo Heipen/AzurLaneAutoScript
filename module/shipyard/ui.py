@@ -269,7 +269,9 @@ class ShipyardUI(UI):
                 confirm_timer.reset()
                 continue
 
-            if self.appear_then_click(GET_SHIP, interval=1):
+            if self.appear(GET_SHIP, interval=1):
+                self.save_get_ship_screenshot()
+                self.device.click(GET_SHIP)
                 confirm_timer.reset()
                 continue
 
