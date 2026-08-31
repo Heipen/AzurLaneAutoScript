@@ -59,6 +59,10 @@ class OpsiMeowfficerFarming(OSMap):
         if not self.is_cl1_enabled:
             return False
         
+        # 月底最后一天：不进行黄币检查（侵蚀1已推迟到下一个24点）
+        if get_os_reset_remain() <= 0:
+            return False
+        
         return_threshold, cl1_preserve = self._get_operation_coins_return_threshold()
         
         # If check is disabled (return_threshold is None), skip
@@ -77,8 +81,8 @@ class OpsiMeowfficerFarming(OSMap):
                 content=f"黄币 {yellow_coins} 达到阈值 {return_threshold}\n切换回侵蚀1继续执行"
             )
             with self.config.multi_set():
-                # 禁用短猫任务的调度器，防止被重新调度
-                self.config.cross_set(keys='OpsiMeowfficerFarming.Scheduler.Enable', value=False)
+                # 短猫自动推迟到下个24点，交给侵蚀1继续执行
+                self.config.task_delay(server_update='00:00')
                 self.config.task_call('OpsiHazard1Leveling')
             self.config.task_stop()
             return True
@@ -90,7 +94,13 @@ class OpsiMeowfficerFarming(OSMap):
         Recommend 3 or 5 for higher meowfficer searching point per action points ratio.
         """
         logger.hr(f'OS meowfficer farming, hazard_level={self.config.OpsiMeowfficerFarming_HazardLevel}', level=1)
-        
+
+        # ===== 月底最后一天 =====
+        # 不进行黄币检查，将侵蚀1推迟到下一个24点，短猫继续执行
+        if get_os_reset_remain() <= 0:
+            logger.info('月底最后一天：推迟侵蚀1到下一个24点，短猫继续执行')
+            self.config.task_delay(task='OpsiHazard1Leveling', server_update='00:00')
+
         # ===== 任务开始前黄币检查 =====
         # 如果启用了CL1且黄币充足，直接返回CL1，不执行短猫
         # 如果 OperationCoinsReturnThreshold 为 0，则禁用黄币检查，只使用行动力阈值控制
@@ -143,7 +153,8 @@ class OpsiMeowfficerFarming(OSMap):
                 # When not running CL1 and use oil
                 keep_current_ap = True
                 check_rest_ap = True
-                if self.is_cl1_enabled:
+                is_last_day = get_os_reset_remain() <= 0
+                if self.is_cl1_enabled and not is_last_day:
                     return_threshold, _ = self._get_operation_coins_return_threshold()
                     # 如果值为 0，跳过黄币检查
                     if return_threshold is not None:
@@ -152,11 +163,12 @@ class OpsiMeowfficerFarming(OSMap):
                             check_rest_ap = False
                 if not self.is_cl1_enabled and self.config.OpsiGeneral_BuyActionPointLimit > 0:
                     keep_current_ap = False
-                if self.is_cl1_enabled and self.cl1_enough_yellow_coins:
+                if self.is_cl1_enabled and not is_last_day and self.cl1_enough_yellow_coins:
                     check_rest_ap = False
                     try:
                         self.action_point_set(cost=0, keep_current_ap=keep_current_ap, check_rest_ap=check_rest_ap)
                     except ActionPointLimit:
+                        # 月底最后一天在任务入口已处理，此处仅覆盖非最后一天
                         self.config.task_delay(server_update=True)
                         self.config.task_call('OpsiHazard1Leveling')
                         self.config.task_stop()
