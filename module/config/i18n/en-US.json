@@ -1624,6 +1624,10 @@
     "UseTicket": {
       "name": "Use Ticket(s)",
       "help": ""
+    },
+    "IgnoreFailure": {
+      "name": "Ignore Failure",
+      "help": "Enable to keep farming to gain affinities with a sunk fleet"
     }
   },
   "RaidDaily": {

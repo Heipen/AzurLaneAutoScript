@@ -1624,6 +1624,10 @@
     "UseTicket": {
       "name": "使用演习券",
       "help": ""
+    },
+    "IgnoreFailure": {
+      "name": "忽略失败",
+      "help": "打开时为沉船刷好感模式"
     }
   },
   "RaidDaily": {

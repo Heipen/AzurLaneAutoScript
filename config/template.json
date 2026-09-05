@@ -641,7 +641,8 @@
     },
     "Raid": {
       "Mode": "hard",
-      "UseTicket": false
+      "UseTicket": false,
+      "IgnoreFailure": false
     },
     "Campaign": {
       "Name": "dynamic",

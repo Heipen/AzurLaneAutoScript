@@ -371,6 +371,7 @@ Raid:
     value: hard
     option: [ easy, normal, hard, ex ]
   UseTicket: false
+  IgnoreFailure: false
 RaidDaily:
   StageFilter: |-
     hard > normal > easy

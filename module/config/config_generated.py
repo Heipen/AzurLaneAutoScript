@@ -246,6 +246,7 @@ class GeneratedConfig:
     # Group `Raid`
     Raid_Mode = 'hard'  # easy, normal, hard, ex
     Raid_UseTicket = False
+    Raid_IgnoreFailure = False
 
     # Group `RaidDaily`
     RaidDaily_StageFilter = 'hard > normal > easy'
