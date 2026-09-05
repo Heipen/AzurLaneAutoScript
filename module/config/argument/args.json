@@ -3191,6 +3191,10 @@
       "UseTicket": {
         "type": "checkbox",
         "value": false
+      },
+      "IgnoreFailure": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Campaign": {

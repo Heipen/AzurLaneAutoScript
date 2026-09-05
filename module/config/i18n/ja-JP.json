@@ -1624,6 +1624,10 @@
     "UseTicket": {
       "name": "Raid.UseTicket.name",
       "help": "Raid.UseTicket.help"
+    },
+    "IgnoreFailure": {
+      "name": "敗北の無視",
+      "help": "艦隊の全滅で好感度を稼ぐモードです"
     }
   },
   "RaidDaily": {
