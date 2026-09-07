@@ -62,10 +62,6 @@ class Retirement(Enhancement, QuickRetireSettingHandler):
     # From MapOperation
     map_cat_attack_timer = Timer(2)
 
-    @property
-    def retire_keep_common_cv(self):
-        return self.config.is_task_enabled('GemsFarming')
-
     def _retirement_choose(self, amount=10, target_rarity=('N',)):
         """
         Args:
@@ -159,7 +155,7 @@ class Retirement(Enhancement, QuickRetireSettingHandler):
                     self.interval_reset([EQUIP_CONFIRM, EQUIP_CONFIRM_2])
                     continue
             if self.match_template_color(SHIP_CONFIRM_2, offset=(30, 30), interval=2):
-                if self.retire_keep_common_cv and not self._have_kept_cv:
+                if self._retire_keep_common_cv and not self._have_kept_cv:
                     self.keep_one_common_cv()
                 self.device.click(SHIP_CONFIRM_2)
                 # GET_ITEMS_1 is going to appear, avoid re-entering ship confirm
@@ -239,7 +235,7 @@ class Retirement(Enhancement, QuickRetireSettingHandler):
         end = False
         total = 0
 
-        if self.retire_keep_common_cv:
+        if self._retire_keep_common_cv:
             self._have_kept_cv = False
 
         while 1:
@@ -323,7 +319,7 @@ class Retirement(Enhancement, QuickRetireSettingHandler):
 
         total = 0
 
-        if self.retire_keep_common_cv:
+        if self._retire_keep_common_cv:
             self._have_kept_cv = False
 
         while amount:
@@ -600,36 +596,28 @@ class Retirement(Enhancement, QuickRetireSettingHandler):
         Returns:
             Button:
         """
-        preset = self.config.GemsFarming_CommonCV
-        if preset in ['custom', 'any', 'eagle']:
-            filter_string = self.config.GemsFarming_CommonCVFilter if preset == 'custom' else self.config.COMMON_CV_FILTER
-            common_cv = self.get_common_ship_filter(filter_string, ship_type='cv', output=False)
-            if self.config.GemsFarming_CommonCV == 'eagle' and 'hermes' in common_cv:
-                common_cv.remove('hermes')
-            logger.attr('Filter sort', ' > '.join(common_cv))
-            for name in common_cv:
-                template = globals()[f'TEMPLATE_{name.upper()}']
-                sim, button = template.match_result(
-                    resize(self.device.image, size=(1189, 669)))
-
-                if sim > self.config.COMMON_CV_THRESHOLD:
-                    return Button(button=tuple(_ * 155 // 144 for _ in button.button), area=button.area,
-                                  color=button.color,
-                                  name=f'TEMPLATE_{name}_RETIRE')
-
+        cv = self._retire_keep_common_cv
+        if not cv:
             return None
-        else:
 
-            template = globals()[
-                f'TEMPLATE_{self.config.GemsFarming_CommonCV.upper()}']
-            sim, button = template.match_result(
-                resize(self.device.image, size=(1189, 669)))
+        dict_template = {
+            'bogue': TEMPLATE_BOGUE,
+            'hermes': TEMPLATE_HERMES,
+            'langley': TEMPLATE_LANGLEY,
+            'ranger': TEMPLATE_RANGER,
+        }
+        if cv != 'any':
+            dict_template = {cv: dict_template[cv]}
 
+        target = resize(self.device.image, size=(1189, 669))
+        for cv, template in dict_template.items():
+            sim, button = template.match_result(target)
             if sim > self.config.COMMON_CV_THRESHOLD:
-                return Button(button=tuple(_ * 155 // 144 for _ in button.button), area=button.area, color=button.color,
-                              name=f'TEMPLATE_{self.config.GemsFarming_CommonCV.upper()}_RETIRE')
+                return Button(button=tuple(_ * 155 // 144 for _ in button.button), area=button.area,
+                              color=button.color,
+                              name=f'TEMPLATE_{cv.upper()}_RETIRE')
 
-            return None
+        return None
 
     def retirement_get_common_rarity_cv(self, skip_first_screenshot=False):
         """
