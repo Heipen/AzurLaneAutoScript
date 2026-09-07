@@ -600,14 +600,23 @@ class Retirement(Enhancement, QuickRetireSettingHandler):
         if not cv:
             return None
 
-        dict_template = {
-            'bogue': TEMPLATE_BOGUE,
-            'hermes': TEMPLATE_HERMES,
-            'langley': TEMPLATE_LANGLEY,
-            'ranger': TEMPLATE_RANGER,
-        }
-        if cv != 'any':
-            dict_template = {cv: dict_template[cv]}
+        if cv in ['custom', 'eagle']:
+            filter_string = self.config.GemsFarming_CommonCVFilter \
+                if cv == 'custom' else self.config.COMMON_CV_FILTER
+            common_cv = self.get_common_ship_filter(filter_string, ship_type='cv', output=False)
+            if cv == 'eagle' and 'hermes' in common_cv:
+                common_cv.remove('hermes')
+            logger.attr('Filter sort', ' > '.join(common_cv))
+            dict_template = {name: globals()[f'TEMPLATE_{name.upper()}'] for name in common_cv}
+        else:
+            dict_template = {
+                'bogue': TEMPLATE_BOGUE,
+                'hermes': TEMPLATE_HERMES,
+                'langley': TEMPLATE_LANGLEY,
+                'ranger': TEMPLATE_RANGER,
+            }
+            if cv != 'any':
+                dict_template = {cv: dict_template[cv]}
 
         target = resize(self.device.image, size=(1189, 669))
         for cv, template in dict_template.items():
