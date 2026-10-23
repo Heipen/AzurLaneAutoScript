@@ -371,6 +371,28 @@ class ShipScanner(Scanner):
         if not cached:
             return [ship for ship in ships if ship.satisfy_limitation(self.limitaion)]
 
+    def scan_rows(self, image, rows, output=False):
+        """Scan detected full rows with matching OCR regions and click coordinates."""
+        scanners = [self] + list(self.sub_scanners.values())
+        originals = [scanner.grids for scanner in scanners]
+        ships = []
+        try:
+            for row in rows:
+                for scanner, grid in zip(scanners, originals):
+                    scanner.grids = ButtonGrid(
+                        origin=(grid.origin[0], row + grid.origin[1] - CARD_GRIDS.origin[1]),
+                        delta=grid.delta, button_shape=grid.button_shape,
+                        grid_shape=(7, 1), name=grid._name)
+                    if hasattr(scanner, 'ocr_model'):
+                        scanner.ocr_model.buttons = scanner.grids.buttons
+                ships.extend(self.scan(image, output=output))
+        finally:
+            for scanner, grid in zip(scanners, originals):
+                scanner.grids = grid
+                if hasattr(scanner, 'ocr_model'):
+                    scanner.ocr_model.buttons = grid.buttons
+        return ships
+
     def move(self, vector) -> None:
         """
         Apply moving to both sub-scanners and self.

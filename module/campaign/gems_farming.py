@@ -207,7 +207,7 @@ class GemsFarming(CampaignRun, Dock):
             return 0
         return self.campaign.emotion.fleet.limit + (2 + self.campaign._map_battle) * self.campaign.emotion.reduce_per_battle
 
-    _new_fleet_emotion = 0
+    _new_fleet_emotion = 150
 
     @property
     def fleet_to_attack(self):
@@ -322,11 +322,12 @@ class GemsFarming(CampaignRun, Dock):
         else:
             self.ui_back(check_button=check_button)
 
-    def find_candidates(self, templates, scanner: ShipScanner, output=False):
+    def find_candidates(self, templates, scanner: ShipScanner, output=False, rows=None):
         """
         Find candidates based on template matching using a scanner.
         """
-        ships = scanner.scan(self.device.image, output=output)
+        ships = (scanner.scan(self.device.image, output=output) if rows is None
+                 else scanner.scan_rows(self.device.image, rows, output=output))
         if not templates:
             return ships
         candidates = []
@@ -336,6 +337,21 @@ class GemsFarming(CampaignRun, Dock):
                     candidates.append(ship)
                     break
         return candidates
+
+    def find_candidates_in_dock(self, templates, scanner):
+        """Return candidates on the first matching page, leaving that page visible."""
+        self.dock_search_reset()
+        for _ in self.loop(timeout=180):
+            rows = self.dock_visible_rows()
+            candidates = self.find_candidates(templates, scanner, output=True, rows=rows)
+            candidates = [ship for ship in candidates if ship.fleet != self.fleet_to_attack_index]
+            if candidates:
+                return candidates
+            if not self.dock_next_page():
+                logger.info('Ordinary dock scrollbar reached end or cannot advance')
+                return []
+        logger.warning('Dock candidate search timed out')
+        return []
 
     def get_cv_templates(self):
         """
@@ -371,24 +387,10 @@ class GemsFarming(CampaignRun, Dock):
 
         logger.hr('FINDING FLAGSHIP')
         templates = self.get_cv_templates()
-        scanner = ShipScanner(level=(1, max_level), emotion=(min_emotion, 150), fleet=self.fleet_to_attack_index, status='free')
+        scanner = ShipScanner(level=(1, max_level), emotion=(min_emotion, 150), fleet=0, status='free')
         scanner.disable('rarity')
 
-        candidates = self.find_candidates(templates, scanner, output=True)
-        # The current flagship is still in the attack fleet, exclude ships in the attack fleet
-        candidates = [ship for ship in candidates if ship.fleet != self.fleet_to_attack_index]
-        if candidates:
-            return candidates
-
-        scanner.set_limitation(fleet=0)
-        candidates = self.find_candidates(templates, scanner, output=False)
-        if candidates or templates == []:
-            return candidates
-
-        logger.info('No specific CV was found, try reversed order.')
-        self.dock_sort_method_dsc_set(False)
-        candidates = self.find_candidates(templates, scanner, output=True)
-        return candidates
+        return self.find_candidates_in_dock(templates, scanner)
 
     @Config.when(Campaign_Mode='normal')
     def flagship_change_execute(self):
@@ -396,7 +398,7 @@ class GemsFarming(CampaignRun, Dock):
         candidate = self.get_common_rarity_cv(min_emotion=self.min_emotion)
         if candidate:
             ship = max(candidate, key=lambda s: (s.level, s.emotion))
-            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion) if self._new_fleet_emotion else ship.emotion
+            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion)
             self.dock_select_one(ship.button)
             self.dock_reset()
             self.dock_select_confirm(check_button=page_fleet.check_button)
@@ -404,7 +406,6 @@ class GemsFarming(CampaignRun, Dock):
             return True
 
         logger.info('Change flagship failed, no CV in common rarity.')
-        self._new_fleet_emotion = 0
         self.dock_reset()
         self.ui_leave_ship()
         return False
@@ -425,7 +426,7 @@ class GemsFarming(CampaignRun, Dock):
         candidate = self.get_common_rarity_cv(max_level=31, min_emotion=self.min_emotion)
         if candidate:
             ship = max(candidate, key=lambda s: (s.level, s.emotion))
-            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion) if self._new_fleet_emotion else ship.emotion
+            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion)
             self.dock_select_one(ship.button)
             self.dock_reset()
             self.dock_select_confirm(check_button=FLEET_PREPARATION)
@@ -436,14 +437,13 @@ class GemsFarming(CampaignRun, Dock):
         candidate = self.get_common_rarity_cv(max_level=self.max_level, min_emotion=0)
         if candidate:
             ship = min(candidate, key=lambda s: (s.level, -s.emotion))
-            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion) if self._new_fleet_emotion else ship.emotion
+            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion)
             self.dock_select_one(ship.button)
             self.dock_reset()
             self.dock_select_confirm(check_button=FLEET_PREPARATION)
             return False
 
         logger.info('Change flagship failed, no CV was found.')
-        self._new_fleet_emotion = 0
         self.dock_reset()
         self.ui_leave_ship()
         return False
@@ -536,16 +536,7 @@ class GemsFarming(CampaignRun, Dock):
         scanner = ShipScanner(level=(self.max_level, self.max_level), emotion=(min_emotion, 150), fleet=[0, self.fleet_to_attack_index], status='free')
         scanner.disable('rarity')
 
-        candidates = self.find_candidates(templates, scanner, output=True)
-        # The current vanguard is still in the attack fleet, exclude ships in the attack fleet
-        candidates = [ship for ship in candidates if ship.fleet != self.fleet_to_attack_index]
-        if candidates or templates == []:
-            return candidates
-
-        logger.info('No specific DD was found, try reversed order.')
-        self.dock_sort_method_dsc_set(False)
-        candidates = self.find_candidates(templates, scanner, output=True)
-        return candidates
+        return self.find_candidates_in_dock(templates, scanner)
 
     @Config.when(Campaign_Mode='normal')
     def vanguard_change_execute(self):
@@ -553,7 +544,7 @@ class GemsFarming(CampaignRun, Dock):
         candidate = self.get_common_rarity_dd(min_emotion=self.min_emotion)
         if candidate:
             ship = max(candidate, key=lambda s: s.emotion)
-            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion) if self._new_fleet_emotion else ship.emotion
+            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion)
             self.dock_select_one(ship.button)
             self.dock_reset()
             self.dock_select_confirm(check_button=page_fleet.check_button)
@@ -561,7 +552,6 @@ class GemsFarming(CampaignRun, Dock):
             return True
 
         logger.info('Change vanguard failed, no DD in common rarity.')
-        self._new_fleet_emotion = 0
         self.dock_reset()
         self.ui_leave_ship()
         return False
@@ -582,7 +572,7 @@ class GemsFarming(CampaignRun, Dock):
         candidate = self.get_common_rarity_dd(min_emotion=self.min_emotion)
         if candidate:
             ship = max(candidate, key=lambda s: s.emotion)
-            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion) if self._new_fleet_emotion else ship.emotion
+            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion)
             self.dock_select_one(ship.button)
             self.dock_reset()
             self.dock_select_confirm(check_button=FLEET_PREPARATION)
@@ -593,14 +583,13 @@ class GemsFarming(CampaignRun, Dock):
         candidate = self.get_common_rarity_dd(min_emotion=0)
         if candidate:
             ship = max(candidate, key=lambda s: s.emotion)
-            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion) if self._new_fleet_emotion else ship.emotion
+            self._new_fleet_emotion = min(ship.emotion, self._new_fleet_emotion)
             self.dock_select_one(ship.button)
             self.dock_reset()
             self.dock_select_confirm(check_button=FLEET_PREPARATION)
             return False
 
         logger.info('Change vanguard failed, no DD was found.')
-        self._new_fleet_emotion = 0
         self.dock_reset()
         self.ui_leave_ship()
         return False
@@ -705,7 +694,6 @@ class GemsFarming(CampaignRun, Dock):
             except CampaignEnd as e:
                 if "Emotion" in e.args[0]:
                     self._trigger_emotion = True
-                    self.set_emotion(0)
                 else:
                     raise
 

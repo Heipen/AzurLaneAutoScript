@@ -1,7 +1,10 @@
+import numpy as np
+
 import module.config.server as server
 from module.base.button import ButtonGrid, color_similar, get_color
 from module.base.decorator import cached_property
 from module.base.timer import Timer
+from module.base.utils import color_similarity_2d
 from module.combat.assets import GET_ITEMS_1
 from module.equipment.equipment import Equipment
 from module.logger import logger
@@ -35,6 +38,30 @@ OCR_DOCK_SELECTED = DigitCounter(DOCK_SELECTED, threshold=64, name='OCR_DOCK_SEL
 
 
 class Dock(Equipment):
+    def dock_search_reset(self):
+        if DOCK_SCROLL.appear(main=self):
+            DOCK_SCROLL.set_top(main=self)
+            self.handle_dock_cards_loading(skip_first_screenshot=False)
+
+    def dock_next_page(self):
+        """Advance using the ordinary dock's own scrollbar, retaining row overlap."""
+        if not DOCK_SCROLL.appear(main=self) or DOCK_SCROLL.at_bottom(main=self):
+            return False
+        moved = DOCK_SCROLL.next_page(main=self, page=0.4)
+        self.handle_dock_cards_loading(skip_first_screenshot=False)
+        return bool(moved)
+
+    def dock_visible_rows(self):
+        """Locate full common-ship card rows after dragging the filtered dock."""
+        image = self.device.image[76:641, 93:231]
+        mask = np.mean(color_similarity_2d(image, (171, 174, 186)) > 221, axis=1) > 0.85
+        edges = np.diff(np.r_[False, mask, False].astype(int))
+        rows = []
+        for start, end in zip(np.flatnonzero(edges == 1), np.flatnonzero(edges == -1)):
+            if 3 <= end - start <= 8 and start + 76 + 204 <= 641:
+                rows.append(int(start + 76))
+        return rows
+
     def handle_dock_cards_loading(self, skip_first_screenshot=True):
         # Poor implementation
         # confirm_timer method cannot be used
