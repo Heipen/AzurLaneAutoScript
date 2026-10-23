@@ -7,7 +7,7 @@ from module.campaign.run import CampaignRun
 from module.combat.assets import BATTLE_PREPARATION
 from module.combat.emotion import Emotion
 from module.equipment.assets import *
-from module.exception import CampaignEnd, HardNotSatisfied
+from module.exception import CampaignEnd, HardNotSatisfied, ScriptEnd
 from module.handler.assets import AUTO_SEARCH_MAP_OPTION_OFF
 from module.logger import logger
 from module.map.assets import FLEET_PREPARATION, MAP_PREPARATION, MAP_PREPARATION_HARD
@@ -23,38 +23,13 @@ FLEET_INDEX = Digit(OCR_FLEET_INDEX, letter=(90, 154, 255), threshold=128, alpha
 SIM_VALUE = 0.92
 
 
-class GemsEmotion(Emotion):
-
-    def check_reduce(self, battle):
-        """
-        Overwrite emotion.check_reduce()
-        Check emotion before entering a campaign.
-        Args:
-            battle (int): Battles in this campaign
-        Raise:
-            CampaignEnd: Pause current task to prevent emotion control in the future.
-        """
-
-        if not self.is_calculate:
-            return
-
-        recovered, delay = self._check_reduce(battle)
-        if delay:
-            self.config.GEMS_EMOTION_TRIGGERED = True
-            logger.info('Detect low emotion, pause current task')
-            raise CampaignEnd('Emotion control')
-
-    def wait(self, fleet_index):
-        pass
-
-
 class GemsCampaignOverride(CampaignBase):
     def handle_combat_low_emotion(self):
         """
         Overwrite info_handler.handle_combat_low_emotion()
         If change vanguard is enabled, withdraw combat and change flagship and vanguard
         """
-        if self.config.GemsFarming_ChangeVanguard == 'disabled':
+        if self.config.GemsFarming_ChangeVanguard == 'disabled' or self.config.Emotion_Mode == 'ignore':
             result = self.handle_popup_confirm('IGNORE_LOW_EMOTION')
             if result:
                 # Avoid clicking AUTO_SEARCH_MAP_OPTION_OFF
@@ -99,7 +74,7 @@ class GemsEmotion(Emotion):
         """
         GemsFarming only tracks the attacking fleet. Support fleet emotion is ignored.
         """
-        return self.fleet_1
+        return self.fleet_2 if self.config.Fleet_FleetOrder == 'fleet1_standby_fleet2_all' else self.fleet_1
 
     def update(self):
         """
@@ -133,6 +108,9 @@ class GemsEmotion(Emotion):
         self.show()
         recovered = self.fleet.get_recovered(expected_reduce)
         if recovered > datetime.now():
+            if self.config.GemsFarming_ChangeVanguard == 'disabled':
+                self.config.task_delay(target=recovered)
+                raise ScriptEnd('Emotion control')
             self.config.GEMS_EMOTION_TRIGGERED = True
             raise CampaignEnd('Emotion control')
 
@@ -140,6 +118,10 @@ class GemsEmotion(Emotion):
         """
         Override Emotion.wait to trigger stop condition when emotion is too low after battle.
         """
+        if not self.is_calculate:
+            return
+        if self.config.GemsFarming_ChangeVanguard == 'disabled':
+            return super().wait(self.fleet.fleet)
         self.update()
         self.record()
         self.show()
@@ -194,8 +176,6 @@ class GemsFarming(CampaignRun, Dock):
                 return False
 
         self.campaign = GemsCampaign(device=self.campaign.device, config=self.campaign.config)
-        if not self.change_vanguard:
-            self.campaign.config.override(Emotion_Mode='ignore')
         self.campaign.config.override(EnemyPriority_EnemyScaleBalanceWeight='S1_enemy_first')
 
     @property
@@ -223,7 +203,9 @@ class GemsFarming(CampaignRun, Dock):
 
     @property
     def min_emotion(self):
-        return (2 + self.campaign._map_battle) * self.campaign.emotion.reduce_per_battle
+        if not self.campaign.emotion.is_calculate:
+            return 0
+        return self.campaign.emotion.fleet.limit + (2 + self.campaign._map_battle) * self.campaign.emotion.reduce_per_battle
 
     _new_fleet_emotion = 0
 
@@ -729,12 +711,12 @@ class GemsFarming(CampaignRun, Dock):
 
             # End
             if self._trigger_lv32 or self._trigger_emotion:
-                self._new_fleet_emotion = 150
+                self._new_fleet_emotion = 150 if self.change_vanguard else self.get_emotion()
                 success = self.flagship_change()
                 if self.change_vanguard:
                     success = success and self.vanguard_change()
 
-                self.campaign.config.set_record(Emotion_Fleet1Value=self._new_fleet_emotion)
+                self.set_emotion(self._new_fleet_emotion)
 
                 if is_limit and self.config.StopCondition_RunCount <= 0:
                     logger.hr('Triggered stop condition: Run count')

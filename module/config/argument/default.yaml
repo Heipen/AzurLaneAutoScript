@@ -7,6 +7,10 @@
 # ==================== Farm ====================
 
 GemsFarming:
+  Emotion:
+    Mode: calculate_ignore
+    Fleet1Control: prevent_red_face
+    Fleet2Control: prevent_red_face
   EquipmentCode:
     Config: |-
       DD: null
