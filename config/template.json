@@ -396,6 +396,7 @@
       "CommonCVFilter": "bogue > ranger > langley > hermes",
       "ChangeVanguard": "ship_equip",
       "CommonDD": "any",
+      "CommonDDFilter": "z20 > z21 > aulick > foote > cassin > downes",
       "ALLowHighFlagshipLevel": false,
       "DelayTaskIFNoFlagship": false,
       "CommissionLimit": true

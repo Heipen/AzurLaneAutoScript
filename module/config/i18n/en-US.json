@@ -1540,6 +1540,10 @@
       "z20_or_z21": "Z20 or Z21",
       "DDG": "DDG"
     },
+    "CommonDDFilter": {
+      "name": "Custom Vanguard Filter",
+      "help": "Supported ships: z20, z21, aulick, foote, cassin, downes. Separate names with >. Level and emotion requirements still apply."
+    },
     "ALLowHighFlagshipLevel": {
       "name": "GemsFarming.ALLowHighFlagshipLevel.name",
       "help": "GemsFarming.ALLowHighFlagshipLevel.help"

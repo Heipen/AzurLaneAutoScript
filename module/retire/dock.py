@@ -32,7 +32,18 @@ else:
     CARD_LEVEL_GRIDS = CARD_GRIDS.crop(area=(74, 5, 136, 27), name='LEVEL')
     CARD_EMOTION_GRIDS = CARD_GRIDS.crop(area=(21, 29, 71, 48), name='EMOTION')
 
-DOCK_SCROLL = Scroll(DOCK_SCROLL, color=(247, 211, 66), name='DOCK_SCROLL')
+class DockScroll(Scroll):
+    # The ordinary dock can report about 0.945 even at its physical bottom.
+    edge_threshold = 0.08
+    drag_threshold = 0.08
+
+    def set(self, position, main, **kwargs):
+        kwargs.setdefault('timeout', 30)
+        kwargs.setdefault('max_drag', 5)
+        return super().set(position, main=main, **kwargs)
+
+
+DOCK_SCROLL = DockScroll(DOCK_SCROLL, color=(247, 211, 66), name='DOCK_SCROLL')
 
 OCR_DOCK_SELECTED = DigitCounter(DOCK_SELECTED, threshold=64, name='OCR_DOCK_SELECTED')
 
@@ -47,9 +58,11 @@ class Dock(Equipment):
         """Advance using the ordinary dock's own scrollbar, retaining row overlap."""
         if not DOCK_SCROLL.appear(main=self) or DOCK_SCROLL.at_bottom(main=self):
             return False
+        before = DOCK_SCROLL.cal_position(main=self)
         moved = DOCK_SCROLL.next_page(main=self, page=0.4)
         self.handle_dock_cards_loading(skip_first_screenshot=False)
-        return bool(moved)
+        after = DOCK_SCROLL.cal_position(main=self)
+        return bool(moved) and after > before + 0.01
 
     def dock_visible_rows(self):
         """Locate full common-ship card rows after dragging the filtered dock."""

@@ -117,7 +117,8 @@ class Scroll:
     def at_bottom(self, main):
         return self.cal_position(main) > 1 - self.edge_threshold
 
-    def set(self, position, main, random_range=(-0.05, 0.05), distance_check=True, skip_first_screenshot=True):
+    def set(self, position, main, random_range=(-0.05, 0.05), distance_check=True, skip_first_screenshot=True,
+            timeout=None, max_drag=None):
         """
         Set scroll to a specific position.
 
@@ -125,6 +126,8 @@ class Scroll:
             position (float, int): 0 to 1.
             main (ModuleBase):
             random_range (tuple(int, float)):
+            timeout (float): Optional overall time limit in seconds.
+            max_drag (int): Optional maximum number of drag attempts.
             distance_check (bool): Whether to drop short swipes
             skip_first_screenshot:
 
@@ -135,6 +138,7 @@ class Scroll:
         self.drag_interval.clear()
         self.drag_timeout.reset()
         dragged = 0
+        overall_timeout = Timer.from_seconds(timeout).start() if timeout is not None else None
         if position <= self.edge_threshold:
             random_range = np.subtract(0, self.edge_add)
         if position >= 1 - self.edge_threshold:
@@ -148,6 +152,10 @@ class Scroll:
 
             current = self.cal_position(main)
             if abs(position - current) < self.drag_threshold:
+                break
+            if (overall_timeout is not None and overall_timeout.reached()) or (
+                    max_drag is not None and dragged >= max_drag):
+                logger.warning(f'{self.name} stopped before target: position={current:.3f}, target={position}')
                 break
             if self.length:
                 self.drag_timeout.reset()

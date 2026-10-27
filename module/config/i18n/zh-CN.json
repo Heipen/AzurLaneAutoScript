@@ -1540,6 +1540,10 @@
       "z20_or_z21": "Z20或Z21（卡洛琳或威尔赫米娜）",
       "DDG": "导驱"
     },
+    "CommonDDFilter": {
+      "name": "自定义前排过滤器",
+      "help": "支持 z20、z21、aulick、foote、cassin、downes，以 > 分隔。仅从指定舰船中选择符合等级和心情条件的前排。"
+    },
     "ALLowHighFlagshipLevel": {
       "name": "仅更换满级后排",
       "help": "打开后，更换旗舰时仅会选择100级的白皮轻航。\n使用时请保证船坞中有符合条件的舰船。"

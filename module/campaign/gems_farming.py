@@ -15,6 +15,7 @@ from module.ocr.ocr import Digit
 from module.retire.assets import *
 from module.retire.dock import Dock
 from module.retire.scanner import ShipScanner
+from module.retire.retirement import Retirement, TEMPLATE_COMMON_DD
 from module.ui.assets import BACK_ARROW, FLEET_CHECK
 from module.ui.page import page_fleet
 
@@ -480,7 +481,9 @@ class GemsFarming(CampaignRun, Dock):
         return success
 
     def get_dd_faction(self):
-        if self.config.GemsFarming_CommonDD == 'any':
+        if self.config.GemsFarming_CommonDD == 'custom':
+            faction = 'all'
+        elif self.config.GemsFarming_CommonDD == 'any':
             faction = ['eagle', 'iron']
         elif self.config.GemsFarming_CommonDD == 'favourite':
             faction = 'all'
@@ -505,7 +508,15 @@ class GemsFarming(CampaignRun, Dock):
         Returns:
             list[Template]: DD templates
         """
-        if self.config.GemsFarming_CommonDD == 'aulick_or_foote':
+        if self.config.GemsFarming_CommonDD == 'custom':
+            names = Retirement.get_common_ship_filter(
+                self, self.config.GemsFarming_CommonDDFilter, ship_type='dd')
+            templates = []
+            for name in names:
+                value = TEMPLATE_COMMON_DD[name.upper()]
+                templates.extend(value if isinstance(value, list) else [value])
+            return templates
+        elif self.config.GemsFarming_CommonDD == 'aulick_or_foote':
             return [
                 TEMPLATE_AULICK,
                 TEMPLATE_FOOTE

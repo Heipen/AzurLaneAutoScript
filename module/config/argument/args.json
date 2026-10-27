@@ -1909,6 +1909,10 @@
           "DDG"
         ]
       },
+      "CommonDDFilter": {
+        "type": "textarea",
+        "value": "z20 > z21 > aulick > foote > cassin > downes"
+      },
       "ALLowHighFlagshipLevel": {
         "type": "checkbox",
         "value": false
