@@ -37,7 +37,16 @@ class DockScroll(Scroll):
     edge_threshold = 0.08
     drag_threshold = 0.08
 
+    def appear(self, main):
+        # A full-height thumb means every filtered ship already fits on screen.
+        # A missing thumb must not be interpreted as a scrollable list either.
+        fraction = np.mean(self.match_color(main))
+        return 0.1 < fraction < 1 - self.edge_threshold
+
     def set(self, position, main, **kwargs):
+        if not self.appear(main):
+            logger.info('Dock list fits on screen or scrollbar is absent, skip scrolling')
+            return 0
         kwargs.setdefault('timeout', 30)
         kwargs.setdefault('max_drag', 5)
         return super().set(position, main=main, **kwargs)

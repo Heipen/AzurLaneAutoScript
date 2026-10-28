@@ -342,15 +342,24 @@ class GemsFarming(CampaignRun, Dock):
     def find_candidates_in_dock(self, templates, scanner):
         """Return candidates on the first matching page, leaving that page visible."""
         self.dock_search_reset()
+        first_page = True
         for _ in self.loop(timeout=180):
-            rows = self.dock_visible_rows()
+            # Filters start at the ordinary dock's fixed grid. Row detection is
+            # only necessary after scrolling, and must not gate the initial scan.
+            rows = None if first_page else self.dock_visible_rows()
+            if rows is None:
+                logger.info('Scan initial dock page with fixed card grid')
+            elif not rows:
+                logger.warning('No full dock card rows detected after scrolling')
             candidates = self.find_candidates(templates, scanner, output=True, rows=rows)
             candidates = [ship for ship in candidates if ship.fleet != self.fleet_to_attack_index]
             if candidates:
                 return candidates
+            logger.info('No eligible replacement on current dock page')
             if not self.dock_next_page():
                 logger.info('Ordinary dock scrollbar reached end or cannot advance')
                 return []
+            first_page = False
         logger.warning('Dock candidate search timed out')
         return []
 
