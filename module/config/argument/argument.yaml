@@ -863,6 +863,11 @@ OpsiScheduling:
 
 # =================== Island ====================
 
+IslandGeneral:
+  Season:
+    type: select
+    value: ''
+    option: []
 IslandProduction:
   HardFloorItems:
     type: textarea
